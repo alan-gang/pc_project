@@ -1,0 +1,1 @@
+exports.ids=[4],exports.modules={79:function(t,e,r){"use strict";r.r(e);var n={},c=r(4);var component=Object(c.a)(n,(function(){var t=this.$createElement;return(this._self._c||t)("div",[this._ssrNode("\n  用户模块 -- 注册\n")])}),[],!1,(function(t){}),"1cb897b4","d4a504d8");e.default=component.exports}};

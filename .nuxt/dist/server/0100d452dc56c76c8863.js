@@ -1,0 +1,1 @@
+exports.ids=[2],exports.modules={81:function(e,t,r){"use strict";r.r(t);var n={},c=r(4);var component=Object(c.a)(n,(function(){var e=this.$createElement;return(this._self._c||e)("div",[this._ssrNode("\n  论坛页面\n")])}),[],!1,(function(e){}),"0cef2dd4","47e583d2");t.default=component.exports}};
