@@ -30,7 +30,8 @@ module.exports = {
         path: '*',
         component: resolve(__dirname, 'pages/404.vue')
       })
-    }
+    },
+    middleware: ['redirect'],
   },
   /*
   ** Customize the progress-bar color
@@ -46,7 +47,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    {src:'@/plugins/element-ui',ssr:true},
+    { src: '@/plugins/route', ssr: true }
   ],
   /*
   ** Nuxt.js dev-modules

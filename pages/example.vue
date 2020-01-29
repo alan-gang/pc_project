@@ -1,15 +1,14 @@
 <template>
   <div>
-   用户模块 -- 登录
+    案例界面
   </div>
 </template>
 
 <script>
-  export default {
-    layout: 'user',
-  }
+export default {
+
+}
 </script>
 
 <style scoped>
-
 </style>

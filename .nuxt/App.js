@@ -11,8 +11,9 @@ import NuxtLoading from './components/nuxt-loading.vue'
 import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
 
 import _6f6c098b from '..\\layouts\\default.vue'
+import _2d2a8cc1 from '..\\layouts\\user.vue'
 
-const layouts = { "_default": _6f6c098b }
+const layouts = { "_default": _6f6c098b,"_user": _2d2a8cc1 }
 
 export default {
   head: {"title":"new_pc_project","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"My first-rate Nuxt.js project"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
@@ -159,6 +160,10 @@ export default {
     },
 
     setLayout (layout) {
+      if(layout && typeof layout !== 'string') {
+        throw new Error('[nuxt] Avoid using non-string value as layout property.')
+      }
+
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }

@@ -1,6 +1,7 @@
 <template>
   <div>
-    论坛页面
+   论坛界面
+    <hr>
   </div>
 </template>
 

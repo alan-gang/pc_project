@@ -1,12 +1,12 @@
 <template>
   <div>
-   用户模块 -- 登录
+    头部组件
   </div>
 </template>
 
 <script>
   export default {
-    layout: 'user',
+
   }
 </script>
 

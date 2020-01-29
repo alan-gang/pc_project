@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{309:function(n,e,t){"use strict";t.r(e);var c={},r=t(27),component=Object(r.a)(c,(function(){var n=this.$createElement;return(this._self._c||n)("div",[this._v("\n  论坛页面\n")])}),[],!1,null,"0cef2dd4",null);e.default=component.exports}}]);

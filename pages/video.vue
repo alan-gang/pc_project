@@ -1,12 +1,12 @@
 <template>
   <div>
-   用户模块 -- 登录
+    视频界面
   </div>
 </template>
 
 <script>
   export default {
-    layout: 'user',
+
   }
 </script>
 
