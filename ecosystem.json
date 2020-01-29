@@ -1,7 +1,7 @@
 {
   "apps": [{
     "name": "pc",
-    "script": "./server/index.js",
+    "script": " ./node_modules/nuxt/bin/nuxt-start",
     "watch": false,
     "env": {
       "COMMON_VARIABLE": "true"
