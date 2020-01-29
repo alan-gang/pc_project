@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt/>
+    用户模块 -- 注册
   </div>
 </template>
 

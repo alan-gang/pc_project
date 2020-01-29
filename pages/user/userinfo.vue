@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt/>
+    用户信息模块
   </div>
 </template>
 
