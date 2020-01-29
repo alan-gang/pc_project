@@ -1,7 +1,7 @@
 {
   "apps": [{
     "name": "pc",
-    "script": "./server/index.js",
+    "script": "/server/index.js",
     "watch": false,
     "env": {
       "COMMON_VARIABLE": "true"
