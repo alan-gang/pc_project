@@ -14,16 +14,33 @@ let rulesMixin = {
                     { required: true, message: '请输入验证码', trigger: 'blur' }
                 ],
                 email: [
-                    { required: true, message: '请输入邮箱', trigger: 'blur' },
-                    { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                  {
+                    validator : (rule, value, callback) => {
+                      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+                      if (!value) {
+                        this.emailValidator = false
+                        return callback(new Error('邮箱不能为空'))
+                      }
+                      setTimeout(() => {
+                        if (mailReg.test(value)) {
+                          this.emailValidator = true
+                          callback()
+                        } else {
+                          this.emailValidator = false
+                          callback(new Error('请输入正确的邮箱格式'))
+                        }
+                      }, 100)
+                    },
+                    trigger:'blur'
+                  },
+                    // { required: true, message: '请输入邮箱', trigger: 'blur' },
+                    // { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
                 ],
                 checkPassword: [
                     { required: true, message: '请输入确认密码', trigger: 'blur' },
                     {
                         validator: (rule, value, callback) => {
-                            console.log(this.rules)
-                                // console.log(value, this.rules.checkPassword)
-                            if (value !== this.rules.checkPassword) {
+                        if (value !== this.registerForm.password) {
                                 callback(new Error('两次输入密码不一致!'));
                             } else {
                                 callback();

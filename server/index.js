@@ -4,6 +4,11 @@ const { Nuxt, Builder } = require('nuxt')
 
 const app = new Koa()
 
+/* 处理psot请求 */
+const bodyParser = require('koa-bodyparser');
+/* 使用post请求中间 */
+app.use(bodyParser())
+
 /* 全局使用session ================*/
 const session = require('koa-session');
 app.keys = ['some secret hurr'];
@@ -22,6 +27,10 @@ app.use(session(CONFIG, app));
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
+
+/* 接口数据 */
+const common = require('./controller/')
+app.use(common.routes(), common.allowedMethods())
 
 async function start () {
   // Instantiate nuxt.js
@@ -48,6 +57,9 @@ async function start () {
     // ctx.session.name = 'demo'
     // console.log(ctx.session)
   })
+
+
+
 
   app.listen(port, host)
   consola.ready({

@@ -1,6 +1,4 @@
-// const resolve = ()=> {
 
-// }
 
 module.exports = {
     mode: 'universal',
@@ -48,7 +46,8 @@ module.exports = {
      */
     plugins: [
         { src: '@/plugins/element-ui', ssr: true },
-        { src: '@/plugins/route', ssr: true }
+        { src: '@/plugins/route', ssr: true },
+        { src: '@/plugins/api', ssr: true },
     ],
     /*
      ** Nuxt.js dev-modules

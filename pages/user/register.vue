@@ -16,7 +16,6 @@
           v-model="registerForm.email"
           placeholder="Email Address"
         ></el-input>
-        <el-button type="primary" class="p_a p_r_0 p_t_1">发送验证码</el-button>
       </el-form-item>
       <el-form-item class="mt_20" prop="code">
         <el-input
@@ -25,6 +24,9 @@
           v-model="registerForm.code"
           placeholder="Code"
         ></el-input>
+        <el-button type="primary" class="p_a p_r_0 p_t_1" :loading="isSend" @click="_getCode">
+          {{!isSend?'发送验证码':`${this.countDown} 秒后从新获取`}}
+        </el-button>
       </el-form-item>
       <el-form-item class="mt_20" prop="password">
         <el-input
@@ -47,17 +49,24 @@
     </el-form>
     <div class="h_1 w_100p bgc_br mt_45 mb_20"></div>
     <div class="action flex w_360">
-      <div class="w_360 h_45 bgc_b_b t_c lh_45 c_f ft_14 r_5" @click="onSubmit('registerForm')">Sign Up</div>
+      <div class="w_360 h_45 bgc_b_b t_c lh_45 c_f ft_14 r_5" @click="_onSubmit('registerForm')">Sign Up</div>
     </div>
   </div>
 </template>
+
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
+import {getcode} from '~/plugins/api'
+
 export default {
   mixins:[rulesMixin],
   layout: "user",
   data() {
     return {
+      isSend:false,
+      emailValidator:false,
+      countDown:5,
+      timer:null,
       registerForm: {
         name: "",
         password:"",
@@ -68,7 +77,7 @@ export default {
     };
   },
   methods: {
-    onSubmit(formName) {
+    _onSubmit(formName) {
      this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
@@ -77,6 +86,24 @@ export default {
            return false;
           }
         });
+    },
+    async _getCode() {
+      if(!this.emailValidator) {
+        this.alert('请输入邮箱之后获取验证码')
+        return
+      }
+      let {code,data} = await getcode({email:this.registerForm.email})
+      code ===0 &&  this.alert(data.msg,'success');
+      this.isSend = true
+      this.countDown = 5;
+      this.timer = setInterval(() => {
+        if( this.countDown < 1 ) {
+          clearInterval(this.timer)
+           this.isSend = false
+           return
+        }
+        this.countDown --
+      }, 1000);
     }
   }
 };
