@@ -35,3 +35,25 @@ a:hover {
     color: #000;
     text-decoration: none;
 }
+
+.el-input__inner {
+  &::placeholder {
+    color: #4F5467;
+  }
+  &::-webkit-input-placeholder {
+    /* WebKit browsers 适配谷歌 */
+   color: #4F5467;
+  }
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 适配火狐 */
+   color: #4F5467;
+  }
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ 适配火狐 */
+  color: #4F5467;
+  }
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10+  适配ie */
+   color: #4F5467;
+  }
+}

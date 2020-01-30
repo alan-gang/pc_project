@@ -8,9 +8,11 @@ import {
 
 import NuxtLoading from './components/nuxt-loading.vue'
 
-import '..\\node_modules\\_element-ui@2.13.0@element-ui\\lib\\theme-chalk\\index.css'
-
 import '..\\assets\\mixin.styl'
+
+import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
+
+import '..\\assets\\font\\iconfont.css'
 
 import _6f6c098b from '..\\layouts\\default.vue'
 import _2d2a8cc1 from '..\\layouts\\user.vue'

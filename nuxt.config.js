@@ -39,8 +39,9 @@ module.exports = {
      ** Global CSS
      */
     css: [
+        './assets/mixin.styl',
         'element-ui/lib/theme-chalk/index.css',
-        './assets/mixin.styl'
+        './assets/font/iconfont.css'
     ],
     /*
      ** Plugins to load before mounting the App
