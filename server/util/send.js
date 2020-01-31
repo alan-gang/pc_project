@@ -15,6 +15,6 @@ module.exports = {
   emailConfig:{
     pass:'jcqmzmsporcvdghd',
     user:'2979476667@qq.com',
-    code:Math.random().toString().substr(2,4)
+    code: () => Math.random().toString().substr(2, 4)
   }
 }

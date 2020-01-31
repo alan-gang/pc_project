@@ -4,12 +4,12 @@
              :rules="rules"
              ref="registerForm"
              class="w_380 pl_10 pr_10 b_s mt_30 user-form">
-      <el-form-item prop="name">
+      <!-- <el-form-item prop="name">
         <el-input class="c_f_c ft_16"
                   prefix-icon="el-icon-user"
                   v-model="registerForm.name"
                   placeholder="Username"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item class="mt_20 p_r"
                     prop="email">
         <el-input class="c_f_c ft_16"
@@ -17,10 +17,10 @@
                   v-model="registerForm.email"
                   placeholder="Email Address"></el-input>
       </el-form-item>
-      <el-form-item class="mt_20">
-        <label for="" class="icon iconfont icon-banjiguanli1"></label>
+      <el-form-item class="mt_20 identity">
+        <label for=""
+               class="icon iconfont icon-banjiguanli1"></label>
         <el-select v-model="registerForm.identity"
-                  prefix-icon="el-icon-paperclip"
                    placeholder="Please select identity">
           <el-option label="student"
                      value="1"></el-option>
@@ -51,7 +51,7 @@
       </el-form-item>
       <el-form-item class="mt_20"
                     prop="checkPassword">
-        <el-input class="c_f_c ft_16"
+        <el-input class="c_f_c ft_16 confirm-password"
                   prefix-icon="el-icon-edit"
                   v-model="registerForm.checkPassword"
                   placeholder="Confirm Password"
@@ -60,7 +60,7 @@
     </el-form>
     <div class="h_1 w_100p bgc_br mt_45 mb_20"></div>
     <div class="action flex w_360">
-      <div class="w_360 h_45 bgc_b_b t_c lh_45 c_f ft_14 r_5"
+      <div class="w_360 h_45 bgc_b_b t_c lh_45 c_f ft_14 r_5 c_r"
            @click="_onSubmit('registerForm')">Sign Up</div>
     </div>
   </div>
@@ -68,7 +68,7 @@
 
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
-import { getcode } from '~/plugins/api'
+import { getcode,registerUser } from '~/plugins/api'
 
 export default {
   mixins: [rulesMixin],
@@ -80,9 +80,8 @@ export default {
       countDown: 5,
       timer: null,
       registerForm: {
-        name: "",
         password: "",
-        identity:'',
+        identity: '',
         email: "",
         code: "",
         checkPassword: ""
@@ -91,9 +90,9 @@ export default {
   },
   methods: {
     _onSubmit (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert('submit!');
+          let res  = await  registerUser({...this.registerForm})
         } else {
           this.alert('请正确填写表单内容');
           return false;
@@ -101,12 +100,12 @@ export default {
       });
     },
     async _getCode () {
-      if (!this.emailValidator) {
-        this.alert('请输入邮箱之后获取验证码')
+      if (!this.emailValidator || !this.registerForm.identity) {
+        this.alert('请先输入邮箱并确认身份')
         return
       }
-      let { code, data } = await getcode({ email: this.registerForm.email })
-      code === 0 && this.alert(data.msg, 'success');
+      let { code, data } = await getcode({ email: this.registerForm.email, identity: this.registerForm.identity })
+      code === 0 && this.alert(data.msg, this.registerForm.identity == 1 ? 'success' : 'warning');
       this.isSend = true
       this.countDown = 5;
       this.timer = setInterval(() => {
@@ -118,7 +117,7 @@ export default {
         this.countDown--
       }, 1000);
     }
-  }
+  },
 };
 </script>
 
@@ -126,6 +125,23 @@ export default {
 @import "../../assets/css/user/user.styl"
     .login-container
       flex(,column)
-      // >>>.el-select
-      //           display block
+      .icon-banjiguanli1
+        width: 35px;
+        border-top-left-radius: 4px;
+        display: inline-block;
+        text-align: center;
+        background: #ffb848;
+        border-bottom-left-radius: 4px;
+        color: #fff;
+        font-size: 19px;
+
+      .identity
+        >>>.el-form-item__content
+                  display flex
+                  .el-select
+                    flex-grow 1
+                    .el-input__inner
+                      text-indent 0px
+                      border-top-left-radius 0!important
+                      border-bottom-left-radius 0!important
 </style>
