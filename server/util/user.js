@@ -17,7 +17,7 @@ module.exports = {
     return  await bcrypt.hash(password, salt);
   },
   async analysisPassword(cuttentPassword,savePassword) {
-    await bcrypt.compare(cuttentPassword, savePassword)
+    return await bcrypt.compare(cuttentPassword, savePassword)
   }
 
 

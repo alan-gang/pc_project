@@ -15,6 +15,7 @@
           prefix-icon="el-icon-edit"
           v-model="ruleForm.password"
           placeholder="Password"
+          type="password"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -35,8 +36,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        name: "",
-        password:""
+        name: "hg9558@126.com",
+        password:"123456"
       }
     };
   },
@@ -45,6 +46,15 @@ export default {
      this.$refs[formName].validate(async (valid) => {
           if (valid) {
            let {code,data,message} = await loginUser({...this.ruleForm})
+           if(code==1) {
+                this.alert(message);
+                return;
+           }else {
+               //重定向
+              let token = data.token;
+              localStorage.token=token;
+               this.$router.push("/")
+           }
           } else {
            this.alert('请正确填写用户名和密码');
            return false;

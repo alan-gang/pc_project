@@ -1,35 +1,33 @@
 const router = require('koa-router')()
 const { userMode } = require('../../../model/user_model')
 const { sendFrontEnd } = require('../../../util/send')
-const { emailConfig, generateToken, genertaePassword } = require('../../../util/user')
+const { emailConfig, generateToken, genertaePassword, analysisPassword } = require('../../../util/user')
 const nodeMailer = require('nodemailer')
 // const axios = require('axios');
 
 // 用户登录
 router.post('/loginUser', async ctx => {
-  let { password, email } = ctx.request.body;
+  let { password, name } = ctx.request.body;
 
-  let user = await userMode.findOne({ email })
+  let user = await userMode.findOne({ email:name })
 
     if(!user) {
       ctx.body = sendFrontEnd(null,'该用户还未注册')
       return
     }else {
-      let checkStatus = analysisPassword(password, user.password)
+      let checkStatus =await analysisPassword(password, user.password)
           if(!checkStatus) {
             ctx.body = sendFrontEnd(null, '密码错误')
             return
+          }else {
+              let token = await generateToken(user);
+              ctx.session.email = name;
+              ctx.body = sendFrontEnd({
+                  token,
+                  msg: '登录成功'
+              })
           }
     }
-
-  password = await genertaePassword(password)
-  let saveStatus = await userMode.create({ password, email })
-  let token = await generateToken(saveStatus);
-
-  ctx.body = sendFrontEnd({
-    token,
-    msg: '注册成功'
-  })
 })
 
 
@@ -48,7 +46,7 @@ router.post('/register', async ctx => {
   password = await genertaePassword(password)
   let saveStatus = await userMode.create({ password, email, identity })
   let token = await generateToken(saveStatus);
-
+  ctx.session.email = email;
   ctx.body = sendFrontEnd({
     token,
     msg: '注册成功'

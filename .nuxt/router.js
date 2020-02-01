@@ -3,13 +3,14 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _df312f4a = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
-const _4bab0a0d = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
-const _910d3944 = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
-const _7ae78ee1 = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
-const _46fd125b = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
-const _f47b889e = () => interopDefault(import('..\\pages\\user\\userinfo.vue' /* webpackChunkName: "pages_user_userinfo" */))
-const _37e47435 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _5bfb1b11 = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
+const _27cb1c7a = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
+const _26297ed8 = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
+const _01502b97 = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
+const _e25c9c36 = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
+const _53419ab1 = () => interopDefault(import('..\\pages\\user\\restpassword.vue' /* webpackChunkName: "pages_user_restpassword" */))
+const _64d2498a = () => interopDefault(import('..\\pages\\user\\userinfo.vue' /* webpackChunkName: "pages_user_userinfo" */))
+const _6d56516b = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -29,35 +30,39 @@ export const routerOptions = {
 
   routes: [{
     path: "/404",
-    component: _df312f4a,
+    component: _5bfb1b11,
     name: "404"
   }, {
     path: "/example",
-    component: _4bab0a0d,
+    component: _27cb1c7a,
     name: "example"
   }, {
     path: "/video",
-    component: _910d3944,
+    component: _26297ed8,
     name: "video"
   }, {
     path: "/user/login",
-    component: _7ae78ee1,
+    component: _01502b97,
     name: "user-login"
   }, {
     path: "/user/register",
-    component: _46fd125b,
+    component: _e25c9c36,
     name: "user-register"
   }, {
+    path: "/user/restpassword",
+    component: _53419ab1,
+    name: "user-restpassword"
+  }, {
     path: "/user/userinfo",
-    component: _f47b889e,
+    component: _64d2498a,
     name: "user-userinfo"
   }, {
     path: "/",
-    component: _37e47435,
+    component: _6d56516b,
     name: "index"
   }, {
     path: "*",
-    component: _df312f4a,
+    component: _5bfb1b11,
     name: "custom"
   }],
 
