@@ -12,3 +12,9 @@ export const registerUser = (data) => ajax({
   type: 'post',
   params: data
 })
+
+export const loginUser = (data) => ajax({
+  url: '/user/useradmin/loginUser',
+  type: 'post',
+  params: data
+})

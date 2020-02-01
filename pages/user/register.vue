@@ -68,7 +68,7 @@
 
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
-import { getcode,registerUser } from '~/plugins/api'
+import { getcode, registerUser } from '~/plugins/api'
 
 export default {
   mixins: [rulesMixin],
@@ -80,11 +80,11 @@ export default {
       countDown: 5,
       timer: null,
       registerForm: {
-        password: "",
-        identity: '',
-        email: "",
+        password: "123456",
+        identity: '1',
+        email: "hg9558@126.com",
         code: "",
-        checkPassword: ""
+        checkPassword: "123456"
       }
     };
   },
@@ -92,7 +92,14 @@ export default {
     _onSubmit (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          let res  = await  registerUser({...this.registerForm})
+          let { code, data, message } = await registerUser({ ...this.registerForm })
+          if (code === 1) {
+            this.alert(message)
+            return
+          } else {
+            localStorage.token = data.token
+            this.$router.replace('/')
+          }
         } else {
           this.alert('请正确填写表单内容');
           return false;
@@ -104,8 +111,6 @@ export default {
         this.alert('请先输入邮箱并确认身份')
         return
       }
-      let { code, data } = await getcode({ email: this.registerForm.email, identity: this.registerForm.identity })
-      code === 0 && this.alert(data.msg, this.registerForm.identity == 1 ? 'success' : 'warning');
       this.isSend = true
       this.countDown = 5;
       this.timer = setInterval(() => {
@@ -116,6 +121,9 @@ export default {
         }
         this.countDown--
       }, 1000);
+      let { code, data } = await getcode({ email: this.registerForm.email, identity: this.registerForm.identity })
+      code === 0 && this.alert(data.msg, this.registerForm.identity == 1 ? 'success' : 'warning');
+
     }
   },
 };

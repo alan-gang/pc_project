@@ -6,7 +6,7 @@
           class="c_f_c ft_16"
           prefix-icon="el-icon-user"
           v-model="ruleForm.name"
-          placeholder="Username"
+          placeholder="Enter email login"
         ></el-input>
       </el-form-item>
       <el-form-item class="mt_20" prop="password">
@@ -21,12 +21,14 @@
     <div class="h_1 w_100p bgc_br mt_45 mb_20"></div>
     <div class="action flex w_360">
       <div class="w_145 h_35 bgc_b_b t_c lh_35 c_f ft_12 r_5">Lost password?</div>
-      <div class="bgc_b_g w_60 h_35 t_c c_f r_5 lh_35 ft_12" @click="onSubmit('ruleForm')">Login</div>
+      <div class="bgc_b_g w_60 h_35 t_c c_f r_5 lh_35 ft_12 cr" @click="onSubmit('ruleForm')">Login</div>
     </div>
   </div>
 </template>
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
+import {  loginUser } from '~/plugins/api'
+
 export default {
   mixins:[rulesMixin],
   layout: "user",
@@ -40,9 +42,9 @@ export default {
   },
   methods: {
     onSubmit(formName) {
-     this.$refs[formName].validate((valid) => {
+     this.$refs[formName].validate(async (valid) => {
           if (valid) {
-            alert('submit!');
+           let {code,data,message} = await loginUser({...this.ruleForm})
           } else {
            this.alert('请正确填写用户名和密码');
            return false;

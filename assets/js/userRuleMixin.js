@@ -3,12 +3,12 @@ let rulesMixin = {
         return {
             rules: {
                 name: [
-                    { required: true, message: '请输入用户名', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                     { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' },
-                    { min: 6, max: 10, message: '长度在 6 到 10 个字符', trigger: 'blur' }
+                    { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
                 ],
                 code: [
                     { required: true, message: '请输入验证码', trigger: 'blur' }

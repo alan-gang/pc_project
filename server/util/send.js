@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 module.exports = {
   sendFrontEnd (data, message) {
     if (data) {
@@ -12,9 +14,8 @@ module.exports = {
       }
     }
   },
-  emailConfig:{
-    pass:'jcqmzmsporcvdghd',
-    user:'2979476667@qq.com',
-    code: () => Math.random().toString().substr(2, 4)
+   db:(dbName) => {
+    return mongoose.createConnection(`mongodb://123.56.119.225:27017/${dbName}`, { useNewUrlParser: true, useUnifiedTopology: true });
   }
+
 }
