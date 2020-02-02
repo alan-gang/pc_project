@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{352:function(t,e,n){"use strict";n.r(e);var r={},c=n(5),component=Object(c.a)(r,(function(){var t=this.$createElement;this._self._c;return this._m(0)}),[function(){var t=this.$createElement,e=this._self._c||t;return e("div",[this._v("\n 论坛界面\n  "),e("hr")])}],!1,null,"5348fc9a",null);e.default=component.exports}}]);

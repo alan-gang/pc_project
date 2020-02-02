@@ -1,0 +1,1 @@
+exports.ids=[8],exports.modules={116:function(t,e,r){"use strict";r.r(e);var n={},o=r(1);var component=Object(o.a)(n,(function(){var t=this.$createElement;return(this._self._c||t)("div",[this._ssrNode("\n  视频界面\n")])}),[],!1,(function(t){}),"69b4aef2","710b1a0a");e.default=component.exports}};
