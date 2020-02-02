@@ -21,7 +21,7 @@
     </el-form>
     <div class="h_1 w_100p bgc_br mt_45 mb_20"></div>
     <div class="action flex w_360">
-      <div class="w_145 h_35 bgc_b_b t_c lh_35 c_f ft_12 r_5">Lost password?</div>
+      <div class="w_145 h_35 bgc_b_b t_c lh_35 c_f ft_12 r_5 c_r" @click="$router.push('/user/resetpassword')">Lost password?</div>
       <div class="bgc_b_g w_60 h_35 t_c c_f r_5 lh_35 ft_12 cr" @click="onSubmit('ruleForm')">Login</div>
     </div>
   </div>

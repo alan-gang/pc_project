@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const { userMode } = require('../../../model/user_model')
 const { sendFrontEnd } = require('../../../util/send')
-const { emailConfig, generateToken, genertaePassword, analysisPassword } = require('../../../util/user')
+const { emailConfig, generateToken, genertaePassword, analysisPassword, connectEmail, mailoptions } = require('../../../util/user')
 const nodeMailer = require('nodemailer')
 // const axios = require('axios');
 
@@ -59,13 +59,7 @@ router.post("/getcode", async ctx => {
   ctx.session.code = null;
 
   /* 第三方登录邮箱 */
-  let transporter = nodeMailer.createTransport({
-    service: 'qq',
-    auth: {
-      pass: emailConfig.pass,
-      user: emailConfig.user
-    }
-  });
+  let transporter = connectEmail();
 
   let mailOptions = {
     from: `"WEB" <${emailConfig.user}>`,
@@ -93,6 +87,30 @@ router.post("/getcode", async ctx => {
   ctx.body = sendFrontEnd({
     msg: identity === '2' ? '请联系管理员获取验证码' : '发送成功，稍后查看邮箱'
   })
+})
+
+/* 邮箱检查 */
+router.post('/checkcode',async ctx => {
+  let {email} = ctx.request.body
+  let user = await userMode.findOne({ email })
+  if(user) {
+    ctx.session.code = null;
+    let transporter = connectEmail();
+    ctx.session.code = await new Promise((resolve, reject) => {
+      transporter.sendMail(mailoptions(email), (error, info) => {
+        if (error) {
+          reject(err)
+          return console.log(error);
+        } else {
+          resolve(emailConfig.code())
+        }
+      });
+    })
+    ctx.body = sendFrontEnd({msg:'发送成功，稍后查看邮箱'
+    })
+  }else {
+    ctx.body = sendFrontEnd(null, '该邮箱没有注册')
+  }
 })
 
 module.exports = router

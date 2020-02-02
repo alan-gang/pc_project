@@ -5,7 +5,9 @@
         <div class="header">
              <img src="../assets/images/user/logo.png" alt="">
         </div>
-        <nuxt/>
+         <transition name="el-fade-in">
+            <nuxt/>
+        </transition>
       </div>
   </div>
 </template>
