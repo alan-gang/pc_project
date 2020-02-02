@@ -8,12 +8,12 @@ let emailConfig = {
   code: () => Math.random().toString().substr(2, 4)
 }
 
-let mailoptions = (email) => {
+let mailoptions = (email, checkCode) => {
   return {
     from: `"WEB" <${emailConfig.user}>`,
     to: email,
     subject: 'WEB前端提示您',
-    html: `<b>本次验证码是${emailConfig.code()}</b>`
+    html: `<b>本次验证码是${checkCode}</b>`
   }
 }
 

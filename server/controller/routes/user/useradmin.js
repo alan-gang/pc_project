@@ -9,25 +9,25 @@ const nodeMailer = require('nodemailer')
 router.post('/loginUser', async ctx => {
   let { password, name } = ctx.request.body;
 
-  let user = await userMode.findOne({ email:name })
+  let user = await userMode.findOne({ email: name })
 
-    if(!user) {
-      ctx.body = sendFrontEnd(null,'该用户还未注册')
+  if (!user) {
+    ctx.body = sendFrontEnd(null, '该用户还未注册')
+    return
+  } else {
+    let checkStatus = await analysisPassword(password, user.password)
+    if (!checkStatus) {
+      ctx.body = sendFrontEnd(null, '密码错误')
       return
-    }else {
-      let checkStatus =await analysisPassword(password, user.password)
-          if(!checkStatus) {
-            ctx.body = sendFrontEnd(null, '密码错误')
-            return
-          }else {
-              let token = await generateToken(user);
-              ctx.session.email = name;
-              ctx.body = sendFrontEnd({
-                  token,
-                  msg: '登录成功'
-              })
-          }
+    } else {
+      let token = await generateToken(user);
+      ctx.session.email = name;
+      ctx.body = sendFrontEnd({
+        token,
+        msg: '登录成功'
+      })
     }
+  }
 })
 
 
@@ -36,6 +36,7 @@ router.post('/register', async ctx => {
   let { password, identity, email, code } = ctx.request.body;
   if (code != ctx.session.code) {
     ctx.body = sendFrontEnd(null, '对不起，验证码不正确')
+    return
   }
   let hasEmail = await userMode.findOne({ email })
   if (hasEmail) {
@@ -57,19 +58,25 @@ router.post('/register', async ctx => {
 router.post("/getcode", async ctx => {
   let { email, identity } = ctx.request.body;
   ctx.session.code = null;
+  let checkCode = emailConfig.code()
 
+  let user = await userMode.findOne({ email })
+  if (user) {
+    ctx.body = ctx.body = sendFrontEnd(null, '改邮箱已经注册过账户')
+    return
+  }
   /* 第三方登录邮箱 */
   let transporter = connectEmail();
   let mailOptions = {
     from: `"WEB" <${emailConfig.user}>`,
     to: email,
     subject: 'WEB前端提示您',
-    html: `<b>本次验证码是${emailConfig.code()}</b>`
+    html: `<b>本次验证码是${checkCode}</b>`
   };
 
   if (identity === '2') {
     mailOptions.to = '2979476667@qq.com'
-    mailOptions.html = `<b>${email}用户 正在申请注册为老师，本次验证码是${emailConfig.code()}</b>`
+    mailOptions.html = `<b>${email}用户 正在申请注册为老师，本次验证码是${checkCode}</b>`
   }
 
   ctx.session.code = await new Promise((resolve, reject) => {
@@ -78,54 +85,53 @@ router.post("/getcode", async ctx => {
         reject(error)
         return console.log(error);
       } else {
-        resolve(emailConfig.code())
+        resolve(checkCode)
       }
     });
   })
-//   console.log(ctx.session.code)
+
   ctx.body = sendFrontEnd({
     msg: identity === '2' ? '请联系管理员获取验证码' : '发送成功，稍后查看邮箱'
   })
 })
 
 /* 邮箱检查 */
-router.post('/checkcode',async ctx => {
-  let {email} = ctx.request.body
+router.post('/checkcode', async ctx => {
+  let { email } = ctx.request.body
   let user = await userMode.findOne({ email })
-  if(user) {
+  if (user) {
     ctx.session.code = null;
     let transporter = connectEmail();
-    console.log(transporter)
+    let checkCode = emailConfig.code()
     ctx.session.code = await new Promise((resolve, reject) => {
-      transporter.sendMail(mailoptions(email), (error, info) => {
+      transporter.sendMail(mailoptions(email, checkCode), (error, info) => {
         if (error) {
           reject(err)
           return console.log(error);
         } else {
-            // console.log(info)
-          resolve(emailConfig.code())
+          resolve(checkCode)
         }
       });
     })
-    //   console.log(ctx.session.code)
-    ctx.body = sendFrontEnd({msg:'发送成功，稍后查看邮箱'
+    ctx.body = sendFrontEnd({
+      msg: '发送成功，稍后查看邮箱'
     })
-  }else {
+  } else {
     ctx.body = sendFrontEnd(null, '该邮箱没有注册')
   }
 })
 
-/*验证验证码是否正确 */ 
-router.post("/matchcode",async ctx =>{
-    let { code } = ctx.request.body
-    // console.log(code,ctx.session.code)
-    if(ctx.session.code==code) {
-         ctx.body = sendFrontEnd({
-            msg: '匹配成功'
-        })
-    }else {
-        ctx.body = sendFrontEnd(null, '验证码错误')
-    }
+/*验证验证码是否正确 */
+router.post("/matchcode", async ctx => {
+  let { code } = ctx.request.body
+  console.log(ctx.session.code,code)
+  if (ctx.session.code == code) {
+    ctx.body = sendFrontEnd({
+      msg: '匹配成功'
+    })
+  } else {
+    ctx.body = sendFrontEnd(null, '验证码错误')
+  }
 })
 
 module.exports = router

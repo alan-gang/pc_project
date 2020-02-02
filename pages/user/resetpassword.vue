@@ -18,7 +18,7 @@
     </div>
     <el-form ref="forgetForm"
              :model="forgetForm"
-             :inline="true"
+             :inline="activeNumber !== 2"
              :rules="rules"
              label-width="120px"
              class="w_839 mt_75">
@@ -31,16 +31,36 @@
                   v-model="forgetForm.email"></el-input>
       </el-form-item>
       <el-form-item
-       label="请输入验证码"
+        label-width="200px"
+       label="请输入获取到的验证码"
        prop="code"
       v-if="activeNumber == 1"
        >
-        <el-input class="w_200"
+        <el-input class="w_300"
                   v-model="forgetForm.code"></el-input>
       </el-form-item>
+      <el-form-item
+       label="请输入密码"
+       prop="password"
+       label-width="200px"
+      v-if="activeNumber == 2"
+       >
+        <el-input class="w_300"
+                  v-model="forgetForm.password"></el-input>
+      </el-form-item>
+      <el-form-item
+       label="请再次输入密码"
+         label-width="200px"
+       prop="checkPassword"
+       class="mt_20"
+      v-if="activeNumber == 2"
+       >
+        <el-input class="w_300 "
+                  v-model="forgetForm.checkPassword"></el-input>
+      </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" :loading="isLoading"
+      <el-form-item :class="{threeStyle:activeNumber == 2}">
+        <el-button class="123" type="primary" :loading="isLoading"
                    @click="onSubmit('forgetForm')">下一步</el-button>
       </el-form-item>
     </el-form>
@@ -59,8 +79,10 @@ export default {
       activeNumber: 0,
       isLoading:false,
       forgetForm: {
-        email: '',
-        code:""
+        email: 'hg9558@126.com',
+        code:"",
+        password:"",
+        checkPassword:"",
       }
     }
   },
@@ -104,4 +126,8 @@ export default {
   flex(center,column)
   .step-box
     //  absolute()
+  .threeStyle
+    margin-top: 20px;
+    text-align: right;
+    width: 500px;
 </style>
