@@ -136,9 +136,13 @@ router.post("/matchcode", async ctx => {
 router.post("/resetPasswords",async ctx=>{
     let { password,email } = ctx.request.body
     password = await genertaePassword(password)
-  // let result = await userMode.update({ email },{});
-  
-    ctx.body="hello"
+
+  let updateStatus = await userMode.updateOne({ email },{password})
+
+  if(updateStatus.n > 0) {
+    ctx.body = sendFrontEnd({msg:'恭喜你，修改密码成功'})
+  }
+
 })
 
 module.exports = router

@@ -46,6 +46,7 @@
       v-if="activeNumber == 2"
        >
         <el-input class="w_300"
+          type="password"
                   v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item
@@ -56,14 +57,20 @@
       v-if="activeNumber == 2"
        >
         <el-input class="w_300 "
+          type="password"
                   v-model="form.checkPassword"></el-input>
       </el-form-item>
 
       <el-form-item :class="{threeStyle:activeNumber == 2}">
-        <el-button class="123" type="primary" :loading="isLoading"
+        <el-button
+        class="123"
+         type="primary"
+          :loading="isLoading"
+          v-if="activeNumber !=4"
                    @click="onSubmit('form')">下一步</el-button>
       </el-form-item>
     </el-form>
+    <success-masker v-if="activeNumber == 4" msg=""></success-masker>
   </div>
 
 </template>
@@ -71,9 +78,13 @@
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
 import {checkCode,matchCode,resetPasswords} from '~/plugins/api'
+import successMasker from '~/components/user/jumpCountdown'
 export default {
   mixins: [rulesMixin],
   layout: "usersetting",
+  components:{
+    successMasker
+  },
   data () {
     return {
       activeNumber: 0,
@@ -100,9 +111,7 @@ export default {
               this.onNextStep(matchCode,2)
               break;
             case 2:
-              this.onNextStep(resetPasswords,3)
-              break;
-            default:
+              this.onNextStep(resetPasswords,4)
               break;
           }
         } else {
@@ -118,7 +127,7 @@ export default {
                 this.alert(message)
                 return
               }
-         this.activeNumber=index
+         index && (this.activeNumber=index)
     }
   }
 };
