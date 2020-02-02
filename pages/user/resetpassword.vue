@@ -16,8 +16,8 @@
                  title="成功"></el-step>
       </el-steps>
     </div>
-    <el-form ref="forgetForm"
-             :model="forgetForm"
+    <el-form ref="form"
+             :model="form"
              :inline="activeNumber !== 2"
              :rules="rules"
              label-width="120px"
@@ -28,7 +28,7 @@
       v-if="activeNumber == 0"
        >
         <el-input class="w_200"
-                  v-model="forgetForm.email"></el-input>
+                  v-model="form.email"></el-input>
       </el-form-item>
       <el-form-item
         label-width="200px"
@@ -37,7 +37,7 @@
       v-if="activeNumber == 1"
        >
         <el-input class="w_300"
-                  v-model="forgetForm.code"></el-input>
+                  v-model="form.code"></el-input>
       </el-form-item>
       <el-form-item
        label="请输入密码"
@@ -46,7 +46,7 @@
       v-if="activeNumber == 2"
        >
         <el-input class="w_300"
-                  v-model="forgetForm.password"></el-input>
+                  v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item
        label="请再次输入密码"
@@ -56,12 +56,12 @@
       v-if="activeNumber == 2"
        >
         <el-input class="w_300 "
-                  v-model="forgetForm.checkPassword"></el-input>
+                  v-model="form.checkPassword"></el-input>
       </el-form-item>
 
       <el-form-item :class="{threeStyle:activeNumber == 2}">
         <el-button class="123" type="primary" :loading="isLoading"
-                   @click="onSubmit('forgetForm')">下一步</el-button>
+                   @click="onSubmit('form')">下一步</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -70,7 +70,7 @@
 
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
-import {checkCode,matchCode} from '~/plugins/api'
+import {checkCode,matchCode,resetPasswords} from '~/plugins/api'
 export default {
   mixins: [rulesMixin],
   layout: "usersetting",
@@ -78,7 +78,7 @@ export default {
     return {
       activeNumber: 0,
       isLoading:false,
-      forgetForm: {
+      form: {
         email: 'hg9558@126.com',
         code:"",
         password:"",
@@ -94,10 +94,13 @@ export default {
           let url = '';
           switch (this.activeNumber) {
             case 0:
-              this.onNextStep("email",checkCode,1)
+              this.onNextStep(checkCode,1)
               break;
             case 1:
-              this.onNextStep("code",matchCode,2)
+              this.onNextStep(matchCode,2)
+              break;
+            case 2:
+              this.onNextStep(resetPasswords,3)
               break;
             default:
               break;
@@ -108,8 +111,8 @@ export default {
         }
       });
     },
-    async onNextStep(params,url,index){
-         let {code,message,data} = await url({[params]:this.forgetForm[params]})
+    async onNextStep(url,index){
+         let {code,message,data} = await url(this.form)
                this.isLoading = false
               if(message) {
                 this.alert(message)

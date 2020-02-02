@@ -38,7 +38,7 @@ let rulesMixin = {
                     { required: true, message: '请输入确认密码', trigger: 'blur' },
                     {
                         validator: (rule, value, callback) => {
-                        if (value !== this.registerForm.password) {
+                        if (value !== this.form.password) {
                                 callback(new Error('两次输入密码不一致!'));
                             } else {
                                 callback();

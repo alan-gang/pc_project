@@ -89,7 +89,6 @@ router.post("/getcode", async ctx => {
       }
     });
   })
-
   ctx.body = sendFrontEnd({
     msg: identity === '2' ? '请联系管理员获取验证码' : '发送成功，稍后查看邮箱'
   })
@@ -124,7 +123,6 @@ router.post('/checkcode', async ctx => {
 /*验证验证码是否正确 */
 router.post("/matchcode", async ctx => {
   let { code } = ctx.request.body
-  console.log(ctx.session.code,code)
   if (ctx.session.code == code) {
     ctx.body = sendFrontEnd({
       msg: '匹配成功'
@@ -132,6 +130,15 @@ router.post("/matchcode", async ctx => {
   } else {
     ctx.body = sendFrontEnd(null, '验证码错误')
   }
+})
+
+/*重置密码 */
+router.post("/resetPasswords",async ctx=>{
+    let { password,email } = ctx.request.body
+    password = await genertaePassword(password)
+  // let result = await userMode.update({ email },{});
+  
+    ctx.body="hello"
 })
 
 module.exports = router

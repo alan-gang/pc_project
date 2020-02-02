@@ -37,3 +37,10 @@ export const matchCode = (data) => ajax({
     type: 'post',
     params: data
 })
+
+//重置密码
+export const resetPasswords = (data) => ajax({
+    url: '/user/useradmin/resetPasswords',
+    type: 'post',
+    params: data
+})
