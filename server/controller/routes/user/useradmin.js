@@ -60,7 +60,6 @@ router.post("/getcode", async ctx => {
 
   /* 第三方登录邮箱 */
   let transporter = connectEmail();
-
   let mailOptions = {
     from: `"WEB" <${emailConfig.user}>`,
     to: email,
@@ -76,14 +75,14 @@ router.post("/getcode", async ctx => {
   ctx.session.code = await new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        reject(err)
+        reject(error)
         return console.log(error);
       } else {
         resolve(emailConfig.code())
       }
     });
   })
-
+//   console.log(ctx.session.code)
   ctx.body = sendFrontEnd({
     msg: identity === '2' ? '请联系管理员获取验证码' : '发送成功，稍后查看邮箱'
   })
@@ -96,21 +95,37 @@ router.post('/checkcode',async ctx => {
   if(user) {
     ctx.session.code = null;
     let transporter = connectEmail();
+    console.log(transporter)
     ctx.session.code = await new Promise((resolve, reject) => {
       transporter.sendMail(mailoptions(email), (error, info) => {
         if (error) {
           reject(err)
           return console.log(error);
         } else {
+            // console.log(info)
           resolve(emailConfig.code())
         }
       });
     })
+    //   console.log(ctx.session.code)
     ctx.body = sendFrontEnd({msg:'发送成功，稍后查看邮箱'
     })
   }else {
     ctx.body = sendFrontEnd(null, '该邮箱没有注册')
   }
+})
+
+/*验证验证码是否正确 */ 
+router.post("/matchcode",async ctx =>{
+    let { code } = ctx.request.body
+    // console.log(code,ctx.session.code)
+    if(ctx.session.code==code) {
+         ctx.body = sendFrontEnd({
+            msg: '匹配成功'
+        })
+    }else {
+        ctx.body = sendFrontEnd(null, '验证码错误')
+    }
 })
 
 module.exports = router

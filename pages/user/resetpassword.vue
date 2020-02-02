@@ -30,6 +30,14 @@
         <el-input class="w_200"
                   v-model="forgetForm.email"></el-input>
       </el-form-item>
+      <el-form-item
+       label="请输入验证码"
+       prop="code"
+      v-if="activeNumber == 1"
+       >
+        <el-input class="w_200"
+                  v-model="forgetForm.code"></el-input>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" :loading="isLoading"
@@ -42,7 +50,7 @@
 
 <script>
 import rulesMixin from "~/assets/js/userRuleMixin.js"
-import {checkCode} from '~/plugins/api'
+import {checkCode,matchCode} from '~/plugins/api'
 export default {
   mixins: [rulesMixin],
   layout: "usersetting",
@@ -52,6 +60,7 @@ export default {
       isLoading:false,
       forgetForm: {
         email: '',
+        code:""
       }
     }
   },
@@ -63,13 +72,10 @@ export default {
           let url = '';
           switch (this.activeNumber) {
             case 0:
-              let {code,message,data} = await checkCode({email:this.forgetForm.email})
-               this.isLoading = false
-              if(message) {
-                this.alert(message)
-                return
-              }
-              console.log(data)
+              this.onNextStep("email",checkCode,1)
+              break;
+            case 1:
+              this.onNextStep("code",matchCode,2)
               break;
             default:
               break;
@@ -79,6 +85,15 @@ export default {
           return false;
         }
       });
+    },
+    async onNextStep(params,url,index){
+         let {code,message,data} = await url({[params]:this.forgetForm[params]})
+               this.isLoading = false
+              if(message) {
+                this.alert(message)
+                return
+              }
+         this.activeNumber=index
     }
   }
 };

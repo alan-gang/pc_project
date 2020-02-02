@@ -30,3 +30,10 @@ export const checkCode = (data) => ajax({
   type: 'post',
   params: data
 })
+
+// 验证码是否正确
+export const matchCode = (data) => ajax({
+    url: '/user/useradmin/matchcode',
+    type: 'post',
+    params: data
+})
