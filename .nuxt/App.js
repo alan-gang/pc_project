@@ -14,11 +14,12 @@ import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
 
 import '..\\assets\\font\\iconfont.css'
 
+import _1a3a3182 from '..\\layouts\\404.vue'
 import _6f6c098b from '..\\layouts\\default.vue'
 import _2d2a8cc1 from '..\\layouts\\user.vue'
 import _7b41d66f from '..\\layouts\\usersetting.vue'
 
-const layouts = { "_default": _6f6c098b,"_user": _2d2a8cc1,"_usersetting": _7b41d66f }
+const layouts = { "_404": _1a3a3182,"_default": _6f6c098b,"_user": _2d2a8cc1,"_usersetting": _7b41d66f }
 
 export default {
   head: {"title":"new_pc_project","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"My first-rate Nuxt.js project"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},

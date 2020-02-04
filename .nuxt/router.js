@@ -3,14 +3,14 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _0f30bf78 = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
-const _09898aaa = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
-const _ad6d318a = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
-const _2e2a78fe = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
-const _1ee7171e = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
-const _2fcba602 = () => interopDefault(import('..\\pages\\user\\resetpassword.vue' /* webpackChunkName: "pages_user_resetpassword" */))
-const _5dac4074 = () => interopDefault(import('..\\pages\\user\\userinfo.vue' /* webpackChunkName: "pages_user_userinfo" */))
-const _29b47812 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _df312f4a = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
+const _4bab0a0d = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
+const _910d3944 = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
+const _7ae78ee1 = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
+const _46fd125b = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
+const _3da0afe2 = () => interopDefault(import('..\\pages\\user\\resetpassword.vue' /* webpackChunkName: "pages_user_resetpassword" */))
+const _f47b889e = () => interopDefault(import('..\\pages\\user\\userinfo.vue' /* webpackChunkName: "pages_user_userinfo" */))
+const _37e47435 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -30,39 +30,39 @@ export const routerOptions = {
 
   routes: [{
     path: "/404",
-    component: _0f30bf78,
+    component: _df312f4a,
     name: "404"
   }, {
     path: "/example",
-    component: _09898aaa,
+    component: _4bab0a0d,
     name: "example"
   }, {
     path: "/video",
-    component: _ad6d318a,
+    component: _910d3944,
     name: "video"
   }, {
     path: "/user/login",
-    component: _2e2a78fe,
+    component: _7ae78ee1,
     name: "user-login"
   }, {
     path: "/user/register",
-    component: _1ee7171e,
+    component: _46fd125b,
     name: "user-register"
   }, {
     path: "/user/resetpassword",
-    component: _2fcba602,
+    component: _3da0afe2,
     name: "user-resetpassword"
   }, {
     path: "/user/userinfo",
-    component: _5dac4074,
+    component: _f47b889e,
     name: "user-userinfo"
   }, {
     path: "/",
-    component: _29b47812,
+    component: _37e47435,
     name: "index"
   }, {
     path: "*",
-    component: _0f30bf78,
+    component: _df312f4a,
     name: "custom"
   }],
 
