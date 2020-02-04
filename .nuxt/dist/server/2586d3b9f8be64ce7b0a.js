@@ -1,1 +1,0 @@
-exports.ids=[3],exports.modules={123:function(e,t,r){"use strict";r.r(t);var n={},o=r(1);var component=Object(o.a)(n,(function(){var e=this.$createElement;return(this._self._c||e)("div",[this._ssrNode("\n 论坛界面\n  <hr data-v-760e4406>")])}),[],!1,(function(e){}),"760e4406","4756e4fe");t.default=component.exports}};
