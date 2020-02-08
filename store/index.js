@@ -3,8 +3,4 @@ export const state = () => ({
 })
 
 export const mutations = {
-  changeSlider (state,status) {
-
-    state.counter++
-  }
 }

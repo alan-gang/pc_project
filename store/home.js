@@ -4,6 +4,6 @@ export const state = () => ({
 
 export const mutations = {
   changeSlider (state, status) {
-    console.log(status)
+    state.isCollapse = status
   },
 }

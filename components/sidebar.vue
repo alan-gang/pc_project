@@ -69,10 +69,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      isCollapse: false,
       activeIndex: '0'
     }
   },
@@ -83,9 +83,32 @@ export default {
     handleClose () {
 
     }
+  },
+  created () {
+    // console.log(this.$store.state)
+  },
+  computed: {
+    ...mapState({
+      isCollapse () {
+        return this.$store.state.home.isCollapse
+      }
+    })
   }
 }
 </script>
+
+  <style>
+.asside-container:not(.el-menu--collapse) {
+  width: 240px;
+}
+.el-menu-item {
+  display: flex;
+  align-items: center;
+}
+.el-menu-item:hover {
+  color: #fff !important;
+}
+</style>
 
 <style scoped lang="stylus">
     .asside-container
