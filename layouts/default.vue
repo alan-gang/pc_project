@@ -34,8 +34,4 @@ export default {
   .main-container
     height 100%
     display flex
-    .el-main
-      background-color: #E9EEF3;
-      color: #333;
-      text-align: center;
 </style>

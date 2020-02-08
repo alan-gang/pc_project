@@ -17,13 +17,10 @@ export default {
       isSlider: false
     }
   },
-  created () {
-    console.log(this.$store._mutations)
-  },
   methods: {
-    // ...mapMutations({
-    //   changeSlider: this.$store.mutations.home.changeSlider
-    // })
+    ...mapMutations({
+      changeSlider: 'home/changeSlider'
+    })
   }
 }
 </script>
