@@ -12,7 +12,7 @@
       <el-menu-item class="first">
         <i class="small-logo"></i>
         <img class="mt_5"
-             src="~/assets/images/home/logo.png"
+             src="/images/home/logo.png"
              slot="title"
              alt="">
         <span slot="title"></span>
@@ -126,5 +126,5 @@ export default {
             width 30px
             display inline-block
             height 100%
-            background (url('~@/assets/images/home/logo-icon.png') center no-repeat)
+            background (url('/images/home/logo-icon.png') center no-repeat)
 </style>
