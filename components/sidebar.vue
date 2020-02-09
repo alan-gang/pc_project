@@ -11,7 +11,8 @@
              :collapse="isCollapse">
       <el-menu-item class="first">
         <i class="small-logo"></i>
-        <img src="~/assets/images/home/logo.png"
+        <img class="mt_5"
+             src="~/assets/images/home/logo.png"
              slot="title"
              alt="">
         <span slot="title"></span>
@@ -101,6 +102,7 @@ export default {
 .asside-container:not(.el-menu--collapse) {
   width: 240px;
 }
+
 .el-menu-item {
   display: flex;
   align-items: center;
@@ -114,14 +116,15 @@ export default {
     .asside-container
       height 100%
       line-height 1
+      border-color transparent !important
       >>>
         .el-submenu__title:hover *,.el-menu-item:hover
           color #fff !important
-      .el-menu-item.first
-        flex(flex-start)
-        .small-logo
-          width 30px
-          display inline-block
-          height 100%
-          background (url('~@/assets/images/home/logo-icon.png') center no-repeat)
+        .el-menu-item.first
+          flex(flex-start)
+          .small-logo
+            width 30px
+            display inline-block
+            height 100%
+            background (url('~@/assets/images/home/logo-icon.png') center no-repeat)
 </style>

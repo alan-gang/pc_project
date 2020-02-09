@@ -1,12 +1,12 @@
 <template>
   <el-container class="main-container">
     <m-sidebar></m-sidebar>
-    <el-container>
+    <div class="content-container">
       <m-header></m-header>
       <el-main>
         <nuxt />
       </el-main>
-    </el-container>
+    </div>
   </el-container>
 </template>
 
@@ -15,7 +15,7 @@
 import mHeader from '~/components/header'
 import mSidebar from '~/components/sidebar'
 export default {
-  components:{
+  components: {
     mHeader,
     mSidebar
   },
@@ -34,4 +34,6 @@ export default {
   .main-container
     height 100%
     display flex
+    .content-container
+      width 100%
 </style>

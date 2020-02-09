@@ -5,13 +5,19 @@
          class="ml_20 ft_24 c_r"
          @click="changeSlider(isSlider= !isSlider)"></i>
     </div>
-    <div class="header-main">头部文件</div>
+    <div class="header-main ml_30">
+      <search-container></search-container>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
+import searchContainer from '@/components/home/searchContainer'
 export default {
+  components:{
+    searchContainer
+  },
   data () {
     return {
       isSlider: false
