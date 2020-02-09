@@ -27,7 +27,7 @@
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
-          <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+          <el-avatar src="/images/home/user_bg.png"></el-avatar>
         </template>
         <el-menu-item index="2-1">选项1</el-menu-item>
         <el-menu-item index="2-2">选项2</el-menu-item>
