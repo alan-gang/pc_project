@@ -5,8 +5,9 @@
          class="ml_20 ft_24 c_r"
          @click="changeSlider(isSlider= !isSlider)"></i>
     </div>
-    <div class="header-main ml_30">
+    <div class="header-main pr_20 ml_30">
       <search-container></search-container>
+      <user-operation></user-operation>
     </div>
   </div>
 </template>
@@ -14,9 +15,11 @@
 <script>
 import { mapMutations } from 'vuex'
 import searchContainer from '@/components/home/searchContainer'
+import userOperation from '@/components/user/userOperation'
 export default {
   components:{
-    searchContainer
+    searchContainer,
+    userOperation
   },
   data () {
     return {
@@ -36,4 +39,8 @@ export default {
       background-color: #141619;
       height 60px
       flex(flex-start)
+      .header-main
+        flex()
+        flex-grow: 1;
+        box-sizing: border-box;
 </style>

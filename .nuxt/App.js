@@ -8,8 +8,6 @@ import {
 
 import NuxtLoading from './components/nuxt-loading.vue'
 
-import '..\\assets\\mixin.styl'
-
 import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
 
 import '..\\assets\\font\\iconfont.css'
