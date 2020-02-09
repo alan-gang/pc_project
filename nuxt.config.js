@@ -35,7 +35,6 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    // './assets/mixin.styl',
     'element-ui/lib/theme-chalk/index.css',
     './assets/font/iconfont.css',
     './static/css/reset.css'

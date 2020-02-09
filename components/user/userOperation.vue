@@ -1,10 +1,13 @@
 <template>
   <div class="user-action-container">
-    <el-menu class="el-menu-demo"
+    <el-menu ref="item"
+             class="el-menu-demo"
              mode="horizontal"
              background-color="#141619"
              menu-trigger="click"
              active-text-color="#fff"
+             :unique-opened="true"
+             @open="openItem"
              text-color="#fff">
       <el-submenu index="1">
         <template slot="title">
@@ -13,25 +16,25 @@
             <i class="icon iconfont icon-lingdang ft_24 c_f"></i>
           </el-badge>
         </template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
+        <el-menu-item index="1-1">选项1</el-menu-item>
+        <el-menu-item index="1-2">选项2</el-menu-item>
+        <el-menu-item index="1-3">选项3</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-chat-dot-square ft_24 c_f"></i>
         </template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
+        <el-menu-item index="2-1">选项2-2</el-menu-item>
+        <el-menu-item index="2-2">选项2-2</el-menu-item>
+        <el-menu-item index="2-3">选项2-3</el-menu-item>
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
           <el-avatar src="/images/home/user_bg.png"></el-avatar>
         </template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
+        <el-menu-item index="3-1">选项3-1</el-menu-item>
+        <el-menu-item index="3-2">选项3-2</el-menu-item>
+        <el-menu-item index="3-3">选项3-3</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
@@ -41,14 +44,20 @@
 export default {
   data () {
     return {
-      activeIndex: '1',
-      activeIndex2: '1'
+      timer: null
     };
   },
   methods: {
-    // handleSelect (key, keyPath) {
-    //   console.log(key, keyPath);
-    // }
+    openItem (index) {
+      this.timer = setTimeout(() => {
+        if (index !== '0') {
+          this.$refs.item.close(index)
+        }
+      }, 5000)
+    },
+  },
+  beforeDestroy () {
+    this.timer && clearTimeout(this.timer)
   }
 }
 </script>
