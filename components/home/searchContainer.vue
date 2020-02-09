@@ -38,6 +38,7 @@ export default {
     >>>
       .el-input__inner
         background-color transparent
+        color #fff
         border none
       .el-select .el-input.is-focus .el-input__inner
         border-color none
@@ -57,29 +58,10 @@ export default {
 </style>
 
 <style>
-/* element-ui 样式修改 */
-
 .el-input__inner::placeholder {
   color: #ffffff;
 }
-
 .el-input__inner::-webkit-input-placeholder {
-  /* WebKit browsers 适配谷歌 */
-  color: #ffffff;
-}
-
-.el-input__inner:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 适配火狐 */
-  color: #ffffff;
-}
-
-.el-input__inner::-moz-placeholder {
-  /* Mozilla Firefox 19+ 适配火狐 */
-  color: #ffffff;
-}
-
-.el-input__inner:-ms-input-placeholder {
-  /* Internet Explorer 10+  适配ie */
   color: #ffffff;
 }
 </style>
