@@ -14,6 +14,8 @@ import '..\\node_modules\\element-ui\\lib\\theme-chalk\\index.css'
 
 import '..\\assets\\font\\iconfont.css'
 
+import '..\\static\\css\\reset.css'
+
 import _1a3a3182 from '..\\layouts\\404.vue'
 import _6f6c098b from '..\\layouts\\default.vue'
 import _2d2a8cc1 from '..\\layouts\\user.vue'
