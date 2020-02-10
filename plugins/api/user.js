@@ -23,7 +23,6 @@ export const loginUser = (data) => ajax({
 })
 
 /* 检验邮箱 */
-
 export const checkCode = (data) => ajax({
   url: '/user/useradmin/checkcode',
   type: 'post',

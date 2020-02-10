@@ -31,20 +31,24 @@
   </div>
 </template>
 <script>
-import rulesMixin from "~/assets/js/userRuleMixin.js"
+import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 import { loginUser, getPublicKey } from '~/plugins/api'
+import userMixin from '~/assets/mixin/user'
 
 export default {
-  mixins: [rulesMixin],
+  mixins: [rulesMixin, userMixin],
   layout: "user",
   created () {
-    // console.log(this)
+  },
+  mounted () {
+    this._fillUserInfo()
+
   },
   data () {
     return {
       ruleForm: {
-        name: "hg9558@126.com",
-        password: "123456"
+        name: "",
+        password: ""
       },
       saveSing: true
     };
@@ -60,8 +64,9 @@ export default {
         }
       });
     },
+
     async _sendUserInfo () {
-      this.ruleForm.password = await this._getPublicKey()
+      this.ruleForm.password = await this._getPublicKey(this.ruleForm.password)
       let { code, data, message } = await loginUser({ ...this.ruleForm })
       if (code == 1) {
         this.alert(message);
@@ -69,19 +74,13 @@ export default {
       } else {
         let token = data.token;
         localStorage.token = token;
+        this.saveSing && (localStorage.user = JSON.stringify(this.ruleForm))
         this.$router.push("/")
       }
     },
-    /* 获取都断公钥 */
-    async _getPublicKey () {
-      let r = () => import('jsencrypt')
-      let { JSEncrypt } = await r()
-      return new Promise(async resolve => {
-        let { data: { resultmap } } = await getPublicKey()
-        let encryptor = new JSEncrypt();
-        encryptor.setPublicKey(resultmap)
-        resolve(encryptor.encrypt(this.ruleForm.password))
-      })
+    async _fillUserInfo () {
+      let userInfo = localStorage.user && JSON.parse(localStorage.user)
+      userInfo && (this.ruleForm.name = userInfo.name, this.ruleForm.password = await this._parsingKey(userInfo.password))
     }
   }
 };

@@ -1,8 +1,7 @@
 const router = require('koa-router')()
 const { userMode } = require('../../../model/user_model')
 const { sendFrontEnd } = require('../../../util/send')
-const { emailConfig, generateToken, genertaePassword, analysisPassword, connectEmail, mailoptions } = require('../../../util/user')
-const nodeMailer = require('nodemailer')
+const { emailConfig, generateToken, genertaePassword, connectEmail, analysisPassword, mailoptions } = require('../../../util/user')
 const fs = require('fs')
 const path = require('path')
 // const axios = require('axios');
@@ -10,21 +9,17 @@ const path = require('path')
 // 用户登录
 router.post('/loginUser', async ctx => {
   let { password, name } = ctx.request.body;
-
   let user = await userMode.findOne({ email: name })
-
   if (!user) {
     ctx.body = sendFrontEnd(null, '该用户还未注册')
     return
   } else {
-    let publicKey = fs.readFileSync(path.resolve(__dirname, '../../../config/keyConfig/public.pem'),'utf8');
-    let buffer1 = Buffer.from(req.body.password, 'base64'); 
     let checkStatus = await analysisPassword(password, user.password)
     if (!checkStatus) {
       ctx.body = sendFrontEnd(null, '密码错误')
       return
     } else {
-      let token = await generateToken(user);
+      let token = await generateToken(user)
       ctx.session.email = name;
       ctx.body = sendFrontEnd({
         token,
@@ -33,7 +28,6 @@ router.post('/loginUser', async ctx => {
     }
   }
 })
-
 
 // 用户注册
 router.post('/register', async ctx => {
@@ -49,6 +43,7 @@ router.post('/register', async ctx => {
   }
 
   password = await genertaePassword(password)
+
   let saveStatus = await userMode.create({ password, email, identity })
   let token = await generateToken(saveStatus);
   ctx.session.email = email;
@@ -137,17 +132,17 @@ router.post("/matchcode", async ctx => {
 })
 
 /*重置密码 */
-router.post("/resetPasswords",async ctx=>{
-    let { password,email } = ctx.request.body
-    password = await genertaePassword(password)
-  let updateStatus = await userMode.updateOne({ email },{password})
-  if(updateStatus.n > 0) {
-    ctx.body = sendFrontEnd({msg:'恭喜你，修改密码成功'})
+router.post("/resetPasswords", async ctx => {
+  let { password, email } = ctx.request.body
+  password = await genertaePassword(password)
+  let updateStatus = await userMode.updateOne({ email }, { password })
+  if (updateStatus.n > 0) {
+    ctx.body = sendFrontEnd({ msg: '恭喜你，修改密码成功' })
   }
 })
 
 /* 获取密码加密公钥 */
-router.get('/getPublicKey', async ctx=> {
+router.get('/getPublicKey', async ctx => {
   let publicKey = fs.readFileSync(path.resolve(__dirname, '../../../config/keyConfig/public.pem'));
   ctx.body = sendFrontEnd({ code: 0, 'resultmap': publicKey.toString() })
 })
