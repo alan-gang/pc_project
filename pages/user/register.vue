@@ -67,11 +67,13 @@
 </template>
 
 <script>
-import rulesMixin from "~/assets/js/userRuleMixin.js"
+import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+import userMixin from '~/assets/mixin/user'
+
 import { getcode, registerUser } from '~/plugins/api'
 
 export default {
-  mixins: [rulesMixin],
+  mixins: [rulesMixin, userMixin],
   layout: "user",
   data () {
     return {
@@ -92,6 +94,8 @@ export default {
     _onSubmit (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          this.form.password = await this._getPublicKey(this.form.password)
+          delete this.form.checkPassword
           let { code, data, message } = await registerUser({ ...this.form })
           if (code === 1) {
             this.alert(message)
