@@ -3,6 +3,8 @@ const { userMode } = require('../../../model/user_model')
 const { sendFrontEnd } = require('../../../util/send')
 const { emailConfig, generateToken, genertaePassword, analysisPassword, connectEmail, mailoptions } = require('../../../util/user')
 const nodeMailer = require('nodemailer')
+const fs = require('fs')
+const path = require('path')
 // const axios = require('axios');
 
 // 用户登录
@@ -15,6 +17,8 @@ router.post('/loginUser', async ctx => {
     ctx.body = sendFrontEnd(null, '该用户还未注册')
     return
   } else {
+    let publicKey = fs.readFileSync(path.resolve(__dirname, '../../../config/keyConfig/public.pem'),'utf8');
+    let buffer1 = Buffer.from(req.body.password, 'base64'); 
     let checkStatus = await analysisPassword(password, user.password)
     if (!checkStatus) {
       ctx.body = sendFrontEnd(null, '密码错误')
@@ -136,13 +140,16 @@ router.post("/matchcode", async ctx => {
 router.post("/resetPasswords",async ctx=>{
     let { password,email } = ctx.request.body
     password = await genertaePassword(password)
-
   let updateStatus = await userMode.updateOne({ email },{password})
-
   if(updateStatus.n > 0) {
     ctx.body = sendFrontEnd({msg:'恭喜你，修改密码成功'})
   }
+})
 
+/* 获取密码加密公钥 */
+router.get('/getPublicKey', async ctx=> {
+  let publicKey = fs.readFileSync(path.resolve(__dirname, '../../../config/keyConfig/public.pem'));
+  ctx.body = sendFrontEnd({ code: 0, 'resultmap': publicKey.toString() })
 })
 
 module.exports = router
