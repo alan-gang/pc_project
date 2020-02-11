@@ -72,7 +72,7 @@ export default {
         return;
       } else {
         let token = data.token;
-        localStorage.token = token;
+        sessionStorage.token = token;
         this.saveSing && (localStorage.user = JSON.stringify({ name: this.ruleForm.name, password: encryptionPassword }))
         this.$router.push("/")
       }

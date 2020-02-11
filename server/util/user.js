@@ -20,17 +20,20 @@ let mailoptions = (email, checkCode) => {
   }
 }
 
+/* 生成jwt验证规则 */
 let generateToken = async (data) => {
   const rules = JSON.parse(JSON.stringify(data))
   return await jwt.sign(rules, 'hangang', { expiresIn: 3600 * 24 })
 }
 
+/* 密码加密 */
 let genertaePassword = async (password) => {
   let frontEndPassword = deCode(password)
   let salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(frontEndPassword, salt);
 }
 
+/* 密码解密 */
 let deCode = (password) => {
   const _priKey = fs.readFileSync(path.resolve(__dirname, '../config/keyConfig/private.pem'));
   let jsencrypt = new JSEncrypt()
@@ -38,8 +41,9 @@ let deCode = (password) => {
   return jsencrypt.decrypt(password)
 }
 
+/* 解析前端密码 */
 let analysisPassword = async (frontEndPassword, savePassword) => {
-   let analysisPassword = deCode(frontEndPassword)
+  let analysisPassword = deCode(frontEndPassword)
   return await bcrypt.compare(analysisPassword, savePassword)
 }
 

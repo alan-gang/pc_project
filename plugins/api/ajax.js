@@ -6,13 +6,13 @@ import qs from 'qs';
 // axios.defaults.baseURL = '/api';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.Authorization = sessionStorage.userToken
+
 
 axios.interceptors.request.use(function (config) {
   config.data = qs.stringify(config.data)
-  // if (sessionStorage.userToken) {
-  //   config.headers.authorization = sessionStorage.userToken
-  // }
+  if (sessionStorage.token) {
+    config.headers.common['Authorization'] = 'Bearer ' + sessionStorage.token;
+  }
   // config.withCredentials = true
   return config;
 }, function (error) {
