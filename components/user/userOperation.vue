@@ -1,14 +1,13 @@
 <template>
   <div class="user-action-container">
     <el-menu ref="item"
-             class="el-menu-demo"
              mode="horizontal"
              background-color="#141619"
              menu-trigger="click"
-             active-text-color="#fff"
+             active-text-color="#ffb848"
              :unique-opened="true"
              @open="openItem"
-             text-color="#fff">
+             text-color="rgba(255,255,255,.6)">
       <el-submenu index="1">
         <template slot="title">
           <el-badge class="item h_24 lh_24 "
@@ -34,13 +33,21 @@
         </template>
         <el-menu-item index="3-1">选项3-1</el-menu-item>
         <el-menu-item index="3-2">选项3-2</el-menu-item>
-        <el-menu-item index="3-3">选项3-3</el-menu-item>
+        <el-menu-item index="3-3"
+                      @click="_signOut">
+          <span class="icon iconfont icon-084tuichu mr_5"></span>
+          <span>
+            退出
+          </span>
+        </el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
 </template>
 
 <script>
+import {signOut } from '~/plugins/api'
+
 export default {
   data () {
     return {
@@ -55,6 +62,10 @@ export default {
         }
       }, 5000)
     },
+    async _signOut () {
+      let {code} = await signOut()
+      console.log(code)
+    }
   },
   beforeDestroy () {
     this.timer && clearTimeout(this.timer)

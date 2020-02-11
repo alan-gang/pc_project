@@ -101,7 +101,7 @@ export default {
             this.alert(message)
             return
           } else {
-            localStorage.token = data.token
+            sessionStorage.token = data.token
             this.$router.replace('/')
           }
         } else {

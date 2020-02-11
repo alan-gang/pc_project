@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
-
+const koajwt = require('koa-jwt');
 const app = new Koa()
 
 /* 处理psot请求 */
@@ -23,10 +23,31 @@ const CONFIG = {
 app.use(session(CONFIG, app));
 /* ======================= */
 
+// 错误捕获中间件
+app.use(async (ctx, next) => {
+  try {
+    ctx.error = (code, message) => {
+      if (typeof code === 'string') {
+        message = code;
+        code = 401;
+      }
+      ctx.throw(code || 401, message || '服务器错误');
+    };
+    await next();
+  } catch (e) {
+    console.log(e)
+    let status = e.status || 401;
+    let message = e.message || '服务器错误';
+    ctx.response.body = { status, message };
+  }
+});
+
+
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
+
 
 /* 接口数据 */
 const common = require('./controller/')

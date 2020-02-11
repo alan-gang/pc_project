@@ -4,6 +4,7 @@ const { sendFrontEnd } = require('../../../util/send')
 const { emailConfig, generateToken, genertaePassword, connectEmail, analysisPassword, mailoptions } = require('../../../util/user')
 const fs = require('fs')
 const path = require('path')
+const jwt = require('koa-jwt')({ secret: 'hangang' });
 // const axios = require('axios');
 
 // 用户登录
@@ -145,6 +146,11 @@ router.post("/resetPasswords", async ctx => {
 router.get('/getPublicKey', async ctx => {
   let publicKey = fs.readFileSync(path.resolve(__dirname, '../../../config/keyConfig/public.pem'));
   ctx.body = sendFrontEnd({ code: 0, 'resultmap': publicKey.toString() })
+})
+
+/* 用户退出 */
+router.post('/signOut', jwt, async ctx => {
+  ctx.body = sendFrontEnd({ code: 0, msg: '里你是' })
 })
 
 module.exports = router

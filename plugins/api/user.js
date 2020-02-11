@@ -47,3 +47,9 @@ export const resetPasswords = (data) => ajax({
 export const getPublicKey = () => ajax({
   url: '/user/useradmin/getPublicKey',
 })
+
+/* 用户退出 */
+export const signOut = () => ajax({
+  url: '/user/useradmin/signOut',
+  type: 'post'
+})
