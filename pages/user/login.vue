@@ -42,7 +42,6 @@ export default {
   },
   mounted () {
     this._fillUserInfo()
-
   },
   data () {
     return {
@@ -66,15 +65,15 @@ export default {
     },
 
     async _sendUserInfo () {
-      this.ruleForm.password = await this._getPublicKey(this.ruleForm.password)
-      let { code, data, message } = await loginUser({ ...this.ruleForm })
+      let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
+      let { code, data, message } = await loginUser({ name: this.ruleForm.name, password: encryptionPassword })
       if (code == 1) {
         this.alert(message);
         return;
       } else {
         let token = data.token;
         localStorage.token = token;
-        this.saveSing && (localStorage.user = JSON.stringify(this.ruleForm))
+        this.saveSing && (localStorage.user = JSON.stringify({ name: this.ruleForm.name, password: encryptionPassword }))
         this.$router.push("/")
       }
     },

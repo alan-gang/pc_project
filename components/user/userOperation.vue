@@ -1,14 +1,13 @@
 <template>
   <div class="user-action-container">
     <el-menu ref="item"
-             class="el-menu-demo"
              mode="horizontal"
              background-color="#141619"
              menu-trigger="click"
-             active-text-color="#fff"
+             active-text-color="#ffb848"
              :unique-opened="true"
              @open="openItem"
-             text-color="#fff">
+             text-color="rgba(255,255,255,.6)">
       <el-submenu index="1">
         <template slot="title">
           <el-badge class="item h_24 lh_24 "
@@ -34,7 +33,7 @@
         </template>
         <el-menu-item index="3-1">选项3-1</el-menu-item>
         <el-menu-item index="3-2">选项3-2</el-menu-item>
-        <el-menu-item index="3-3">选项3-3</el-menu-item>
+        <el-menu-item index="3-3">退出</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
