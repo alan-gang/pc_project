@@ -45,7 +45,7 @@ module.exports = {
   plugins: [
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/route', ssr: true },
-    { src: '@/plugins/api', ssr: true },
+    { src: '@/plugins/api/intercept', ssr: true },
   ],
   /*
    ** Nuxt.js dev-modules

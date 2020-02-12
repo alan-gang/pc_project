@@ -85,9 +85,6 @@ export default {
 
     }
   },
-  created () {
-    // console.log(this.$store.state)
-  },
   computed: {
     ...mapState({
       isCollapse () {
