@@ -31,9 +31,22 @@
         <template slot="title">
           <el-avatar src="/images/home/user_bg.png"></el-avatar>
         </template>
-        <el-menu-item index="3-1">选项3-1</el-menu-item>
-        <el-menu-item index="3-2">选项3-2</el-menu-item>
-        <el-menu-item index="3-3"
+        <el-menu-item index="3-1">
+          <span>
+            账户设置
+          </span>
+        </el-menu-item>
+        <el-menu-item index="3-2">
+          <span>
+            个人资料
+          </span>
+        </el-menu-item>
+        <el-menu-item index="3-3">
+          <span>
+            头像设置
+          </span>
+        </el-menu-item>
+        <el-menu-item index="3-4"
                       @click="_signOut">
           <span class="icon iconfont icon-084tuichu mr_5"></span>
           <span>
@@ -46,9 +59,11 @@
 </template>
 
 <script>
-import {signOut } from '~/plugins/api'
+import { signOut } from '~/plugins/api'
+import ruleMixin from '~/assets/mixin/userRuleMixin'
 
 export default {
+  mixins: [ruleMixin],
   data () {
     return {
       timer: null
@@ -56,6 +71,7 @@ export default {
   },
   methods: {
     openItem (index) {
+      this.timer && clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         if (index !== '0') {
           this.$refs.item.close(index)
@@ -63,8 +79,8 @@ export default {
       }, 5000)
     },
     async _signOut () {
-      let {code} = await signOut()
-      console.log(code)
+      let { code, message } = await signOut()
+      location.reload()
     }
   },
   beforeDestroy () {

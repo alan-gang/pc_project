@@ -47,7 +47,7 @@ let analysisPassword = async (frontEndPassword, savePassword) => {
   return await bcrypt.compare(analysisPassword, savePassword)
 }
 
-
+/* qq邮箱连接规则 */
 let connectEmail = () => {
   return nodeMailer.createTransport({
     service: 'qq',

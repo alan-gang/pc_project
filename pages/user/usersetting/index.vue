@@ -1,15 +1,14 @@
 <template>
   <div>
-    用户信息模块
+    账户设置界面1
   </div>
 </template>
 
 <script>
-  export default {
+export default {
 
-  }
+}
 </script>
 
 <style scoped>
-
 </style>

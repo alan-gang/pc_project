@@ -20,6 +20,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\store\\home.js'), 'home.js')
+  resolveStoreModules(require('..\\store\\user.js'), 'user.js')
 
   // If the environment supports hot reloading...
 
@@ -28,6 +29,7 @@ let store = {};
     module.hot.accept([
       '..\\store\\home.js',
       '..\\store\\index.js',
+      '..\\store\\user.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

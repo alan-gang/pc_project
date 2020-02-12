@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const path = require('path')
 
 module.exports = {
   sendFrontEnd (data, message) {
@@ -16,6 +17,8 @@ module.exports = {
   },
    db:(dbName) => {
     return mongoose.createConnection(`mongodb://123.56.119.225:27017/${dbName}`, { useNewUrlParser: true, useUnifiedTopology: true });
+  },
+  resolve(dir) {
+    return path.join(__dirname, dir)
   }
-
-}
+ }

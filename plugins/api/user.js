@@ -3,7 +3,7 @@ import ajax from './ajax'
 
 /* 获取验证码 */
 export const getcode = (code) => ajax({
-  url: '/user/useradmin/getcode',
+  url: '/user/handleEmail/getcode',
   type: 'post',
   params: code
 })
@@ -24,14 +24,14 @@ export const loginUser = (data) => ajax({
 
 /* 检验邮箱 */
 export const checkCode = (data) => ajax({
-  url: '/user/useradmin/checkcode',
+  url: '/user/handleEmail/checkcode',
   type: 'post',
   params: data
 })
 
 // 验证码是否正确
 export const matchCode = (data) => ajax({
-  url: '/user/useradmin/matchcode',
+  url: '/user/handleEmail/matchcode',
   type: 'post',
   params: data
 })
@@ -41,11 +41,6 @@ export const resetPasswords = (data) => ajax({
   url: '/user/useradmin/resetPasswords',
   type: 'post',
   params: data
-})
-
-/* 获取加密密码公钥 */
-export const getPublicKey = () => ajax({
-  url: '/user/useradmin/getPublicKey',
 })
 
 /* 用户退出 */
