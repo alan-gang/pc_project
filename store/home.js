@@ -7,8 +7,8 @@ export const mutations = {
   changeSlider (state, status) {
     state.isCollapse = status
   },
-/* 填充侧边栏列表 */
-fillSidebar(state,list) {
-  state.sidebarList = list
-}
+  /* 填充侧边栏列表 */
+  fillSidebar (state, list) {
+    state.sidebarList = list
+  }
 }

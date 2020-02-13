@@ -1,6 +1,6 @@
 import axios from 'axios'
+import qs from 'qs'
 // console.log(process.env.NODE_ENV);
-
 // const myaxios = axios.create()
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

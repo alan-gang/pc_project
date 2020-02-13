@@ -17,52 +17,18 @@
              alt="">
         <span slot="title"></span>
       </el-menu-item>
-      <el-submenu index="1">
+      <el-submenu :index="`${index}`"
+                  v-for="(item,index) in sidebarList.contentList"
+                  :key="item.title"
+                  :class="{empty:!item.lists.length}">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
+          <i class="icon iconfont"
+             :class="`${item.icon}`"></i>
+          <span class="pl_5">{{item.title}}</span>
         </template>
-        <el-menu-item-group>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="1-2">选项3</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="2-1">选项1</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="2-2">选项3</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-      <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="3-1">选项1</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="3-2">选项3</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-      <el-submenu index="4">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="4-1">选项1</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group>
-          <el-menu-item index="4-2">选项3</el-menu-item>
+        <el-menu-item-group v-for="(section, sIndex) in item.lists"
+                            :key="sIndex">
+          <el-menu-item :index="`${index}-${sIndex}`">{{section.title}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -72,6 +38,8 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  created () {
+  },
   data () {
     return {
       activeIndex: '0'
@@ -87,9 +55,8 @@ export default {
   },
   computed: {
     ...mapState({
-      isCollapse () {
-        return this.$store.state.home.isCollapse
-      }
+      isCollapse: (state) => state.home.isCollapse,
+      sidebarList: (state) => state.home.sidebarList
     })
   }
 }
@@ -124,4 +91,7 @@ export default {
             display inline-block
             height 100%
             background (url('/images/home/logo-icon.png') center no-repeat)
+        .empty
+          .el-submenu__icon-arrow
+            display none
 </style>
