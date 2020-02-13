@@ -69,7 +69,7 @@
 <script>
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 import userMixin from '~/assets/mixin/user'
-import { getcode, registerUser } from '~/plugins/api'
+import { getcode, registerUser } from '~/api'
 
 export default {
   mixins: [rulesMixin, userMixin],

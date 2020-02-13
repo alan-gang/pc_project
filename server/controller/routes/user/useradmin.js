@@ -20,6 +20,7 @@ router.post('/loginUser', async ctx => {
     } else {
       let token = await generateToken(user)
       ctx.session.user = user;
+      ctx.session.token = token
       ctx.body = ctx.state.sendFrontEnd({
         token,
         msg: '登录成功',
@@ -45,6 +46,7 @@ router.post('/register', async ctx => {
   let saveStatus = await userMode.create({ password, email, identity })
   let token = await generateToken(saveStatus);
   ctx.session.user = saveStatus;
+  ctx.session.token = token
   ctx.body = ctx.state.sendFrontEnd({
     token,
     msg: '注册成功',

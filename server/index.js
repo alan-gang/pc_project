@@ -13,7 +13,7 @@ app.use(bodyParser())
 const session = require('koa-session');
 app.keys = ['some secret hurr'];
 const CONFIG = {
-  key: 'koa:sess', //cookie key (default is koa:sess)
+  key: 'sessionKey', //cookie key (default is koa:sess)
   maxAge: 86400000,
   overwrite: true, //是否可以overwrite
   httpOnly: true, //cookie是否只有服务器端可以访问 httpOnly or not (default true)
@@ -68,9 +68,6 @@ async function start () {
     // ctx.session.name = 'demo'
     // console.log(ctx.session)
   })
-
-
-
 
   app.listen(port, host)
   consola.ready({

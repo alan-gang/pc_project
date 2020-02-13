@@ -1,7 +1,8 @@
 import axios from 'axios'
-import qs from 'qs';
 // console.log(process.env.NODE_ENV);
-axios.defaults.baseURL = 'http://localhost:5000';
+
+// const myaxios = axios.create()
+
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 axios.interceptors.request.use(function (config) {

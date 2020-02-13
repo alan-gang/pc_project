@@ -5,8 +5,8 @@ const path = require('path')
 const jwt = require('koa-jwt')({ secret: 'hangang' });
 
 // 用户登录
-router.get('/list', async ctx => {
-  ctx.body = ctx.query.title
+router.get('/list', jwt, async ctx => {
+  ctx.body = ctx.state.user
   // let { password, name } = ctx.request.body;
   // let user = await userMode.findOne({ email: name })
   // if (!user) {

@@ -27,35 +27,20 @@ module.exports = {
     },
     middleware: ['redirect'],
   },
-  /*
-   ** Customize the progress-bar color
-   */
   loading: { color: '#fff' },
-  /*
-   ** Global CSS
-   */
   css: [
     'element-ui/lib/theme-chalk/index.css',
     './assets/font/iconfont.css',
     './static/css/reset.css'
   ],
-  /*
-   ** Plugins to load before mounting the App
-   */
   plugins: [
     { src: '@/plugins/element-ui', ssr: true },
     { src: '@/plugins/route', ssr: true },
-    { src: '@/plugins/api/intercept', ssr: true },
+    { src: '@/plugins/http', ssr: true },
   ],
-  /*
-   ** Nuxt.js dev-modules
-   */
+
   buildModules: [],
-  /*
-   ** Nuxt.js modules
-   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     "@nuxtjs/style-resources"
   ],

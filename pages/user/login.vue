@@ -32,7 +32,7 @@
 </template>
 <script>
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import { loginUser } from '~/plugins/api'
+import { loginUser } from '~/api'
 import userMixin from '~/assets/mixin/user'
 import { mapState } from 'vuex'
 
@@ -67,6 +67,7 @@ export default {
     async _sendUserInfo () {
       let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
       let { code, data, message } = await loginUser({ name: this.ruleForm.name, password: encryptionPassword })
+
       if (code == 1) {
         this.alert(message);
         return;

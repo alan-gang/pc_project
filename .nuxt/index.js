@@ -12,10 +12,10 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_axios_bd2dd0b6 from 'nuxt_plugin_axios_bd2dd0b6' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_axios_1af4087b from 'nuxt_plugin_axios_1af4087b' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
 import nuxt_plugin_route_231494d5 from 'nuxt_plugin_route_231494d5' // Source: ..\\plugins\\route (mode: 'all')
-import nuxt_plugin_intercept_8cc0c4ce from 'nuxt_plugin_intercept_8cc0c4ce' // Source: ..\\plugins\\api\\intercept (mode: 'all')
+import nuxt_plugin_http_926ab708 from 'nuxt_plugin_http_926ab708' // Source: ..\\plugins\\http (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -172,8 +172,8 @@ async function createApp (ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_axios_bd2dd0b6 === 'function') {
-    await nuxt_plugin_axios_bd2dd0b6(app.context, inject)
+  if (typeof nuxt_plugin_axios_1af4087b === 'function') {
+    await nuxt_plugin_axios_1af4087b(app.context, inject)
   }
 
   if (typeof nuxt_plugin_elementui_d905880e === 'function') {
@@ -184,8 +184,8 @@ async function createApp (ssrContext) {
     await nuxt_plugin_route_231494d5(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_intercept_8cc0c4ce === 'function') {
-    await nuxt_plugin_intercept_8cc0c4ce(app.context, inject)
+  if (typeof nuxt_plugin_http_926ab708 === 'function') {
+    await nuxt_plugin_http_926ab708(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

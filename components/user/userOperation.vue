@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { signOut } from '~/plugins/api'
+import { signOut } from '~/api'
 import ruleMixin from '~/assets/mixin/userRuleMixin'
 
 export default {

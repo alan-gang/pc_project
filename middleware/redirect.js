@@ -8,6 +8,5 @@ export default function ({ route, app, redirect, ctx, req, $axios, error }) {
       }
     }
   } else {
-    console.log($axios)
   }
 }

@@ -77,7 +77,7 @@
 
 <script>
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import {checkCode,matchCode,resetPasswords} from '~/plugins/api'
+import {checkCode,matchCode,resetPasswords} from '~/api'
 import successMasker from '~/components/user/jumpCountdown'
 export default {
   mixins: [rulesMixin],
