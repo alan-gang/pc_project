@@ -1,7 +1,7 @@
 
 export default function ({ $axios, redirect, app }, inject, ) {
-  console.log(process.env.NODE_ENV)
-  process.env.NODE_ENV == 'production' ? '//lehu.hyfarsight.com/' : '//localhost:5000'
+  let env = process.env.NODE_ENV == 'production' ? '//lehu.hyfarsight.com/' : '//localhost:5000'
+  $axios.setBaseURL(env)
   $axios.setHeader('Content-Type', 'application/x-www-form-urlencoded', ['post'])
   $axios.onRequest(config => {
     if (process.client) {
