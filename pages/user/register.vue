@@ -69,8 +69,7 @@
 <script>
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 import userMixin from '~/assets/mixin/user'
-
-import { getcode, registerUser } from '~/plugins/api'
+import { getcode, registerUser } from '~/api'
 
 export default {
   mixins: [rulesMixin, userMixin],
@@ -99,10 +98,10 @@ export default {
           let { code, data, message } = await registerUser({ ...this.form })
           if (code === 1) {
             this.alert(message)
-            return
           } else {
             sessionStorage.token = data.token
-            this.$router.replace('/')
+            this.$store.commit('user/saveUserInfo', data.user)
+            this.$router.replace('/user/usersetting')
           }
         } else {
           this.alert('请正确填写表单内容');

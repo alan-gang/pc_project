@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   "email": { type: String, required: true },
   "password": { type: String, required: true },
   "avatar": { type: String, default: '' },
-  "gender": { type: String, default: '1' }
+  "gender": { type: String, default: '1' },
+  "classClassify": { type: String }
 })
 
 

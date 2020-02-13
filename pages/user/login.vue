@@ -32,8 +32,9 @@
 </template>
 <script>
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import { loginUser, getPublicKey } from '~/plugins/api'
+import { loginUser } from '~/api'
 import userMixin from '~/assets/mixin/user'
+import { mapState } from 'vuex'
 
 export default {
   mixins: [rulesMixin, userMixin],
@@ -63,10 +64,10 @@ export default {
         }
       });
     },
-
     async _sendUserInfo () {
       let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
       let { code, data, message } = await loginUser({ name: this.ruleForm.name, password: encryptionPassword })
+
       if (code == 1) {
         this.alert(message);
         return;
@@ -74,13 +75,19 @@ export default {
         let token = data.token;
         sessionStorage.token = token;
         this.saveSing && (localStorage.user = JSON.stringify({ name: this.ruleForm.name, password: encryptionPassword }))
-        this.$router.push("/")
+        this.$store.commit('user/saveUserInfo', data.user)
+        this.UserInfo.classClassify ? this.$router.push('/') : this.$router.push("/user/usersetting")
       }
     },
     async _fillUserInfo () {
       let userInfo = localStorage.user && JSON.parse(localStorage.user)
       userInfo && (this.ruleForm.name = userInfo.name, this.ruleForm.password = await this._parsingKey(userInfo.password))
     }
+  },
+  computed: {
+    ...mapState('user', {
+      UserInfo: state => state.UserInfo
+    })
   }
 };
 </script>

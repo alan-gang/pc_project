@@ -15,7 +15,7 @@ import { createStore } from './store.js'
 import nuxt_plugin_axios_bd2dd0b6 from 'nuxt_plugin_axios_bd2dd0b6' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_elementui_d905880e from 'nuxt_plugin_elementui_d905880e' // Source: ..\\plugins\\element-ui (mode: 'all')
 import nuxt_plugin_route_231494d5 from 'nuxt_plugin_route_231494d5' // Source: ..\\plugins\\route (mode: 'all')
-import nuxt_plugin_api_caeae0b4 from 'nuxt_plugin_api_caeae0b4' // Source: ..\\plugins\\api (mode: 'all')
+import nuxt_plugin_http_926ab708 from 'nuxt_plugin_http_926ab708' // Source: ..\\plugins\\http (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -184,8 +184,8 @@ async function createApp (ssrContext) {
     await nuxt_plugin_route_231494d5(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_api_caeae0b4 === 'function') {
-    await nuxt_plugin_api_caeae0b4(app.context, inject)
+  if (typeof nuxt_plugin_http_926ab708 === 'function') {
+    await nuxt_plugin_http_926ab708(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

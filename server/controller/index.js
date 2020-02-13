@@ -20,9 +20,11 @@ function readFileList (dir, filesList = []) {
 const filesList = [];
 readFileList(__dirname, filesList);
 
+
 filesList
   .filter(file => ~file.search(/^[^\.].*\.js$/))
   .forEach(file => {
+
     /* TODOS linux与window系统的/处理 */
     let file_entity = require(path.resolve(__dirname, file));
 

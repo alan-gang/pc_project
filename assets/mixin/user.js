@@ -1,4 +1,3 @@
-import { getPublicKey } from '~/plugins/api'
 
 
 export default {

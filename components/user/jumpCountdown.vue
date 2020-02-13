@@ -33,7 +33,6 @@
     },
     destroyed() {
       clearInterval(this.time)
-      console.log(this.time)
     }
   }
 </script>

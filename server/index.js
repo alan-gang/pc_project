@@ -13,7 +13,7 @@ app.use(bodyParser())
 const session = require('koa-session');
 app.keys = ['some secret hurr'];
 const CONFIG = {
-  key: 'koa:sess', //cookie key (default is koa:sess)
+  key: 'sessionKey', //cookie key (default is koa:sess)
   maxAge: 86400000,
   overwrite: true, //是否可以overwrite
   httpOnly: true, //cookie是否只有服务器端可以访问 httpOnly or not (default true)
@@ -23,25 +23,15 @@ const CONFIG = {
 app.use(session(CONFIG, app));
 /* ======================= */
 
-// 错误捕获中间件
-app.use(async (ctx, next) => {
-  try {
-    ctx.error = (code, message) => {
-      if (typeof code === 'string') {
-        message = code;
-        code = 401;
-      }
-      ctx.throw(code || 401, message || '服务器错误');
-    };
-    await next();
-  } catch (e) {
-    console.log(e)
-    let status = e.status || 401;
-    let message = e.message || '服务器错误';
-    ctx.response.body = { status, message };
-  }
-});
 
+/* 使用错误处理 */
+app.use(require('./util/handleError.js')())
+app.onerror = (err) => {
+  console.log('捕获到了!', err.message);
+}
+
+/* 全局变量定义 */
+app.use(require('./util/globalVariable')())
 
 
 // Import and Set Nuxt.js options
@@ -78,9 +68,6 @@ async function start () {
     // ctx.session.name = 'demo'
     // console.log(ctx.session)
   })
-
-
-
 
   app.listen(port, host)
   consola.ready({

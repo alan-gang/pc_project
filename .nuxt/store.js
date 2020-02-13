@@ -16,6 +16,7 @@ let store = {};
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\store\\home.js'), 'home.js')
+  resolveStoreModules(require('..\\store\\user.js'), 'user.js')
 
   // If the environment supports hot reloading...
 })()

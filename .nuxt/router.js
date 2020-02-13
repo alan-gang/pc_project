@@ -9,7 +9,8 @@ const _567970fc = () => interopDefault(import('..\\pages\\video.vue' /* webpackC
 const _31026dff = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
 const _080f767d = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
 const _36719100 = () => interopDefault(import('..\\pages\\user\\resetpassword.vue' /* webpackChunkName: "pages_user_resetpassword" */))
-const _46d49fd3 = () => interopDefault(import('..\\pages\\user\\userinfo.vue' /* webpackChunkName: "pages_user_userinfo" */))
+const _215d423b = () => interopDefault(import('..\\pages\\user\\usersetting.vue' /* webpackChunkName: "pages_user_usersetting" */))
+const _0ccc29e7 = () => interopDefault(import('..\\pages\\user\\usersetting\\index.vue' /* webpackChunkName: "pages_user_usersetting_index" */))
 const _5236fc5a = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
@@ -53,9 +54,13 @@ export const routerOptions = {
     component: _36719100,
     name: "user-resetpassword"
   }, {
-    path: "/user/userinfo",
-    component: _46d49fd3,
-    name: "user-userinfo"
+    path: "/user/usersetting",
+    component: _215d423b,
+    children: [{
+      path: "",
+      component: _0ccc29e7,
+      name: "user-usersetting"
+    }]
   }, {
     path: "/",
     component: _5236fc5a,
