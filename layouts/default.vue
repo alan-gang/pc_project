@@ -36,4 +36,6 @@ export default {
     display flex
     .content-container
       width 100%
+    .el-main
+      overflow hidden
 </style>
