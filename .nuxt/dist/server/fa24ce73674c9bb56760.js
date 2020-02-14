@@ -1,0 +1,1 @@
+exports.ids=[8],exports.modules={124:function(e,t,r){"use strict";r.r(t);var n={},c=r(1);var component=Object(c.a)(n,(function(){var e=this.$createElement;return(this._self._c||e)("div",[this._ssrNode("\n  头像设置\n")])}),[],!1,(function(e){}),"778ee145","8853f4c6");t.default=component.exports}};
