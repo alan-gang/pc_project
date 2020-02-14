@@ -67,6 +67,7 @@ router.post("/resetPasswords", async ctx => {
 /* 用户退出 */
 router.post('/signOut', jwt, async ctx => {
   ctx.session.user = null
+  ctx.session.token = null
   ctx.body = ctx.state.sendFrontEnd({ msg: '退出成功' })
 })
 

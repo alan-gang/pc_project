@@ -6,14 +6,15 @@
          @click="changeSlider(isSlider= !isSlider)"></i>
     </div>
     <div class="header-main pr_20 ml_30">
-      <search-container></search-container>
+      <search-container v-if="!showSearch"></search-container>
+      <div v-else class="c_tc">{{showSearch}}</div>
       <user-operation></user-operation>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 import searchContainer from '@/components/home/searchContainer'
 import userOperation from '@/components/user/userOperation'
 export default {
@@ -25,6 +26,11 @@ export default {
     return {
       isSlider: false
     }
+  },
+  computed:{
+    ...mapState({
+      showSearch:(state)=> state.home.sidebarList.title === 'userSetting'?'用户中心':false
+    })
   },
   methods: {
     ...mapMutations({

@@ -57,7 +57,7 @@ export default {
                       color #fff
 </style>
 
-<style>
+<style scoped>
 .el-input__inner::placeholder {
   color: #ffffff;
 }

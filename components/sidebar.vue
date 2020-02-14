@@ -3,8 +3,8 @@
     <el-menu :default-active="activeIndex"
              class="asside-container"
              :unique-opened="true"
-             @open="handleOpen"
-             @close="handleClose"
+             @open="handleClick"
+             @close="handleClick"
              background-color="#1F262D"
              text-color="rgba(255,255,255,.6)"
              active-text-color="#ffb848"
@@ -13,15 +13,25 @@
         <i class="small-logo"></i>
         <img class="mt_5"
              src="/images/home/logo.png"
-             slot="title"
-             alt="">
+             slot="title">
         <span slot="title"></span>
       </el-menu-item>
       <el-submenu :index="`${index}`"
                   v-for="(item,index) in sidebarList.contentList"
                   :key="item.title"
+                  :popper-class="!item.lists.length?'hide':''"
                   :class="{empty:!item.lists.length}">
-        <template slot="title">
+        <template slot="title"
+                  v-if="!item.lists.length">
+          <nuxt-link :to="item.linkUrl"
+                     tag="div">
+            <i class="icon iconfont"
+               :class="`${item.icon}`"></i>
+            <span class="pl_5">{{item.title}}</span>
+          </nuxt-link>
+        </template>
+        <template slot="title"
+                  v-else>
           <i class="icon iconfont"
              :class="`${item.icon}`"></i>
           <span class="pl_5">{{item.title}}</span>
@@ -46,11 +56,9 @@ export default {
     }
   },
   methods: {
-    handleOpen () {
-
-    },
-    handleClose () {
-
+    handleClick (index) {
+      // if (this.sidebarList.contentList[index].lists.length) return
+      // this.$router.push(this.sidebarList.contentList[index].linkUrl)
     }
   },
   computed: {
@@ -94,4 +102,12 @@ export default {
         .empty
           .el-submenu__icon-arrow
             display none
+       .on
+        color #e6a23c
+        & *
+          color #e6a23c
+</style>
+<style lang="stylus">
+    .hide,.hide *
+      background-color transparent
 </style>
