@@ -12,7 +12,8 @@
           <template slot="title">
             <el-form-item label="登录用户名"
                           class="w_100p">
-              <el-input v-model="userForm.name"></el-input>
+              <el-input v-model="userForm.name"
+                        placeholder="请输入用户名"></el-input>
             </el-form-item>
           </template>
           <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
@@ -39,7 +40,7 @@ export default {
     return {
       activeNames: ['1'],
       userForm: {
-        name: '',
+        name: "",
       }
     };
   },
@@ -78,5 +79,11 @@ export default {
                   border-bottom: 1px solid #DCDFE6;
         >>>.el-input__inner:focus
                   border-bottom-color: #409EFF !important
+        >>>.el-form-item__label
+                  font-size 17px
+                  color: rgba(0,0,0,.7);
+                  padding 0
+                  padding-left: 12px;
+                  margin-bottom:-25px;
 
 </style>
