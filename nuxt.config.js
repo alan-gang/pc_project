@@ -18,6 +18,7 @@ module.exports = {
     port: 5000, // default: 3000
   },
   router: {
+    linkExactActiveClass: 'on',
     extendRoutes (routes, resolve) {
       routes.push({
         name: 'custom',

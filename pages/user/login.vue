@@ -20,13 +20,12 @@
       </el-form-item>
     </el-form>
     <el-checkbox v-model="saveSing"
-                 class="ml_10 mt_25 f_x_s">stay signed in</el-checkbox>
+                 class="ml_10 mt_25 f_x_s" @change="selectBoxStatus">stay signed in</el-checkbox>
     <div class="h_1 w_100p bgc_br mt_5 mb_20"></div>
     <div class="action flex w_360">
       <div class="w_145 h_35 bgc_b_b t_c lh_35 c_f ft_12 r_5 c_r"
            @click="$router.push('/user/resetpassword')">Lost password?</div>
-      <div class="bgc_b_g w_60 h_35 t_c c_f r_5 lh_35 ft_12 c_r"
-           @click="onSubmit('ruleForm')">Login</div>
+           <el-button type="primary"  :loading="loading" class="bgc_b_g  ft_12 b_n h_35"  @click="onSubmit('ruleForm')">Login</el-button>
     </div>
   </div>
 </template>
@@ -39,7 +38,9 @@ import { mapState } from 'vuex'
 export default {
   mixins: [rulesMixin, userMixin],
   layout: "user",
-  created () {
+  head : {
+      title :'用户登录',
+
   },
   mounted () {
     this._fillUserInfo()
@@ -50,13 +51,15 @@ export default {
         name: "",
         password: ""
       },
-      saveSing: true
+      saveSing: true,
+       loading:false
     };
   },
   methods: {
     onSubmit (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true
           this._sendUserInfo()
         } else {
           this.alert('请正确填写用户名和密码');
@@ -67,10 +70,8 @@ export default {
     async _sendUserInfo () {
       let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
       let { code, data, message } = await loginUser({ name: this.ruleForm.name, password: encryptionPassword })
-
       if (code == 1) {
         this.alert(message);
-        return;
       } else {
         let token = data.token;
         sessionStorage.token = token;
@@ -78,10 +79,15 @@ export default {
         this.$store.commit('user/saveUserInfo', data.user)
         this.UserInfo.classClassify ? this.$router.push('/') : this.$router.push("/user/usersetting")
       }
+      this.loading = false
     },
     async _fillUserInfo () {
       let userInfo = localStorage.user && JSON.parse(localStorage.user)
       userInfo && (this.ruleForm.name = userInfo.name, this.ruleForm.password = await this._parsingKey(userInfo.password))
+    },
+    selectBoxStatus(status) {
+      this.saveSing = status
+      !status && localStorage.removeItem('user')
     }
   },
   computed: {

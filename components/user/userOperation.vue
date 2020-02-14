@@ -31,20 +31,15 @@
         <template slot="title">
           <el-avatar src="/images/home/user_bg.png"></el-avatar>
         </template>
-        <el-menu-item index="3-1">
-          <span>
-            账户设置
-          </span>
-        </el-menu-item>
-        <el-menu-item index="3-2">
-          <span>
-            个人资料
-          </span>
-        </el-menu-item>
-        <el-menu-item index="3-3">
-          <span>
-            头像设置
-          </span>
+        <el-menu-item :index="`3-${index}`"
+                      v-for="(item, index) in userSettingList"
+                      :key="index">
+          <nuxt-link :to="item.linkUrl"
+                     tag="div">
+            <span class="icon iconfont mr_5"
+                  :class="item.icon"></span>
+            <span>{{item.title}}</span>
+          </nuxt-link>
         </el-menu-item>
         <el-menu-item index="3-4"
                       @click="_signOut">
@@ -66,7 +61,20 @@ export default {
   mixins: [ruleMixin],
   data () {
     return {
-      timer: null
+      timer: null,
+      userSettingList: [{
+        "icon": "icon-shezhi_huaban",
+        "title": "账户设置",
+        "linkUrl": "/user/usersetting"
+      }, {
+        "icon": "icon-mingpian",
+        "title": "个人资料",
+        "linkUrl": "/user/usersetting/userMessage"
+      }, {
+        "icon": "icon-xuexiao",
+        "title": "用户信息详情",
+        "linkUrl": "/user/usersetting/userDetail"
+      }]
     };
   },
   methods: {
@@ -80,7 +88,8 @@ export default {
     },
     async _signOut () {
       let { code, message } = await signOut()
-      location.reload()
+      sessionStorage.removeItem('token')
+      this.$router.replace('/user/login')
     }
   },
   beforeDestroy () {

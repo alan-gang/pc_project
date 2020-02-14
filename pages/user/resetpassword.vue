@@ -85,6 +85,9 @@ export default {
   components:{
     successMasker
   },
+  head : {
+      title :'密码重置'
+  },
   data () {
     return {
       activeNumber: 0,

@@ -74,6 +74,9 @@ import { getcode, registerUser } from '~/api'
 export default {
   mixins: [rulesMixin, userMixin],
   layout: "user",
+  head : {
+      title :'用户注册'
+  },
   data () {
     return {
       isSend: false,

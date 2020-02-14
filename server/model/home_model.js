@@ -7,6 +7,7 @@ const sidebarSchema = new mongoose.Schema({
     {
       icon: { type: String, required: true },
       title: { type: String, required: true },
+      linkUrl: { type: String, required: true },
       lists: [
         {
           icon: { type: String },
@@ -16,7 +17,6 @@ const sidebarSchema = new mongoose.Schema({
     }
   ]
 })
-
 
 const sidebarModel = db('pc').model("sidebar_lists", sidebarSchema)
 
