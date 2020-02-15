@@ -4,12 +4,7 @@
              :rules="rules"
              ref="form"
              class="w_380 pl_10 pr_10 b_s mt_30 user-form">
-      <!-- <el-form-item prop="name">
-        <el-input class="c_f_c ft_16"
-                  prefix-icon="el-icon-user"
-                  v-model="form.name"
-                  placeholder="Username"></el-input>
-      </el-form-item> -->
+
       <el-form-item class="mt_20 p_r"
                     prop="email">
         <el-input class="c_f_c ft_16"
@@ -60,8 +55,10 @@
     </el-form>
     <div class="h_1 w_100p bgc_br mt_45 mb_20"></div>
     <div class="action flex w_360">
-      <div class="w_360 h_45 bgc_b_b t_c lh_45 c_f ft_14 r_5 c_r"
-           @click="_onSubmit('form')">Sign Up</div>
+      <el-button type="primary"
+                 :loading="isLoading"
+                 class="bgc_b_b ft_14 w_100p"
+                 @click="_onSubmit('form')">Sign Up</el-button>
     </div>
   </div>
 </template>
@@ -74,13 +71,14 @@ import { getcode, registerUser } from '~/api'
 export default {
   mixins: [rulesMixin, userMixin],
   layout: "user",
-  head : {
-      title :'用户注册'
+  head: {
+    title: '用户注册'
   },
   data () {
     return {
       isSend: false,
       emailValidator: false,
+      isLoading: false,
       countDown: 5,
       timer: null,
       form: {
@@ -96,9 +94,12 @@ export default {
     _onSubmit (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.form.password = await this._getPublicKey(this.form.password)
-          delete this.form.checkPassword
-          let { code, data, message } = await registerUser({ ...this.form })
+          this.isLoading = true
+          let password = await this._getPublicKey(this.form.password)
+
+          let { code, data, message } = await registerUser({
+            password, identity: this.form.identity, email: this.form.email, code: this.form.code
+          })
           if (code === 1) {
             this.alert(message)
           } else {
@@ -106,6 +107,7 @@ export default {
             this.$store.commit('user/saveUserInfo', data.user)
             this.$router.replace('/user/usersetting')
           }
+          this.isLoading = false
         } else {
           this.alert('请正确填写表单内容');
           return false;
@@ -129,7 +131,6 @@ export default {
       }, 1000);
       let { code, data } = await getcode({ email: this.form.email, identity: this.form.identity })
       code === 0 && this.alert(data.msg, this.form.identity == 1 ? 'success' : 'warning');
-
     }
   },
 };

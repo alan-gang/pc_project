@@ -1,11 +1,12 @@
 import axios from 'axios'
 import qs from 'qs'
-// console.log(process.env.NODE_ENV);
-// const myaxios = axios.create()
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
 axios.interceptors.request.use(function (config) {
+  if (config.isLoading) {
+    const store = $nuxt.$store
+    store.commit('changLoadingMasker', true)
+  }
   config.data = qs.stringify(config.data)
   if (sessionStorage.token) {
     config.headers.common['Authorization'] = 'Bearer ' + sessionStorage.token;
@@ -17,15 +18,26 @@ axios.interceptors.request.use(function (config) {
 })
 
 axios.interceptors.response.use(function (response) {
+  if (response.config.isLoading) {
+    const store = $nuxt.$store
+    store.commit('changLoadingMasker', false)
+  }
   return response.data;
 }, function (error) {
   return Promise.reject(error);
 })
 
-export default function ({ params = null, url = '', type = 'get' }) {
-  let data = (type == 'get' || type == 'delete') ? { params } : params;
-
+export default function ({ params = null, url = '', type = 'get', config = {} }) {
+  let arr = [];
+  if ((type === 'get' || type === 'delete')) {
+    if (params) {
+      url += `?${qs.stringify(params)}`
+    }
+    arr.push(config)
+  } else {
+    params ? arr.push(params, config) : arr.push({}, config)
+  }
   return new Promise((resolve, reject) => {
-    axios[type](url, data).then(resolve).catch(reject)
+    axios[type](url, ...arr).then(resolve).catch(reject)
   })
 }
