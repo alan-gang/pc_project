@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const { userMode } = require('../../../model/user_model')
-const {  generateToken, genertaePassword, analysisPassword } = require('../../../util/user')
+const { generateToken, genertaePassword, analysisPassword } = require('../../../util/user')
 const fs = require('fs')
 const path = require('path')
 const jwt = require('koa-jwt')({ secret: 'hangang' });
@@ -37,9 +37,9 @@ router.post('/register', async ctx => {
     ctx.body = ctx.state.sendFrontEnd(null, '对不起，验证码不正确')
     return
   }
-  let hasEmail = await userMode.findOne({ email })
-  if (hasEmail) {
-    ctx.body = ctx.state.sendFrontEnd(null, '对不起，邮箱已经被注册')
+  // let hasEmail = await userMode.findOne({ email })
+  if (ctx.session.email != email) {
+    ctx.body = ctx.state.sendFrontEnd(null, '对不起，邮箱错误')
     return
   }
   password = await genertaePassword(password)

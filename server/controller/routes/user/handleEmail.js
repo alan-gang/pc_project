@@ -14,7 +14,7 @@ router.post("/getcode", async ctx => {
     ctx.body = ctx.body = ctx.state.sendFrontEnd(null, '改邮箱已经注册过账户')
     return
   }
-  /* 第三方登录邮箱 */
+
   let transporter = connectEmail();
   let mailOptions = {
     from: `"WEB" <${emailConfig.user}>`,
@@ -38,6 +38,7 @@ router.post("/getcode", async ctx => {
       }
     });
   })
+  ctx.session.email = email
   ctx.body = ctx.state.sendFrontEnd({
     msg: identity === '2' ? '请联系管理员获取验证码' : '发送成功，稍后查看邮箱'
   })

@@ -12,7 +12,7 @@ import { getSidebar } from '~/api'
 import { mapState } from 'vuex'
 export default {
   async fetch ({ store, $axios }) {
-    const { data: { sidebarList } } = await getSidebar($axios, { title: 'userSetting' })
+    const {  sidebarList  } = await getSidebar($axios, { title: 'userSetting' })
     store.commit('home/fillSidebar', sidebarList)
   },
   watch: {

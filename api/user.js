@@ -19,7 +19,10 @@ export const registerUser = (data) => ajax({
 export const loginUser = (data) => ajax({
   url: '/user/useradmin/loginUser',
   type: 'post',
-  params: data
+  params: data,
+  config: {
+    isLoading: true
+  }
 })
 
 /* 检验邮箱 */
@@ -46,5 +49,8 @@ export const resetPasswords = (data) => ajax({
 /* 用户退出 */
 export const signOut = () => ajax({
   url: '/user/useradmin/signOut',
-  type: 'post'
+  type: 'post',
+  config: {
+    isLoading: true
+  }
 })

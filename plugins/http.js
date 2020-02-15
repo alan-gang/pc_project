@@ -1,9 +1,12 @@
+import qs from 'qs'
 
 export default function ({ $axios, redirect, app }, inject, ) {
   let env = process.env.NODE_ENV == 'production' ? 'https://lehu.hyfarsight.com/' : 'http://localhost:5000'
   $axios.setBaseURL(env)
   $axios.setHeader('Content-Type', 'application/x-www-form-urlencoded', ['post'])
+
   $axios.onRequest(config => {
+    config.data = qs.stringify(config.data)
     if (process.client) {
       if (sessionStorage.token) {
         config.headers.common['Authorization'] = 'Bearer ' + sessionStorage.token;
@@ -11,23 +14,11 @@ export default function ({ $axios, redirect, app }, inject, ) {
     } else {
       config.headers.common['Authorization'] = 'Bearer ' + app.context.req.ctx.session.token;
     }
+    return config
   })
 
-  return ({ params = null, url = '', type = 'get' }) => {
-    let data = (type == 'get' || type == 'delete') ? { params } : params;
-    return new Promise((resolve, reject) => {
-      $axios[type](url, data).then(resolve).catch(reject)
-    })
-  }
-  // $axios.onResponse(response => {
-  //   console.log(response.data)
-  //   return response.data
-  // })
+  $axios.onResponse(response => {
+    return response.data
+  })
 
-  // $axios.onError(error => {
-  //   const code = parseInt(error.response && error.response.status)
-  //   if (code === 400) {
-  //     redirect('/400')
-  //   }
-  // })
 }
