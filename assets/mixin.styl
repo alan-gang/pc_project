@@ -54,7 +54,7 @@ for x in -100 -80 -50 -44 -40 -30 -20 -10 -5 -3 -2 0 1 2 3 4 5 8 10 15 18 20 25 
   }
 }
 // height line-height
-for x in 0 1 2 5 10 12 15 20 24 25 28 30 32 33 34 35 40 44 45 50 55 60 65 70 75 80 90 100 110 104 105 108 120 140 145 150 160 180 200 210 240 260 300 320 350 330 360 380 400 839 840 1000{
+for x in 0 1 2 5 10 12 15 20 24 25 28 30 32 33 34 35 40 44 48 45 50 55 60 65 70 75 80 90 100 110 104 105 108 120 140 145 150 160 180 200 210 240 260 300 320 350 330 360 380 400 839 840 1000{
   .h_{x} {
     height: x * 1px;
   }
@@ -255,6 +255,12 @@ li {
 .a_i, .a_c {
   align-items: center;
 }
+.a_e {
+  align-items:flex-end !important;
+}
+.a_s {
+  align-items: flex-start !important;
+}
 .mh_0 {
   max-height: 0;
 }
@@ -306,6 +312,12 @@ li {
 }
 .flex-ai-c {
   align-items: center;
+}
+.f-d-c {
+    flex-direction column
+}
+.f-i-e{
+    align-self: end;
 }
 .ellipsis {
   display: block;
