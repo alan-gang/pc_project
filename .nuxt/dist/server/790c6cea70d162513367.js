@@ -1,1 +1,0 @@
-exports.ids=[11],exports.modules={126:function(e,t,r){"use strict";r.r(t);var n={},o=r(1);var component=Object(o.a)(n,(function(){var e=this.$createElement;return(this._self._c||e)("div",[this._ssrNode("\n  个人信息\n")])}),[],!1,(function(e){}),"a8e243e6","6af119a2");t.default=component.exports}};
