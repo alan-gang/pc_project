@@ -1,5 +1,9 @@
 <template>
-  <el-container class="main-container">
+  <el-container v-loading="loadingMasker"
+                element-loading-text="拼命加载中"
+                element-loading-spinner="el-icon-loading"
+                element-loading-background="rgba(0, 0, 0, 0.5)"
+                class="main-container">
     <m-sidebar></m-sidebar>
     <div class="content-container">
       <m-header></m-header>
@@ -14,6 +18,7 @@
 
 import mHeader from '~/components/header'
 import mSidebar from '~/components/sidebar'
+import { mapState } from 'vuex'
 export default {
   components: {
     mHeader,
@@ -26,6 +31,9 @@ export default {
   },
   methods: {
 
+  },
+  computed: {
+    ...mapState(['loadingMasker'])
   }
 }
 </script>

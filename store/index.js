@@ -1,6 +1,9 @@
 export const state = () => ({
-  counter: 0
+  loadingMasker: false
 })
 
 export const mutations = {
+  changLoadingMasker (state, status) {
+    state.loadingMasker = status
+  }
 }

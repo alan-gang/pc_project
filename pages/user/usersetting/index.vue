@@ -97,8 +97,10 @@
             <div class="operate-container">
               <el-input v-model="userForm.name"
                         placeholder="请输入获取到的验证码">
-                        <template slot="append"><el-button type="primary">主要按钮</el-button></template>
-                        </el-input>
+                <template slot="append">
+                  <el-button type="primary">主要按钮</el-button>
+                </template>
+              </el-input>
             </div>
             <div class="btn-group mt_20">
               <el-button size="small"
@@ -122,8 +124,10 @@
             <div class="operate-container">
               <el-input v-model="userForm.name"
                         placeholder="请输入获取到的验证码">
-                        <template slot="append"><el-button type="primary">主要按钮</el-button></template>
-                        </el-input>
+                <template slot="append">
+                  <el-button type="primary">主要按钮</el-button>
+                </template>
+              </el-input>
             </div>
             <div class="btn-group mt_20">
               <el-button size="small"
@@ -134,13 +138,13 @@
         </el-collapse-item>
       </el-collapse>
     </el-form>
-     <div class="bottom-container ft_24 c_6 ft_b mt_50 ">
-        其他
-      </div>
-      <div class="cancel-group mt_30 ml_20 c_6 ft_18">
-        <h3>注销账户</h3>
-        <span class="c_tc ft_16 f_x_e ml_30 c_r">注销</span>
-      </div>
+    <div class="bottom-container ft_24 c_6 ft_b mt_50 ">
+      其他
+    </div>
+    <div class="cancel-group mt_30 ml_20 c_6 ft_18">
+      <h3>注销账户</h3>
+      <span class="c_tc ft_16 f_x_e ml_30 c_r">注销</span>
+    </div>
   </div>
 </template>
 
