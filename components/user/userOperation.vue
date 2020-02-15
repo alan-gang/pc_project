@@ -35,7 +35,8 @@
                       v-for="(item, index) in userSettingList"
                       :key="index">
           <nuxt-link :to="item.linkUrl"
-                     tag="div">
+                     tag="div"
+                     class="w_100p">
             <span class="icon iconfont mr_5"
                   :class="item.icon"></span>
             <span>{{item.title}}</span>

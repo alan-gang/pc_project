@@ -1,6 +1,9 @@
 <template>
   <div>
-    <nuxt-child />
+    <transition name="el-fade-in"
+                mode="out-in">
+      <nuxt-child />
+    </transition>
   </div>
 </template>
 
