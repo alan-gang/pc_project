@@ -66,7 +66,6 @@ async function start () {
     ctx.req.ctx = ctx // This might be useful later on, e.g. in nuxtServerInit or with nuxt-stash
     nuxt.render(ctx.req, ctx.res)
     // ctx.session.name = 'demo'
-    // console.log(ctx.session)
   })
 
   app.listen(port, host)

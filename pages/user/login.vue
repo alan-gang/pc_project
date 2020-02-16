@@ -4,11 +4,19 @@
              :rules="rules"
              ref="ruleForm"
              class="w_380 pl_10 pr_10 b_s mt_30 user-form">
-      <el-form-item prop="email">
+      <el-form-item v-if="!ruleForm.accountName && ruleForm.email"
+                    prop="email">
         <el-input class="c_f_c ft_16"
-                  prefix-icon="el-icon-user"
+                  prefix-icon="el-icon-message"
                   v-model="ruleForm.email"
                   placeholder="Enter email login"></el-input>
+      </el-form-item>
+      <el-form-item v-else
+                    prop="accountName">
+        <el-input class="c_f_c ft_16"
+                  prefix-icon="el-icon-user"
+                  v-model="ruleForm.accountName"
+                  placeholder="Enter user Account"></el-input>
       </el-form-item>
       <el-form-item class="mt_20"
                     prop="password">
@@ -53,10 +61,11 @@ export default {
     return {
       ruleForm: {
         email: "",
-        password: ""
+        password: "",
+        accountName: ""
       },
       saveSing: true,
-      loading: false
+      loading: false,
     };
   },
   methods: {
@@ -73,13 +82,16 @@ export default {
     },
     async _sendUserInfo () {
       let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
-      let { code, data, message } = await loginUser({ name: this.ruleForm.name, password: encryptionPassword })
+      let { code, data, message } = await loginUser({ name: this.ruleForm.email, password: encryptionPassword, accountName: this.ruleForm.accountName })
       if (code == 1) {
         this.alert(message);
       } else {
         let token = data.token;
         sessionStorage.token = token;
-        this.saveSing && (localStorage.user = JSON.stringify({ name: this.ruleForm.name, password: encryptionPassword }))
+        let obj = { password: encryptionPassword }
+        this.ruleForm.email ? obj.email = this.ruleForm.email : obj.accountName = this.ruleForm.accountName
+        console.log(obj)
+        this.saveSing && (localStorage.user = JSON.stringify(obj))
         this.$store.commit('user/saveUserInfo', data.user);
         this.UserInfo.classClassify || (this.UserInfo.identity == '2') ? this.$router.push('/') : this.$router.push("/user/usersetting")
       }
@@ -87,7 +99,12 @@ export default {
     },
     async _fillUserInfo () {
       let userInfo = localStorage.user && JSON.parse(localStorage.user)
-      userInfo && (this.ruleForm.name = userInfo.name, this.ruleForm.password = await this._parsingKey(userInfo.password))
+      if (userInfo.accountName) {
+        this.ruleForm.accountName = userInfo.accountName
+      } else {
+        this.ruleForm.email = userInfo.email
+      }
+      this.ruleForm.password = await this._parsingKey(userInfo.password)
     },
     selectBoxStatus (status) {
       this.saveSing = status

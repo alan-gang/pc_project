@@ -2,8 +2,9 @@
   <div class="account-container w_840">
     <el-form label-position="top"
              label-width="80px"
-             :rules="rules"
              :model="UserInfo"
+             :show-message="showErrorMessage"
+             :rules="rules"
              ref="UserInfo">
       <div class="title-container ft_24 c_6 ft_b mt_30 ">账户与安全</div>
       <el-collapse v-model="activeNames"
@@ -19,6 +20,7 @@
               <el-input v-model="UserInfo.accountName"
                         suffix-icon="icon iconfont icon-write_fill"
                         placeholder="请输入用户名"
+                        @input="isDisabled = true"
                         :class="{on:activeClass == '1'}"></el-input>
             </el-form-item>
           </template>
@@ -31,9 +33,10 @@
             <div class="btn-group mt_20">
               <el-button size="small"
                          type="primary"
-                         @click="_updateUser('accountName',{accountName:UserInfo.accountName})"
-                         >确定</el-button>
-              <el-button size="small">取消</el-button>
+                         :disabled="activeNames == 1 && !isDisabled"
+                         @click="_updateUser('accountName',{accountName:UserInfo.accountName})">确定</el-button>
+              <el-button size="small"
+                         @click="activeNames = '0'">取消</el-button>
             </div>
           </div>
         </el-collapse-item>
@@ -161,7 +164,8 @@
     <div class="cancel-group mt_30 ml_20 c_6 ft_18">
       <!-- <h3>注销账户</h3>
       <span class="c_tc ft_16 f_x_e ml_30 c_r">注销</span> -->
-      <el-button type="primary" :disabled="isLinkHome">跳转首页</el-button>
+      <el-button type="primary"
+                 :disabled="isLinkHome">跳转首页</el-button>
       <el-button type="danger">注销账户</el-button>
     </div>
   </div>
@@ -170,38 +174,55 @@
 <script>
 import { mapState } from 'vuex'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import {updateUser} from "~/api"
+import { updateUser } from "~/api"
+import { gLS, sLS } from '~/assets/js/handle.js'
 export default {
   mixins: [rulesMixin],
+  mounted () {
+    this.$nextTick(() => {
+      this.useNameLogin = gLS('user').hasOwnProperty('accountName')
+    })
+  },
   data () {
     return {
-      activeNames: ['0'],
+      activeNames: '0',
       activeClass: '1',
+      isDisabled: false,
       useNameLogin: false,
       UserInfo: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
-      isLinkHome:true
+      isLinkHome: true
     };
   },
   methods: {
-    handleChange (val) {
-    //   console.log(val);
+    async _updateUser (formItem, data) {
+      if (this.$refs[formItem].validateState == 'success') {
+        data['accountName'] && this.isSaveUserName()
+        let { data: { msg, user } } = await updateUser(data)
+        this.activeNames = '0'
+        this.isDisabled = false
+        this.$store.commit('user/saveUserInfo', user);
+        this.alert(msg, 'success')
+      } else {
+        this.alert(this.$refs[formItem].validateMessage)
+      }
     },
-    async _updateUser(UserInfo,data){
-        console.log(this.$refs[UserInfo].validate)
-        this.$refs[UserInfo].validate(async (valid) => {
-            console.log(valid)
-        if (valid) {
-          this.loading = true
-          let resute = await updateUser(data)
-          console.log(resute)
-        } else {
-          this.alert('请正确填写用户名和密码');
-          return false;
-        }
-      });
+    isSaveUserName () {
+      let obj = {
+        accountName: this.UserInfo.accountName,
+        email: this.UserInfo.email,
+        password: this.UserInfo.password
+      }
+      let userData = gLS('user')
+      if (userData && userData.hasOwnProperty('accountName') && !this.useNameLogin) {
+        delete obj.accountName
+      }
+      sLS('user', obj)
     }
   },
   computed: {
+    showErrorMessage () {
+      return this.activeNames !== '0'
+    }
   }
 }
 </script>
