@@ -3,20 +3,26 @@ let rulesMixin = {
     return {
       rules: {
         name: [
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          { required: true, message: '帐户名称不能为空', trigger: 'blur' },
+          { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
+        ],
+        accountName: [
+          { required: true, message: '帐户名称不能为空', trigger: 'blur' },
+          { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, message: '密码不能为空', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
         ],
         code: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { min: 4, message: '位数不正确', trigger: 'blur' }
         ],
         email: [
           {
             validator: (rule, value, callback) => {
               const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+              console.log(value)
               if (!value) {
                 this.emailValidator = false
                 return callback(new Error('邮箱不能为空'))
@@ -62,31 +68,31 @@ let rulesMixin = {
       let num = 5
       let msg;
       setInterval(() => {
-          --num
-         msg = `<div>哈哈哈${num}</div>`
+        --num
+        msg = `<div>哈哈哈${num}</div>`
       }, 1000);
 
       this.$confirm(msg, '温馨提示', {
-       confirmButtonText: '确定',
-       cancelButtonText: '',
-       dangerouslyUseHTMLString:true,
-       showClose:false,
-      closeOnClickModal:false,
-       distinguishCancelAndClose:true,
-       showCancelButton,
-       type,
-     }).then(() => {
-      //  this.$message({
-      //    type: 'success',
-      //    message: '删除成功!'
-      //  });
-     })/* .catch(() => {
+        confirmButtonText: '确定',
+        cancelButtonText: '',
+        dangerouslyUseHTMLString: true,
+        showClose: false,
+        closeOnClickModal: false,
+        distinguishCancelAndClose: true,
+        showCancelButton,
+        type,
+      }).then(() => {
+        //  this.$message({
+        //    type: 'success',
+        //    message: '删除成功!'
+        //  });
+      })/* .catch(() => {
        this.$message({
          type: 'info',
          message: '已取消删除'
        });
      }); */
-   }
+    }
   }
 
 };

@@ -4,10 +4,10 @@
              :rules="rules"
              ref="ruleForm"
              class="w_380 pl_10 pr_10 b_s mt_30 user-form">
-      <el-form-item prop="name">
+      <el-form-item prop="email">
         <el-input class="c_f_c ft_16"
                   prefix-icon="el-icon-user"
-                  v-model="ruleForm.name"
+                  v-model="ruleForm.email"
                   placeholder="Enter email login"></el-input>
       </el-form-item>
       <el-form-item class="mt_20"
@@ -52,7 +52,7 @@ export default {
   data () {
     return {
       ruleForm: {
-        name: "",
+        email: "",
         password: ""
       },
       saveSing: true,
