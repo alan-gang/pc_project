@@ -3,7 +3,8 @@
     <el-form label-position="top"
              label-width="80px"
              :rules="rules"
-             :model="UserInfo">
+             :model="UserInfo"
+             ref="UserInfo">
       <div class="title-container ft_24 c_6 ft_b mt_30 ">账户与安全</div>
       <el-collapse v-model="activeNames"
                    :accordion="true"
@@ -13,6 +14,7 @@
           <template slot="title">
             <el-form-item prop="accountName"
                           label="登录用户名"
+                          ref="accountName"
                           class="w_100p">
               <el-input v-model="UserInfo.accountName"
                         suffix-icon="icon iconfont icon-write_fill"
@@ -28,7 +30,9 @@
             </div>
             <div class="btn-group mt_20">
               <el-button size="small"
-                         type="primary">确定</el-button>
+                         type="primary"
+                         @click="_updateUser('accountName',{accountName:UserInfo.accountName})"
+                         >确定</el-button>
               <el-button size="small">取消</el-button>
             </div>
           </div>
@@ -36,10 +40,10 @@
         <el-collapse-item class="mt_30"
                           name="2">
           <template slot="title">
-            <el-form-item prop="password"
+            <el-form-item prop="oldPassword"
                           label="密码"
                           class="w_100p">
-              <el-input v-model="UserInfo.password"
+              <el-input v-model="UserInfo.oldPassword"
                         suffix-icon="icon iconfont icon-write_fill"
                         placeholder="当前密码"
                         type="password"
@@ -155,8 +159,10 @@
       其他
     </div>
     <div class="cancel-group mt_30 ml_20 c_6 ft_18">
-      <h3>注销账户</h3>
-      <span class="c_tc ft_16 f_x_e ml_30 c_r">注销</span>
+      <!-- <h3>注销账户</h3>
+      <span class="c_tc ft_16 f_x_e ml_30 c_r">注销</span> -->
+      <el-button type="primary" :disabled="isLinkHome">跳转首页</el-button>
+      <el-button type="danger">注销账户</el-button>
     </div>
   </div>
 </template>
@@ -164,7 +170,7 @@
 <script>
 import { mapState } from 'vuex'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-
+import {updateUser} from "~/api"
 export default {
   mixins: [rulesMixin],
   data () {
@@ -173,11 +179,26 @@ export default {
       activeClass: '1',
       useNameLogin: false,
       UserInfo: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
+      isLinkHome:true
     };
   },
   methods: {
     handleChange (val) {
-      console.log(val);
+    //   console.log(val);
+    },
+    async _updateUser(UserInfo,data){
+        console.log(this.$refs[UserInfo].validate)
+        this.$refs[UserInfo].validate(async (valid) => {
+            console.log(valid)
+        if (valid) {
+          this.loading = true
+          let resute = await updateUser(data)
+          console.log(resute)
+        } else {
+          this.alert('请正确填写用户名和密码');
+          return false;
+        }
+      });
     }
   },
   computed: {
