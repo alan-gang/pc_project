@@ -71,4 +71,14 @@ router.post('/signOut', jwt, async ctx => {
   ctx.body = ctx.state.sendFrontEnd({ msg: '退出成功' })
 })
 
+/* 服务端数据获取 */
+
+router.get('/initUser', jwt, async ctx => {
+  // ctx.session.user = null
+  // ctx.session.token = null
+  // console.log(ctx.session.user)
+  ctx.body = ctx.state.sendFrontEnd({ user: ctx.session.user })
+})
+
+
 module.exports = router

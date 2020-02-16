@@ -2,25 +2,25 @@
   <div class="account-container w_840">
     <el-form label-position="top"
              label-width="80px"
-             :model="userForm">
-      <div class="title-container ft_24 c_6 ft_b mt_30 ">
-        账户与安全
-      </div>
+             :rules="rules"
+             :model="UserInfo">
+      <div class="title-container ft_24 c_6 ft_b mt_30 ">账户与安全</div>
       <el-collapse v-model="activeNames"
                    :accordion="true"
                    @change="(arr) => activeClass = arr[0]">
         <el-collapse-item class="mt_30"
                           name="1">
           <template slot="title">
-            <el-form-item label="登录用户名"
+            <el-form-item prop="accountName"
+                          label="登录用户名"
                           class="w_100p">
-              <el-input v-model="userForm.name"
+              <el-input v-model="UserInfo.accountName"
                         suffix-icon="icon iconfont icon-write_fill"
                         placeholder="请输入用户名"
                         :class="{on:activeClass == '1'}"></el-input>
             </el-form-item>
           </template>
-          <div class="mt_15">
+          <div class="mt_25">
             <div class="operate-container">
               <el-switch v-model="useNameLogin"
                          active-text="使用用户名作为登录凭证">
@@ -36,23 +36,29 @@
         <el-collapse-item class="mt_30"
                           name="2">
           <template slot="title">
-            <el-form-item label="密码"
+            <el-form-item prop="password"
+                          label="密码"
                           class="w_100p">
-              <el-input v-model="userForm.name"
+              <el-input v-model="UserInfo.password"
                         suffix-icon="icon iconfont icon-write_fill"
                         placeholder="当前密码"
                         type="password"
                         :class="{on:activeClass == '2'}"></el-input>
             </el-form-item>
           </template>
-          <div class="mt_15 ">
+          <div class="mt_25 ">
             <div class="operate-container">
-              <el-input type="password"
-                        v-model="userForm.name"
-                        placeholder="新密码"></el-input>
-              <el-input type="password"
-                        v-model="userForm.name"
-                        placeholder="确认新密码"></el-input>
+              <el-form-item prop="password">
+                <el-input type="password"
+                          v-model="UserInfo.newPassword"
+                          placeholder="新密码">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="checkPassword">
+                <el-input type="password"
+                          v-model="UserInfo.checkPassword"
+                          placeholder="确认新密码"></el-input>
+              </el-form-item>
             </div>
             <div class="btn-group mt_20">
               <el-button size="small"
@@ -67,10 +73,11 @@
                           name="3">
           <template slot="title">
             <el-form-item label="显示昵称"
+                          prop="accountName"
                           class="w_100p">
-              <el-input v-model="userForm.name"
+              <el-input v-model="UserInfo.nickName"
                         suffix-icon="icon iconfont icon-write_fill"
-                        placeholder="请输入用户名"
+                        placeholder="请输入用户昵称"
                         :class="{on:activeClass == '3'}"></el-input>
             </el-form-item>
           </template>
@@ -86,21 +93,24 @@
                           name="4">
           <template slot="title">
             <el-form-item label="邮箱"
+                          prop="name"
                           class="w_100p">
-              <el-input v-model="userForm.name"
+              <el-input v-model="UserInfo.email"
                         suffix-icon="icon iconfont icon-write_fill"
                         placeholder="请输入邮箱"
                         :class="{on:activeClass == '4'}"></el-input>
             </el-form-item>
           </template>
-          <div class="mt_15 ">
+          <div class="mt_25 ">
             <div class="operate-container">
-              <el-input v-model="userForm.name"
-                        placeholder="请输入获取到的验证码">
-                <template slot="append">
-                  <el-button type="primary">主要按钮</el-button>
-                </template>
-              </el-input>
+              <el-form-item prop="code">
+                <el-input v-model="UserInfo.code"
+                          placeholder="请输入获取到的验证码">
+                  <template slot="append">
+                    <el-button type="primary">主要按钮</el-button>
+                  </template>
+                </el-input>
+              </el-form-item>
             </div>
             <div class="btn-group mt_20">
               <el-button size="small"
@@ -113,8 +123,9 @@
                           name="5">
           <template slot="title">
             <el-form-item label="手机"
+                          prop="mobile"
                           class="w_100p">
-              <el-input v-model="userForm.name"
+              <el-input v-model="UserInfo.mobile"
                         suffix-icon="icon iconfont icon-write_fill"
                         placeholder="请输入手机号码"
                         :class="{on:activeClass == '5'}"></el-input>
@@ -122,12 +133,14 @@
           </template>
           <div class="mt_15 ">
             <div class="operate-container">
-              <el-input v-model="userForm.name"
-                        placeholder="请输入获取到的验证码">
-                <template slot="append">
-                  <el-button type="primary">主要按钮</el-button>
-                </template>
-              </el-input>
+              <el-form-item prop="code">
+                <el-input v-model="UserInfo.mobileCode"
+                          placeholder="请输入获取到的验证码">
+                  <template slot="append">
+                    <el-button type="primary">主要按钮</el-button>
+                  </template>
+                </el-input>
+              </el-form-item>
             </div>
             <div class="btn-group mt_20">
               <el-button size="small"
@@ -149,21 +162,25 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+
 export default {
+  mixins: [rulesMixin],
   data () {
     return {
       activeNames: ['0'],
       activeClass: '1',
       useNameLogin: false,
-      userForm: {
-        name: "",
-      }
+      UserInfo: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
     };
   },
   methods: {
     handleChange (val) {
       console.log(val);
     }
+  },
+  computed: {
   }
 }
 </script>
