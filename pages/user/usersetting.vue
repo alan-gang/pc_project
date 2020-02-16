@@ -8,12 +8,17 @@
 </template>
 
 <script>
-import { getSidebar } from '~/api'
-import { mapState } from 'vuex'
+import { getSidebar, initUser } from '~/api'
+import { mapState, mapActions } from 'vuex'
+
 export default {
   async fetch ({ store, $axios }) {
-    const {  sidebarList  } = await getSidebar($axios, { title: 'userSetting' })
+    let { sidebarList } = await getSidebar($axios, { title: 'userSetting' })
     store.commit('home/fillSidebar', sidebarList)
+    if (!process.client) {
+      let { user } = await initUser($axios)
+      store.commit('user/saveUserInfo', user)
+    }
   },
   watch: {
     async $route (url) {

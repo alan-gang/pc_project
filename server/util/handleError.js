@@ -1,8 +1,8 @@
-const  { sendFrontEnd} = require('./send')
+const { sendFrontEnd } = require('./send')
 
 
 module.exports = () => {
-  return async (ctx,next) => {
+  return async (ctx, next) => {
     try {
       await next();
     } catch (e) {
