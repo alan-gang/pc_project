@@ -231,7 +231,6 @@ export default {
         lazyLoad (node, resolve) {
           const { level } = node;
           setTimeout(() => {
-            console.log(1)
             const nodes = [1, 2, 3, 4, 5]
               .map(item => ({
                 value: ++id,

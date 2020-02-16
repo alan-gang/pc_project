@@ -54,3 +54,8 @@ export const signOut = () => ajax({
     isLoading: true
   }
 })
+
+/* 服务端获取用户内容 */
+export const initUser = (axios) => {
+  return axios.$get('/user/useradmin/initUser')
+}
