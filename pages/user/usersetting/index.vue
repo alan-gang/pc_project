@@ -5,7 +5,7 @@
 
       <div class="title-container ft_24 c_6 ft_b mt_30 ">账户与安全</div>
 
-      <el-collapse v-model="activeNames" :accordion="true">
+      <el-collapse v-model="activeNames" :accordion="true" @change="isDisabled=true">
         <!--  用户名输入  -->
         <el-collapse-item class="mt_30" name="1">
           <template slot="title">
@@ -179,7 +179,7 @@ export default {
         delete obj.accountName
       }
       sLS('user', obj)
-    }
+    },
   },
   computed: {
     showErrorMessage () {
