@@ -14,6 +14,28 @@ let rulesMixin = {
           { required: true, message: '密码不能为空', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
         ],
+        oldPassword: [
+          { message: '原有密码不能为空', trigger: 'change' },
+          { min: 6, max: 15, message: '密码长度在 6 到 15个字符', trigger: 'change' }
+        ],
+        newPassword: [
+          { required: true, message: '新密码不能为空', trigger: 'change' },
+          { min: 6, max: 15, message: '密码长度在 6 到 15个字符', trigger: 'change' }
+        ],
+        checkPassword: [
+          { required: true, message: '请输入确认密码', trigger: 'blur' },
+          {
+            validator: (rule, value, callback) => {
+              let pre = this.form.newPassword ? this.form.newPassword : this.form.password
+              if (value !== pre) {
+                callback(new Error('两次输入密码不一致!'));
+              } else {
+                callback();
+              }
+            },
+            trigger: 'change'
+          }
+        ],
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' },
           { min: 4, message: '位数不正确', trigger: 'blur' }
@@ -38,25 +60,7 @@ let rulesMixin = {
           },
           trigger: 'blur'
         },
-
         ],
-        checkPassword: [
-          { required: true, message: '请输入确认密码', trigger: 'blur' },
-          {
-            validator: (rule, value, callback) => {
-              if (value !== this.form.password) {
-                callback(new Error('两次输入密码不一致!'));
-              } else {
-                callback();
-              }
-            },
-            trigger: 'blur'
-          }
-        ],
-        oldPassword: [
-          { required: true, message: '密码不能为空', trigger: 'blur' },
-          { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
-        ]
       }
     }
   },
