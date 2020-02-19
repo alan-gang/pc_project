@@ -13,11 +13,14 @@
               <el-input v-model="form.accountName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户名" @input="isDisabled = false" :class="{on:activeNames == '1'}"></el-input>
             </el-form-item>
           </template>
+
+          <!-- switch开关 -->
           <div class="mt_25">
             <div class="operate-container">
               <el-switch v-model="useNameLogin" active-text="使用用户名作为登录凭证">
               </el-switch>
             </div>
+
             <!--  按钮i组件  -->
             <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="1" @uodateUser="_updateUser(['accountName'],{accountName:form.accountName})" @changeActive="activeNames = '0'"></btn-group>
           </div>
@@ -25,6 +28,7 @@
 
         <!--  账户密码输入  -->
         <el-collapse-item class="mt_30" name="2">
+          <!-- 输入框模板 -->
           <template slot="title">
             <el-form-item prop="oldPassword" ref="oldPassword" label="密码修改" class="w_100p">
               <el-input v-model="form.oldPassword" suffix-icon="icon iconfont icon-write_fill" placeholder="修改密码前需要输入当前密码" type="password" :class="{on:activeNames == '2'}" @input="isDisabled = false"></el-input>
@@ -38,33 +42,37 @@
                   <span slot="suffix" class="icon iconfont icon-eye ft_18 c_r" @click="isShowPassword=!isShowPassword"></span>
                 </el-input>
               </el-form-item>
+
               <el-form-item prop="checkPassword" ref="checkPassword">
                 <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false" v-model="form.checkPassword" placeholder="确认新密码">
                   <span slot="suffix" class="icon iconfont icon-eye ft_18 c_r" @click="isShowPassword=!isShowPassword"></span>
                 </el-input>
               </el-form-item>
             </div>
+
             <!--  按钮i组件  -->
             <div class="flex  j_s ">
               <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="2" @uodateUser="_updateUser(['oldPassword','newPassword','checkPassword'],{password:form.oldPassword,newPassword:form.newPassword})" @changeActive="activeNames = '0'"></btn-group>
               <nuxt-link to="/user/resetpassword" class="f_x_e ml_20 c_tc">忘记密码</nuxt-link>
             </div>
           </div>
+
         </el-collapse-item>
 
+        <!-- 昵称处理 -->
         <el-collapse-item class="mt_30" name="3">
+          <!-- 昵称输入框 -->
           <template slot="title">
-            <el-form-item label="显示昵称" prop="accountName" class="w_100p">
-              <el-input v-model="form.nickName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户昵称" :class="{on:activeNames == '3'}"></el-input>
+            <el-form-item label="显示昵称" prop="nickName" class="w_100p mb_30">
+              <el-input @input="isDisabled=false" v-model="form.nickName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户昵称" :class="{on:activeNames == '3'}"></el-input>
             </el-form-item>
           </template>
-          <div class="mt_15 ">
-            <div class="btn-group mt_20">
-              <el-button size="small" type="primary">确定</el-button>
-              <el-button size="small">取消</el-button>
-            </div>
-          </div>
+          <!--  按钮i组件  -->
+          <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="3" @uodateUser="_updateUser(['nickName'],{nickName:form.nickName})" @changeActive="activeNames = '0'"></btn-group>
         </el-collapse-item>
+
+
+
         <el-collapse-item class="mt_30" name="4">
           <template slot="title">
             <el-form-item label="邮箱" prop="name" class="w_100p">

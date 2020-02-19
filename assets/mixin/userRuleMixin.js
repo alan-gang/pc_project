@@ -41,6 +41,10 @@ let rulesMixin = {
           { required: true, message: '请输入验证码', trigger: 'blur' },
           { min: 4, message: '位数不正确', trigger: 'blur' }
         ],
+        nickName: [
+          { required: true, message: '请输入用户昵称', trigger: 'blur' },
+          { min: 2, max: 12, message: '昵称长度在 2 到 12个字符', trigger: 'change' }
+        ],
         email: [{
           validator: (rule, value, callback) => {
             const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
