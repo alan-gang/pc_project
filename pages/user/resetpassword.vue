@@ -1,5 +1,5 @@
 <template>
-  <div class="rest-wrapper wp_100 h_80  p_r mt_80">
+  <div class="rest-wrapper wp_100 h_80  p_r mt_220">
     <div class="step-box w_1000 mg_0a">
       <el-steps :space="650"
                 :active="activeNumber"

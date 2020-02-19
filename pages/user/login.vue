@@ -90,7 +90,6 @@ export default {
         sessionStorage.token = token;
         let obj = { password: encryptionPassword }
         this.ruleForm.email ? obj.email = this.ruleForm.email : obj.accountName = this.ruleForm.accountName
-        console.log(obj)
         this.saveSing && (localStorage.user = JSON.stringify(obj))
         this.$store.commit('user/saveUserInfo', data.user);
         this.UserInfo.classClassify || (this.UserInfo.identity == '2') ? this.$router.push('/') : this.$router.push("/user/usersetting")

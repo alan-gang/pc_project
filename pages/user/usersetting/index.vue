@@ -27,25 +27,28 @@
         <el-collapse-item class="mt_30" name="2">
           <template slot="title">
             <el-form-item prop="oldPassword" ref="oldPassword" label="密码修改" class="w_100p">
-              <el-input v-model="form.oldPassword" suffix-icon="icon iconfont icon-write_fill" placeholder="修改密码前需要输入当前密码" type="password" :class="{on:activeNames == '2'}" @input="isDisabled = true"></el-input>
+              <el-input v-model="form.oldPassword" suffix-icon="icon iconfont icon-write_fill" placeholder="修改密码前需要输入当前密码" type="password" :class="{on:activeNames == '2'}" @input="isDisabled = false"></el-input>
             </el-form-item>
           </template>
 
           <div class="mt_25 ">
             <div class="operate-container">
               <el-form-item prop="newPassword" ref="newPassword">
-                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = true" v-model="form.newPassword" placeholder="新密码">
+                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false" v-model="form.newPassword" placeholder="新密码">
                   <span slot="suffix" class="icon iconfont icon-eye ft_18 c_r" @click="isShowPassword=!isShowPassword"></span>
                 </el-input>
               </el-form-item>
               <el-form-item prop="checkPassword" ref="checkPassword">
-                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = true" v-model="form.checkPassword" placeholder="确认新密码">
+                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false" v-model="form.checkPassword" placeholder="确认新密码">
                   <span slot="suffix" class="icon iconfont icon-eye ft_18 c_r" @click="isShowPassword=!isShowPassword"></span>
                 </el-input>
               </el-form-item>
             </div>
             <!--  按钮i组件  -->
-            <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="2" @uodateUser="_updateUser(['oldPassword','newPassword','checkPassword'],{password:form.newPassword})" @changeActive="activeNames = '0'"></btn-group>
+            <div class="flex  j_s ">
+              <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="2" @uodateUser="_updateUser(['oldPassword','newPassword','checkPassword'],{password:form.oldPassword,newPassword:form.newPassword})" @changeActive="activeNames = '0'"></btn-group>
+              <nuxt-link to="/user/resetpassword" class="f_x_e ml_20 c_tc">忘记密码</nuxt-link>
+            </div>
           </div>
         </el-collapse-item>
 
@@ -123,11 +126,12 @@
 <script>
 import { mapState } from 'vuex'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+import userMixin from '~/assets/mixin/user'
 import { updateUser } from "~/api"
 import { gLS, sLS } from '~/assets/js/handle.js'
 import btnGroup from '~/components/user/btnGroup.vue'
 export default {
-  mixins: [rulesMixin],
+  mixins: [rulesMixin, userMixin],
   components: {
     btnGroup
   },
@@ -153,19 +157,37 @@ export default {
   },
   methods: {
     async _updateUser (formItem, data) {
-      console.log(formItem)
-      return
-      console.log(this.$refs[formItem].validateState)
-      return
-      if (this.$refs[formItem].validateState == 'success') {
+      let checkStatus = formItem.every(item => this.$refs[item].validateState === 'success')
+
+      /* 验证成功 */
+      if (checkStatus) {
+        // 当用户名为账户的时候进行本地数据存储
         data['accountName'] && this.isSaveUserName()
-        let { data: { msg, user } } = await updateUser(data)
+
+        /* 请求修改为密码修改的时候进行密码的加密操作 */
+        if (data['password']) {
+          data['password'] = await this._getPublicKey(data['password'])
+          data['newPassword'] = await this._getPublicKey(data['newPassword'])
+          this.form['oldPassword'] = ''
+          this.form['newPassword'] = ''
+          this.form['checkPassword'] = ''
+        }
+
+        let { data: { message, code, user, token } } = await updateUser(data)
+        if (code == 1) {
+          this.alert(message, 'warning')
+          return
+        } else {
+          sessionStorage.token = token;
+          this.$store.commit('user/saveUserInfo', user);
+          this.alert(message, 'success')
+        }
+
         this.activeNames = '0'
         this.isDisabled = true
-        this.$store.commit('user/saveUserInfo', user);
-        this.alert(msg, 'success')
+
       } else {
-        this.alert(this.$refs[formItem].validateMessage)
+        this.alert('请检查表单后在进行数据提交')
       }
     },
     isSaveUserName () {

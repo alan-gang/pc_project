@@ -23,7 +23,8 @@ let rulesMixin = {
           { min: 6, max: 15, message: '密码长度在 6 到 15个字符', trigger: 'change' }
         ],
         checkPassword: [
-          { required: true, message: '请输入确认密码', trigger: 'blur' },
+          { required: true, message: '请输入确认密码', trigger: 'change' },
+          { min: 6, max: 15, message: '确认密码长度在 6 到 15个字符', trigger: 'change' },
           {
             validator: (rule, value, callback) => {
               let pre = this.form.newPassword ? this.form.newPassword : this.form.password
@@ -33,7 +34,7 @@ let rulesMixin = {
                 callback();
               }
             },
-            trigger: 'change'
+            trigger: 'blur'
           }
         ],
         code: [
