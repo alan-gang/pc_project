@@ -63,19 +63,19 @@
         <el-collapse-item class="mt_30" name="3">
           <!-- 昵称输入框 -->
           <template slot="title">
-            <el-form-item label="显示昵称" prop="nickName" class="w_100p mb_30">
+            <el-form-item label="显示昵称" prop="nickName" ref="nickName" class="w_100p">
               <el-input @input="isDisabled=false" v-model="form.nickName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户昵称" :class="{on:activeNames == '3'}"></el-input>
             </el-form-item>
           </template>
           <!--  按钮i组件  -->
-          <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="3" @uodateUser="_updateUser(['nickName'],{nickName:form.nickName})" @changeActive="activeNames = '0'"></btn-group>
+          <btn-group class="mt_30" :activeNames="activeNames" :isDisabled="isDisabled" index="3" @uodateUser="_updateUser(['nickName'],{nickName:form.nickName})" @changeActive="activeNames = '0'"></btn-group>
         </el-collapse-item>
 
 
 
         <el-collapse-item class="mt_30" name="4">
           <template slot="title">
-            <el-form-item label="邮箱" prop="name" class="w_100p">
+            <el-form-item label="修改邮箱" prop="name" class="w_100p">
               <el-input v-model="form.email" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入邮箱" :class="{on:activeNames == '4'}"></el-input>
             </el-form-item>
           </template>
@@ -165,6 +165,7 @@ export default {
   },
   methods: {
     async _updateUser (formItem, data) {
+        console.log(formItem,data)
       let checkStatus = formItem.every(item => this.$refs[item].validateState === 'success')
 
       /* 验证成功 */
@@ -180,8 +181,10 @@ export default {
           this.form['newPassword'] = ''
           this.form['checkPassword'] = ''
         }
-
+        
+        
         let res = await updateUser(data)
+        console.log(res)
 
         if (res.code == 1) {
           res.status === 401 ? this.newLogin() : this.alert(res.message)

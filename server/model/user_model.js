@@ -1,6 +1,6 @@
 const { db } = require('../util/send');
 const mongoose = require("mongoose");
-
+mongoose.set('useFindAndModify', false);
 const userSchema = new mongoose.Schema({
     "identity": { type: String, required: true },
     "email": { type: String, required: true },
@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
     "avatar": { type: String, default: '' },
     "gender": { type: String, default: '1' },
     "classClassify": { type: String },
-    "accountName": { type: String }
+    "accountName": { type: String },
+    "nickName": { type: String }
 })
 
 
