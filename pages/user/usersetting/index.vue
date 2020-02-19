@@ -173,14 +173,15 @@ export default {
           this.form['checkPassword'] = ''
         }
 
-        let { data: { message, code, user, token } } = await updateUser(data)
-        if (code == 1) {
-          this.alert(message, 'warning')
+        let res = await updateUser(data)
+
+        if (res.code == 1) {
+          res.status === 401 ? this.newLogin() : this.alert(res.message)
           return
         } else {
-          sessionStorage.token = token;
-          this.$store.commit('user/saveUserInfo', user);
-          this.alert(message, 'success')
+          sessionStorage.token = res.data.token;
+          this.$store.commit('user/saveUserInfo', res.data.user);
+          this.alert(res.data.msg, 'success')
         }
 
         this.activeNames = '0'

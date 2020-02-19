@@ -86,12 +86,12 @@ router.post("/updateUser", jwt, async ctx => {
   let _id = ctx.state.user._id
   let obj = ctx.request.body
 
-  if(obj.password) {
+  if (obj.password) {
     let status = await analysisPassword(obj.password, ctx.state.user.password)
     if (!status) {
       ctx.body = ctx.state.sendFrontEnd(null, '对不起，原密码错误')
       return
-    }else {
+    } else {
       obj.password = await genertaePassword(obj.newPassword)
       delete obj.newPassword
     }
@@ -106,7 +106,7 @@ router.post("/updateUser", jwt, async ctx => {
   ctx.session.user = result
   let token = await generateToken(result)
   ctx.session.token = token
-  ctx.body = ctx.state.sendFrontEnd({ message: '恭喜你，修改成功', token, user: result })
+  ctx.body = ctx.state.sendFrontEnd({ msg: '恭喜你，修改成功', token, user: result })
 })
 
 

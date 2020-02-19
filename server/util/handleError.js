@@ -8,7 +8,7 @@ module.exports = () => {
     } catch (e) {
       let status = e.status || 401;
       let message = e.message || '服务器错误';
-      ctx.body = sendFrontEnd(null, message)
+      ctx.body = sendFrontEnd(null, message, status)
     }
   }
 }
