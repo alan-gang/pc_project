@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "853813",
+      "name": "eye",
+      "font_class": "eye",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
       "icon_id": "4868942",
       "name": "write_fill",
       "font_class": "write_fill",

@@ -19,8 +19,8 @@ router.post('/loginUser', async ctx => {
       ctx.body = ctx.state.sendFrontEnd(null, '密码错误')
       return
     } else {
-      user.password = password
       let token = await generateToken(user)
+      user.password = password
       ctx.session.user = user;
       ctx.session.token = token
       ctx.body = ctx.state.sendFrontEnd({
@@ -46,8 +46,8 @@ router.post('/register', async ctx => {
   }
   password = await genertaePassword(password)
   let saveStatus = await userMode.create({ password, email, identity })
-  saveStatus.password = password
   let token = await generateToken(saveStatus);
+  saveStatus.password = password
   ctx.session.user = saveStatus;
   ctx.session.token = token
   ctx.body = ctx.state.sendFrontEnd({
@@ -85,13 +85,40 @@ router.get('/initUser', jwt, async ctx => {
 router.post("/updateUser", jwt, async ctx => {
   let _id = ctx.state.user._id
   let obj = ctx.request.body
-  let result = await userMode.findOneAndUpdate({ _id }, { $set: obj }
-    , {
-      new: true,
-      upsert: true
-    })
+
+  switch (true) {
+    case Boolean(obj.password):
+      let status = await analysisPassword(obj.password, ctx.state.user.password)
+      if (!status) {
+        ctx.body = ctx.state.sendFrontEnd(null, '对不起，原密码错误')
+        return
+      } else {
+        obj.password = await genertaePassword(obj.newPassword)
+        delete obj.newPassword
+      }
+      break;
+    case Boolean(obj.mobile):
+      if (obj.mobileCode != ctx.session.mobileCode) {
+        ctx.body = ctx.state.sendFrontEnd(null, '对不起，验证码错误')
+        return
+      } else if (obj.mobile != ctx.session.user.mobile) {
+        ctx.body = ctx.state.sendFrontEnd(null, '对不起，手机号码与获得验证码手机不匹配')
+        return
+      }
+      delete obj.mobileCode
+      break;
+  }
+
+
+  let result = await userMode.findOneAndUpdate({ _id }, { $set: obj }, {
+    new: true,
+    upsert: true
+  })
+
   ctx.session.user = result
-  ctx.body = ctx.state.sendFrontEnd({ msg: '恭喜你，修改成功', user: result })
+  let token = await generateToken(result)
+  ctx.session.token = token
+  ctx.body = ctx.state.sendFrontEnd({ msg: '恭喜你，修改成功', token, user: result })
 })
 
 

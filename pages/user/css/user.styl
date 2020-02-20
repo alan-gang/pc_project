@@ -35,3 +35,30 @@
         }
     }
 }
+
+.login-container {
+  flex(, column);
+  .icon-banjiguanli1 {
+    width: 35px;
+    border-top-left-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    background: #ffb848;
+    border-bottom-left-radius: 4px;
+    color: #fff;
+    font-size: 19px;
+  }
+  .identity {
+    >>>.el-form-item__content {
+      display: flex;
+      .el-select {
+        flex-grow: 1;
+        .el-input__inner {
+          text-indent: 0px;
+          border-top-left-radius: 0 !important;
+          border-bottom-left-radius: 0 !important;
+        }
+      }
+    }
+  }
+}

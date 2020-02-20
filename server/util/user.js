@@ -4,6 +4,7 @@ const nodeMailer = require('nodemailer')
 const fs = require('fs')
 const path = require('path')
 const JSEncrypt = require('node-jsencrypt')
+const SMSClient = require('@alicloud/sms-sdk')
 
 let emailConfig = {
   pass: 'jcqmzmsporcvdghd',
@@ -58,7 +59,16 @@ let connectEmail = () => {
   });
 }
 
+/* 生成手机号码发送验证规则 */
+
+let generatorMobileCode = () => {
+  const accessKeyId = 'LTAI4FbhrxcXRo18ib9LPYtM'
+  const secretAccessKey = 'IgWjvrRsc4i9YMZ64UotaLtTlMXQfp'
+  return new SMSClient({ accessKeyId, secretAccessKey })
+}
+
+
 module.exports = {
   emailConfig, mailoptions, analysisPassword, generateToken, genertaePassword,
-  connectEmail
+  connectEmail, generatorMobileCode
 }
