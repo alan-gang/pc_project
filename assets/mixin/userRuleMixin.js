@@ -38,8 +38,12 @@ let rulesMixin = {
           }
         ],
         code: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { required: true, message: '请输入邮箱验证码', trigger: 'blur' },
           { min: 4, message: '位数不正确', trigger: 'blur' }
+        ],
+        mobileCode: [
+          { required: true, message: '请输入手机验证码', trigger: ['blur', 'change'] },
+          { min: 6, max: 6, message: '位数不正确', trigger: ['blur', 'change'] }
         ],
         nickName: [
           { required: true, message: '请输入用户昵称', trigger: 'blur' },
@@ -65,7 +69,7 @@ let rulesMixin = {
           trigger: ['blur', 'change']
         },
         ],
-        mobile:[
+        mobile: [
           {
             validator: (rule, value, callback) => {
 
@@ -86,7 +90,6 @@ let rulesMixin = {
                 }
               }, 100)
             },
-
             trigger: ['blur', 'change']
           },
         ]

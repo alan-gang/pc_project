@@ -1,40 +1,50 @@
 <template>
   <el-button type="primary" :loading="isSend" @click="_getCode">
-    {{!isSend?'发送验证码':`${this.countDown} 秒后从新获取`}}
+    {{!isSend?`发送${type=='email'?'邮箱':'手机'}验证码`:`${this.countDown} 秒后从新获取`}}
   </el-button>
 </template>
 
 <script>
-import { getcode } from '~/api'
+import { getcode, getMobileCode } from '~/api'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 export default {
   mixins: [rulesMixin],
   props: {
-    emailValidator: Boolean,
     identity: String,
     email: String,
     type: String,
-    isValidateMobile: String
-  },
-  created () {
-    console.log(this)
+    mobile: String,
+    isValidate: Boolean
   },
   data () {
     return {
       isSend: false,
       countDown: 0,
       timer: null,
+      url: null,
+      msg: null,
+      sendData: null
     }
   },
   methods: {
     async  _getCode () {
-      let status = this.type == 'email' ? this.emailValidator : this.isValidateMobile
-      let msg = this.type == 'email' ? '请先输入邮箱并确认身份' : '请输入正确的手机号码'
 
-      if (!status || !this.identity) {
-        this.alert('请先输入邮箱并确认身份')
+      if (this.type == 'email') {
+        this.msg = '请先输入邮箱并确认身份'
+        this.url = getcode
+        this.sendData = { email: this.email, identity: this.identity }
+      } else {
+        this.msg = '请输入正确的手机号码'
+        this.url = getMobileCode
+        this.sendData = { mobile: this.mobile, identity: this.identity }
+      }
+
+      /* 当没有验证通过时候，无法进行验证获取 */
+      if (!this.isValidate || !this.identity) {
+        this.alert(this.msg)
         return
       }
+
       this.isSend = true
       this.countDown = 5;
       this.timer = setInterval(() => {
@@ -45,8 +55,9 @@ export default {
         }
         this.countDown--
       }, 1000);
-      let { code, data, message } = await getcode({ email: this.email, identity: this.identity })
-      code === 0 ? this.alert(data.msg, this.identity == 1 ? 'success' : 'warning') : this.alert(message, 'warning')
+
+      let { code, data, message } = await this.url(this.sendData);
+      code === 0 ? this.alert(data.msg, this.identity == 1 ? 'success' : 'warning') : this.alert('频率过快,绑定手机失败', 'warning');
     }
   },
 }

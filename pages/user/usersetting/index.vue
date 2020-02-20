@@ -5,7 +5,7 @@
 
       <div class="title-container ft_24 c_6 ft_b mt_30 ">账户与安全</div>
 
-      <el-collapse v-model="activeNames" :accordion="true" @change="isDisabled=true">
+      <el-collapse v-model="activeNames" :accordion="true" @change="(isDisabled=true)">
         <!--  用户名输入  -->
         <el-collapse-item class="mt_30" name="1">
           <template slot="title">
@@ -63,7 +63,7 @@
         <el-collapse-item class="mt_30" name="3">
           <!-- 昵称输入框 -->
           <template slot="title">
-            <el-form-item label="显示昵称" prop="nickName" ref="nickName" class="w_100p">
+            <el-form-item label="昵称" prop="nickName" ref="nickName" class="w_100p">
               <el-input @input="isDisabled=false" v-model="form.nickName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户昵称" :class="{on:activeNames == '3'}"></el-input>
             </el-form-item>
           </template>
@@ -75,7 +75,7 @@
         <!--  邮箱修改  -->
         <el-collapse-item class="mt_30" name="4">
           <template slot="title">
-            <el-form-item label="邮箱" prop="email" class="w_100p" ref="email">
+            <el-form-item label="绑定邮箱" prop="email" class="w_100p" ref="email">
               <el-input v-model="form.email" suffix-icon="icon iconfont icon-write_fill" @input="isDisabled=false" placeholder="请输入需要修改的邮箱" :class="{on:activeNames == '4'}"></el-input>
             </el-form-item>
           </template>
@@ -85,7 +85,7 @@
                 <el-input v-model="form.code" @input="isDisabled=false" placeholder="请输入获取到的验证码">
                   <template slot="append">
                     <!-- 邮箱组件-->
-                    <get-code :emailValidator="emailValidator" type="email" :identity="form.identity" :email="form.email" class=""></get-code>
+                    <get-code :isValidate="emailValidator" type="email" :identity="form.identity" :email="form.email" class=""></get-code>
                   </template>
                 </el-input>
               </el-form-item>
@@ -98,28 +98,32 @@
         <el-collapse-item class="mt_30" name="5">
 
           <template slot="title">
-            <el-form-item label="手机" prop="mobile" ref="mobile" class="w_100p">
+            <el-form-item label="手机号码" prop="mobile" ref="mobile" class="w_100p">
               <el-input v-model="form.mobile" @input="isDisabled=false" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入手机号码" :class="{on:activeNames == '5'}"></el-input>
             </el-form-item>
 
           </template>
           <div class="mt_30 ">
             <div class="operate-container">
-              <el-form-item prop="code">
-                <el-input v-model="form.mobileCode" placeholder="请输入获取到的验证码">
+              <el-form-item prop="mobileCode">
+                <el-input v-model="form.mobileCode" @input="isDisabled=false" placeholder="请输入获取到的验证码">
                   <template slot="append">
-                    <el-button type="primary" @input="isDisabled=false" @click="_sendMobileCode">发送手机验证码</el-button>
+                    <!-- 验证码组件 -->
+                    <get-code :isValidate="isValidateMobile" type="mobile" :identity="form.identity" :mobile="form.mobile" class=""></get-code>
+
                   </template>
                 </el-input>
               </el-form-item>
             </div>
 
-            <btn-group class="mt_30" :activeNames="activeNames" :isDisabled="isDisabled" index="5" @uodateUser="_updateUser(['mobile'],{mobile:form.mobile})" @changeActive="activeNames = '0'"></btn-group>
-
+            <!-- 手机按钮组件 -->
+            <btn-group class="mt_30" :activeNames="activeNames" :isDisabled="isDisabled" index="5" @uodateUser="_updateUser(['mobile'],{mobile:form.mobile,mobileCode:form.mobileCode})" @changeActive="activeNames = '0'"></btn-group>
           </div>
         </el-collapse-item>
       </el-collapse>
     </el-form>
+
+    <!-- 登陆完成之后相关操作 -->
     <div class="bottom-container ft_24 c_6 ft_b mt_50 ">
       其他
     </div>
@@ -137,7 +141,7 @@
 import { mapState } from 'vuex'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 import userMixin from '~/assets/mixin/user'
-import { updateUser, getMobileCode } from "~/api"
+import { updateUser } from "~/api"
 import { gLS, sLS } from '~/assets/js/handle.js'
 import btnGroup from '~/components/user/btnGroup.vue'
 import getCode from '~/components/user/getCode.vue'
@@ -153,10 +157,6 @@ export default {
     this.$nextTick(() => {
       this.useNameLogin = gLS('user').hasOwnProperty('accountName')
     })
-  },
-  watch: {
-    activeNames (val) {
-    }
   },
   data () {
     return {
@@ -194,6 +194,7 @@ export default {
 
         let res = await updateUser(data)
 
+        console.log(res)
         if (res.code == 1) {
           res.status === 401 ? this.newLogin() : this.alert(res.message)
           return
@@ -222,14 +223,6 @@ export default {
       }
       sLS('user', obj)
     },
-    async _sendMobileCode () {
-      if (!this.isValidateMobile) {
-        this.alert('请输入正确的手机号码')
-        return
-      }
-      let res = await getMobileCode({ mobile: this.form.mobile })
-      res.code == 0 ? this.alert(res.data.msg, 'success') : this.alert('发送失败，请稍后重试')
-    }
   },
   computed: {
     showErrorMessage () {
