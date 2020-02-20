@@ -3,18 +3,18 @@ import Router from 'vue-router'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _fb04af6e = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
-const _70b8ba0a = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
-const _7cff5fcc = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
-const _b423fe62 = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
-const _2a0131ad = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
-const _0f4553d0 = () => interopDefault(import('..\\pages\\user\\resetpassword.vue' /* webpackChunkName: "pages_user_resetpassword" */))
-const _42e3790b = () => interopDefault(import('..\\pages\\user\\usersetting.vue' /* webpackChunkName: "pages_user_usersetting" */))
-const _2ef1a917 = () => interopDefault(import('..\\pages\\user\\usersetting\\index.vue' /* webpackChunkName: "pages_user_usersetting_index" */))
-const _168a677c = () => interopDefault(import('..\\pages\\user\\usersetting\\avatarSetting.vue' /* webpackChunkName: "pages_user_usersetting_avatarSetting" */))
-const _37189e07 = () => interopDefault(import('..\\pages\\user\\usersetting\\userDetail.vue' /* webpackChunkName: "pages_user_usersetting_userDetail" */))
-const _167b317e = () => interopDefault(import('..\\pages\\user\\usersetting\\userMessage.vue' /* webpackChunkName: "pages_user_usersetting_userMessage" */))
-const _052b1eba = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _df312f4a = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
+const _4bab0a0d = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
+const _910d3944 = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
+const _7ae78ee1 = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
+const _46fd125b = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
+const _3da0afe2 = () => interopDefault(import('..\\pages\\user\\resetpassword.vue' /* webpackChunkName: "pages_user_resetpassword" */))
+const _262ab19d = () => interopDefault(import('..\\pages\\user\\usersetting.vue' /* webpackChunkName: "pages_user_usersetting" */))
+const _43f1ef76 = () => interopDefault(import('..\\pages\\user\\usersetting\\index.vue' /* webpackChunkName: "pages_user_usersetting_index" */))
+const _2bc68eac = () => interopDefault(import('..\\pages\\user\\usersetting\\avatarSetting.vue' /* webpackChunkName: "pages_user_usersetting_avatarSetting" */))
+const _18058b99 = () => interopDefault(import('..\\pages\\user\\usersetting\\userDetail.vue' /* webpackChunkName: "pages_user_usersetting_userDetail" */))
+const _31732bef = () => interopDefault(import('..\\pages\\user\\usersetting\\userMessage.vue' /* webpackChunkName: "pages_user_usersetting_userMessage" */))
+const _37e47435 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -34,55 +34,55 @@ export const routerOptions = {
 
   routes: [{
     path: "/404",
-    component: _fb04af6e,
+    component: _df312f4a,
     name: "404"
   }, {
     path: "/example",
-    component: _70b8ba0a,
+    component: _4bab0a0d,
     name: "example"
   }, {
     path: "/video",
-    component: _7cff5fcc,
+    component: _910d3944,
     name: "video"
   }, {
     path: "/user/login",
-    component: _b423fe62,
+    component: _7ae78ee1,
     name: "user-login"
   }, {
     path: "/user/register",
-    component: _2a0131ad,
+    component: _46fd125b,
     name: "user-register"
   }, {
     path: "/user/resetpassword",
-    component: _0f4553d0,
+    component: _3da0afe2,
     name: "user-resetpassword"
   }, {
     path: "/user/usersetting",
-    component: _42e3790b,
+    component: _262ab19d,
     children: [{
       path: "",
-      component: _2ef1a917,
+      component: _43f1ef76,
       name: "user-usersetting"
     }, {
       path: "avatarSetting",
-      component: _168a677c,
+      component: _2bc68eac,
       name: "user-usersetting-avatarSetting"
     }, {
       path: "userDetail",
-      component: _37189e07,
+      component: _18058b99,
       name: "user-usersetting-userDetail"
     }, {
       path: "userMessage",
-      component: _167b317e,
+      component: _31732bef,
       name: "user-usersetting-userMessage"
     }]
   }, {
     path: "/",
-    component: _052b1eba,
+    component: _37e47435,
     name: "index"
   }, {
     path: "*",
-    component: _fb04af6e,
+    component: _df312f4a,
     name: "custom"
   }],
 

@@ -70,3 +70,13 @@ export const updateUser = (data) => ajax({
         isLoading: true
     }
 })
+
+/* 获取手机验证码 */
+
+export const getMobileCode = (params) => ajax({
+  url: '/user/handleMobile/getMobileCode',
+  params,
+  config: {
+    isLoading: false
+  }
+})

@@ -11,7 +11,7 @@ router.post("/getcode", async ctx => {
 
   let user = await userMode.findOne({ email })
   if (user) {
-    ctx.body = ctx.body = ctx.state.sendFrontEnd(null, '改邮箱已经注册过账户')
+     ctx.body = ctx.state.sendFrontEnd(null, '当前邮箱已经注册过账户，请重新选择')
     return
   }
 

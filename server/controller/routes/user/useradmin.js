@@ -96,6 +96,7 @@ router.post("/updateUser", jwt, async ctx => {
             delete obj.newPassword
         }
     }
+    
     let result = await userMode.findOneAndUpdate({ _id }, { $set: obj }, {
         new: true,
         upsert: true
