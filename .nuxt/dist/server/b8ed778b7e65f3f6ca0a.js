@@ -1,0 +1,1 @@
+exports.ids=[10],exports.modules={130:function(t,e,r){"use strict";r.r(e);var n={},c=r(1);var component=Object(c.a)(n,(function(){var t=this.$createElement;return(this._self._c||t)("div",[this._ssrNode("\n  用户详情\n")])}),[],!1,(function(t){}),"f23b2674","81ecc8f4");e.default=component.exports}};
