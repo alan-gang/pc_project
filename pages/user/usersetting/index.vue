@@ -186,14 +186,13 @@ export default {
           this.form['newPassword'] = ''
           this.form['checkPassword'] = ''
         }
-        console.log(data);
+        console.log(data, this.temporaryPassword);
         // 当用户名为账户邮箱密码的时候进行本地数据存储
-        (data['accountName'] || this.temporaryPassword || this.form['email']) && this.isSaveUserName(data.length)
+        (data['accountName'] || this.temporaryPassword || this.form['email']) && this.isSaveUserName(formItem.length)
 
 
         let res = await updateUser(data)
 
-        
         if (res.code == 1) {
           res.status === 401 ? this.newLogin() : this.alert(res.message)
           return
@@ -214,14 +213,20 @@ export default {
       let obj = {
         accountName: this.form.accountName,
         email: this.form.email,
-        password: len>1?(this.temporaryPassword || this.password): this.$store.state.user.UserInfo.password
       }
-     
+
+      if (len > 1) {
+        obj.password = this.temporaryPassword
+      }
+
+
+
       let userData = gLS('user')
       if (userData && userData.hasOwnProperty('accountName') && !this.useNameLogin) {
         delete obj.accountName
       }
-      sLS('user', obj)
+
+      sLS('user', Object.assign(userData, obj))
     },
   },
   computed: {
