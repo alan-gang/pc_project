@@ -16,7 +16,7 @@
         <el-input class="c_f_c ft_16" prefix-icon="el-icon-paperclip" v-model="form.code" placeholder="Code"></el-input>
 
         <!-- 邮箱组件-->
-        <get-code :emailValidator="emailValidator" :identity="form.identity" :email="form.email" class="p_a p_r_0 p_t_1"></get-code>
+        <get-code :emailValidator="emailValidator" :identity="form.identity" :email="form.email" type="email" class="p_a p_r_0 p_t_1"></get-code>
 
       </el-form-item>
       <el-form-item class="mt_20" prop="password">

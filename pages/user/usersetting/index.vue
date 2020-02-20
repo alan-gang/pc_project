@@ -177,7 +177,6 @@ export default {
 
       /* 验证成功 */
       if (checkStatus) {
-        let password;
 
         /* 请求修改为密码修改的时候进行密码的加密操作 */
         if (data['password']) {
@@ -187,14 +186,14 @@ export default {
           this.form['newPassword'] = ''
           this.form['checkPassword'] = ''
         }
-
+        console.log(data);
         // 当用户名为账户邮箱密码的时候进行本地数据存储
-        (data['accountName'] || password || this.form['email']) && this.isSaveUserName()
+        (data['accountName'] || this.temporaryPassword || this.form['email']) && this.isSaveUserName(data.length)
 
 
         let res = await updateUser(data)
 
-        console.log(res)
+        
         if (res.code == 1) {
           res.status === 401 ? this.newLogin() : this.alert(res.message)
           return
@@ -211,12 +210,13 @@ export default {
         this.alert('请检查表单后在进行数据提交')
       }
     },
-    isSaveUserName () {
+    isSaveUserName (len) {
       let obj = {
         accountName: this.form.accountName,
         email: this.form.email,
-        password: this.temporaryPassword || this.password
+        password: len>1?(this.temporaryPassword || this.password): this.$store.state.user.UserInfo.password
       }
+     
       let userData = gLS('user')
       if (userData && userData.hasOwnProperty('accountName') && !this.useNameLogin) {
         delete obj.accountName
