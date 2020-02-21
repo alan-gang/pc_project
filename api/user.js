@@ -80,3 +80,14 @@ export const getMobileCode = (params) => ajax({
     isLoading: false
   }
 })
+
+/* 用户删除操作 */
+
+export const delUser = (params) => ajax({
+  url: '/user/useradmin/delUser',
+  params,
+  type: 'delete',
+  config: {
+    isLoading: true
+  }
+})

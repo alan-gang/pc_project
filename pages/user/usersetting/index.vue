@@ -6,11 +6,12 @@
       <div class="title-container ft_24 c_6 ft_b mt_30 ">账户与安全</div>
 
       <el-collapse v-model="activeNames" :accordion="true" @change="(isDisabled=true)">
-        <!--  用户名输入  -->
+
+        <!--  用户名输入开始 ===================================== -->
         <el-collapse-item class="mt_30" name="1">
           <template slot="title">
             <el-form-item prop="accountName" label="用户名" ref="accountName" class="w_100p">
-              <el-input v-model="form.accountName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户名" @input="isDisabled = false" :class="{on:activeNames == '1'}"></el-input>
+              <el-input v-model="form.accountName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户名" @input="isDisabled = false;activeNames='1'" :class="{on:activeNames == '1'}"></el-input>
             </el-form-item>
           </template>
 
@@ -25,26 +26,27 @@
             <btn-group :activeNames="activeNames" :isDisabled="isDisabled" index="1" @uodateUser="_updateUser(['accountName'],{accountName:form.accountName})" @changeActive="activeNames = '0'"></btn-group>
           </div>
         </el-collapse-item>
+        <!--  用户名输入结束 ===================================== -->
 
-        <!--  账户密码输入  -->
+        <!--  账户密码输入开始 ===================================== -->
         <el-collapse-item class="mt_30" name="2">
           <!-- 输入框模板 -->
           <template slot="title">
             <el-form-item prop="oldPassword" ref="oldPassword" label="密码" class="w_100p">
-              <el-input v-model="form.oldPassword" suffix-icon="icon iconfont icon-write_fill" placeholder="修改密码前需要输入当前密码" type="password" :class="{on:activeNames == '2'}" @input="isDisabled = false"></el-input>
+              <el-input v-model="form.oldPassword" suffix-icon="icon iconfont icon-write_fill" placeholder="修改密码前需要输入当前密码" type="password" :class="{on:activeNames == '2'}" @input="isDisabled = false;activeNames='2'"></el-input>
             </el-form-item>
           </template>
 
           <div class="mt_25 ">
             <div class="operate-container">
               <el-form-item prop="newPassword" ref="newPassword">
-                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false" v-model="form.newPassword" placeholder="新密码">
+                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false;activeNames='2'" v-model="form.newPassword" placeholder="新密码">
                   <span slot="suffix" class="icon iconfont icon-eye ft_18 c_r" @click="isShowPassword=!isShowPassword"></span>
                 </el-input>
               </el-form-item>
 
               <el-form-item prop="checkPassword" ref="checkPassword">
-                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false" v-model="form.checkPassword" placeholder="确认新密码">
+                <el-input :type="isShowPassword?'text':'password'" @input="isDisabled = false;activeNames='2'" v-model="form.checkPassword" placeholder="确认新密码">
                   <span slot="suffix" class="icon iconfont icon-eye ft_18 c_r" @click="isShowPassword=!isShowPassword"></span>
                 </el-input>
               </el-form-item>
@@ -58,13 +60,14 @@
           </div>
 
         </el-collapse-item>
+        <!--  账户密码输入结束 =====================================  -->
 
-        <!-- 昵称处理 -->
+        <!-- 昵称处理  开始 ================================-->
         <el-collapse-item class="mt_30" name="3">
           <!-- 昵称输入框 -->
           <template slot="title">
             <el-form-item label="昵称" prop="nickName" ref="nickName" class="w_100p">
-              <el-input @input="isDisabled=false" v-model="form.nickName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户昵称" :class="{on:activeNames == '3'}"></el-input>
+              <el-input @input="isDisabled=false;activeNames='3'" v-model="form.nickName" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入用户昵称" :class="{on:activeNames == '3'}"></el-input>
             </el-form-item>
           </template>
 
@@ -72,17 +75,19 @@
           <btn-group class="mt_30" :activeNames="activeNames" :isDisabled="isDisabled" index="3" @uodateUser="_updateUser(['nickName'],{nickName:form.nickName})" @changeActive="activeNames = '0'"></btn-group>
         </el-collapse-item>
 
-        <!--  邮箱修改  -->
+        <!-- 昵称处理  开结束================================-->
+
+        <!--  邮箱修改 开始==================================  -->
         <el-collapse-item class="mt_30" name="4">
           <template slot="title">
             <el-form-item label="绑定邮箱" prop="email" class="w_100p" ref="email">
-              <el-input v-model="form.email" suffix-icon="icon iconfont icon-write_fill" @input="isDisabled=false" placeholder="请输入需要修改的邮箱" :class="{on:activeNames == '4'}"></el-input>
+              <el-input v-model="form.email" suffix-icon="icon iconfont icon-write_fill" @input="isDisabled=false;activeNames='4'" placeholder="请输入需要修改的邮箱" :class="{on:activeNames == '4'}"></el-input>
             </el-form-item>
           </template>
           <div class="mt_25 ">
             <div class="operate-container">
               <el-form-item prop="code">
-                <el-input v-model="form.code" @input="isDisabled=false" placeholder="请输入获取到的验证码">
+                <el-input v-model="form.code" @input="isDisabled=false;activeNames='4'" placeholder="请输入获取到的验证码">
                   <template slot="append">
                     <!-- 邮箱组件-->
                     <get-code :isValidate="emailValidator" type="email" :identity="form.identity" :email="form.email" class=""></get-code>
@@ -94,23 +99,24 @@
           </div>
         </el-collapse-item>
 
-        <!--手机验证码获取-->
+        <!--  邮箱修改 结束==================================  -->
+
+        <!--手机验证码获取 开始===============================-->
         <el-collapse-item class="mt_30" name="5">
 
           <template slot="title">
             <el-form-item label="手机号码" prop="mobile" ref="mobile" class="w_100p">
-              <el-input v-model="form.mobile" @input="isDisabled=false" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入手机号码" :class="{on:activeNames == '5'}"></el-input>
+              <el-input v-model="form.mobile" @input="isDisabled=false;activeNames='5'" suffix-icon="icon iconfont icon-write_fill" placeholder="请输入手机号码" :class="{on:activeNames == '5'}"></el-input>
             </el-form-item>
 
           </template>
           <div class="mt_30 ">
             <div class="operate-container">
               <el-form-item prop="mobileCode">
-                <el-input v-model="form.mobileCode" @input="isDisabled=false" placeholder="请输入获取到的验证码">
+                <el-input v-model="form.mobileCode" @input="isDisabled=false;activeNames='5'" placeholder="请输入获取到的验证码">
                   <template slot="append">
                     <!-- 验证码组件 -->
                     <get-code :isValidate="isValidateMobile" type="mobile" :identity="form.identity" :mobile="form.mobile" class=""></get-code>
-
                   </template>
                 </el-input>
               </el-form-item>
@@ -123,15 +129,14 @@
       </el-collapse>
     </el-form>
 
+    <!--手机验证码获取 结束===============================-->
+
     <!-- 登陆完成之后相关操作 -->
     <div class="bottom-container ft_24 c_6 ft_b mt_50 ">
       其他
     </div>
-    <div class="cancel-group mt_30 ml_20 c_6 ft_18">
-      <!-- <h3>注销账户</h3>
-      <span class="c_tc ft_16 f_x_e ml_30 c_r">注销</span> -->
-      <el-button type="primary" :disabled="isLinkHome">跳转首页</el-button>
-      <el-button type="danger">注销账户</el-button>
+    <div class="cancel-group mt_30 ml_15 c_6 ft_18">
+      <el-button type="danger" @click="_destoryUser">注销账户</el-button>
     </div>
   </div>
 </template>
@@ -141,8 +146,8 @@
 import { mapState } from 'vuex'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 import userMixin from '~/assets/mixin/user'
-import { updateUser } from "~/api"
-import { gLS, sLS } from '~/assets/js/handle.js'
+import { updateUser, delUser } from "~/api"
+import { gLS, sLS, cLS } from '~/assets/js/handle.js'
 import btnGroup from '~/components/user/btnGroup.vue'
 import getCode from '~/components/user/getCode.vue'
 
@@ -167,18 +172,16 @@ export default {
       isValidateMobile: false,
       temporaryPassword: null,
       form: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
-      isLinkHome: true,
       isShowPassword: false
     };
   },
   methods: {
+    /* 用户修改 */
     async _updateUser (formItem, data) {
       let checkStatus = formItem.every(item => this.$refs[item].validateState === 'success')
 
       /* 验证成功 */
       if (checkStatus) {
-        let password;
-
         /* 请求修改为密码修改的时候进行密码的加密操作 */
         if (data['password']) {
           data['password'] = await this._getPublicKey(data['password'])
@@ -187,14 +190,11 @@ export default {
           this.form['newPassword'] = ''
           this.form['checkPassword'] = ''
         }
-
         // 当用户名为账户邮箱密码的时候进行本地数据存储
-        (data['accountName'] || password || this.form['email']) && this.isSaveUserName()
-
+        (data['accountName'] || this.temporaryPassword || this.form['email']) && this.isSaveUserName(formItem.length)
 
         let res = await updateUser(data)
 
-        console.log(res)
         if (res.code == 1) {
           res.status === 401 ? this.newLogin() : this.alert(res.message)
           return
@@ -211,18 +211,36 @@ export default {
         this.alert('请检查表单后在进行数据提交')
       }
     },
-    isSaveUserName () {
+    /* 本地存储用户 */
+    isSaveUserName (len) {
       let obj = {
         accountName: this.form.accountName,
         email: this.form.email,
-        password: this.temporaryPassword || this.password
       }
+      len > 1 && (obj.password = this.temporaryPassword)
       let userData = gLS('user')
       if (userData && userData.hasOwnProperty('accountName') && !this.useNameLogin) {
         delete obj.accountName
+        delete userData.accountName
       }
-      sLS('user', obj)
+      sLS('user', Object.assign(!userData ? { password: this.form.password } : userData, obj))
     },
+
+    /* 当前用户删除 */
+    async _destoryUser () {
+      this.prompt('此操作将永久删除用户信息,是否继续？', async () => {
+        let res = await delUser({
+          _id: this.$store.state.user.UserInfo._id
+        })
+        cLS('user')
+        if (res.code == 0) {
+          this.alert('删除用户成功', 'error', 2000)
+          this.$router.replace('/user/register')
+        } else {
+          this.alert(res.message)
+        }
+      })
+    }
   },
   computed: {
     showErrorMessage () {
