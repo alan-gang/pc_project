@@ -18,11 +18,17 @@ axios.interceptors.request.use(function (config) {
 })
 
 axios.interceptors.response.use(function (response) {
+
   if (response.config.isLoading) {
     const store = $nuxt.$store
     store.commit('changLoadingMasker', false)
   }
+  if (response.data.message === 'Authentication Error') {
+    const router = $nuxt.$router
+    router.replace('/user/login')
+  }else {
   return response.data;
+  }
 }, function (error) {
   return Promise.reject(error);
 })

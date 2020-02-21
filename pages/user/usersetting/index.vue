@@ -190,10 +190,12 @@ export default {
           this.form['newPassword'] = ''
           this.form['checkPassword'] = ''
         }
+
+
+        let res = await updateUser(data);
+
         // 当用户名为账户邮箱密码的时候进行本地数据存储
         (data['accountName'] || this.temporaryPassword || this.form['email']) && this.isSaveUserName(formItem.length)
-
-        let res = await updateUser(data)
 
         if (res.code == 1) {
           res.status === 401 ? this.newLogin() : this.alert(res.message)
