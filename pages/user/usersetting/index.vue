@@ -147,7 +147,7 @@ import { mapState } from 'vuex'
 import rulesMixin from "~/assets/mixin/userRuleMixin.js"
 import userMixin from '~/assets/mixin/user'
 import { updateUser, delUser } from "~/api"
-import { gLS, sLS, cLS } from '~/assets/js/handle.js'
+import { gLS, sLS, cLS } from '~/assets/js/handleStorage.js'
 import btnGroup from '~/components/user/btnGroup.vue'
 import getCode from '~/components/user/getCode.vue'
 

@@ -4,7 +4,6 @@ import ajax from './ajax'
 /* 获取验证码 */
 export const getcode = (code) => ajax({
     url: '/user/handleEmail/getcode',
-    type: 'post',
     params: code
 })
 

@@ -46,7 +46,7 @@ module.exports = {
     "@nuxtjs/style-resources"
   ],
   styleResources: {
-    stylus: "./assets/mixin.styl"
+    stylus: "./assets/css/mixin.styl"
   },
   /*
    ** Axios module configuration

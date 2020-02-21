@@ -5,7 +5,7 @@ const { emailConfig, connectEmail, mailoptions } = require('../../../util/user')
 
 /* 处理验证码 */
 router.post("/getcode", async ctx => {
-  let { email, identity } = ctx.request.body;
+  let { email, identity } = ctx.query;
   ctx.session.code = null;
   let checkCode = emailConfig.code()
 

@@ -4,7 +4,7 @@
       <span class="to-register c_f ft_12 c_r"
             @click="changePath">{{pathName}}</span>
       <div class="header">
-        <img src="../assets/images/user/logo.png"
+        <img src="/images/user/logo.png"
              alt="">
       </div>
       <transition name="el-fade-in">
