@@ -1,17 +1,9 @@
 <template>
   <div class="user-action-container">
-    <el-menu ref="item"
-             mode="horizontal"
-             background-color="#141619"
-             menu-trigger="click"
-             active-text-color="#ffb848"
-             :unique-opened="true"
-             @open="openItem"
-             text-color="rgba(255,255,255,.6)">
+    <el-menu ref="item" mode="horizontal" background-color="#141619" menu-trigger="click" active-text-color="#ffb848" :unique-opened="true" @open="openItem" text-color="rgba(255,255,255,.6)">
       <el-submenu index="1">
         <template slot="title">
-          <el-badge class="item h_24 lh_24 "
-                    :value="3">
+          <el-badge class="item h_24 lh_24 " :value="3">
             <i class="icon iconfont icon-lingdang ft_24 c_f"></i>
           </el-badge>
         </template>
@@ -19,7 +11,7 @@
         <el-menu-item index="1-2">选项2</el-menu-item>
         <el-menu-item index="1-3">选项3</el-menu-item>
       </el-submenu>
-      <el-submenu index="2" >
+      <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-chat-dot-square ft_24 c_f"></i>
         </template>
@@ -31,19 +23,13 @@
         <template slot="title">
           <el-avatar src="/images/home/user_bg.png"></el-avatar>
         </template>
-        <el-menu-item :index="`3-${index}`"
-                      v-for="(item, index) in userSettingList"
-                      :key="index">
-          <nuxt-link :to="item.linkUrl"
-                     tag="div"
-                     class="w_100p">
-            <span class="icon iconfont mr_5"
-                  :class="item.icon"></span>
+        <el-menu-item :index="`3-${index}`" v-for="(item, index) in userSettingList" :key="index">
+          <nuxt-link :to="item.linkUrl" tag="div" class="w_100p">
+            <span class="icon iconfont mr_5" :class="item.icon"></span>
             <span>{{item.title}}</span>
           </nuxt-link>
         </el-menu-item>
-        <el-menu-item index="3-4"
-                      @click="_signOut">
+        <el-menu-item index="3-4" @click="_signOut">
           <span class="icon iconfont icon-084tuichu mr_5"></span>
           <span>
             退出
@@ -56,10 +42,10 @@
 
 <script>
 import { signOut } from '~/api'
-import ruleMixin from '~/assets/mixin/userRuleMixin'
+import userMixin from '~/assets/mixin/userMixin'
 
 export default {
-  mixins: [ruleMixin],
+  mixins: [userMixin],
   data () {
     return {
       timer: null,
@@ -92,8 +78,8 @@ export default {
       sessionStorage.removeItem('token')
       this.$router.replace('/user/login')
     },
-    open(){
-       window.open("https://lehu.hyfarsight.com","_blank", `width=800, height=500, top=${(window.screen.height-30-500)/2}, left=${(window.screen.width-10-800)/2}, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=yes`)
+    open () {
+      window.open("https://lehu.hyfarsight.com", "_blank", `width=800, height=500, top=${(window.screen.height - 30 - 500) / 2}, left=${(window.screen.width - 10 - 800) / 2}, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=yes`)
     }
   },
   beforeDestroy () {

@@ -32,13 +32,13 @@
 </template>
 
 <script>
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+import userMixin from "~/assets/mixin/userMixin.js"
+import dialogMixin from "~/assets/mixin/dialogMixin.js"
 import { checkCode, matchCode, resetPasswords } from '~/api'
 import successMasker from '~/components/user/jumpCountdown'
-import userMixin from '~/assets/mixin/user'
 
 export default {
-  mixins: [rulesMixin, userMixin],
+  mixins: [userMixin, dialogMixin],
   layout: "usersetting",
   components: {
     successMasker

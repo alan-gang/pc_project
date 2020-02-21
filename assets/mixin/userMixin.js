@@ -1,6 +1,20 @@
 let rulesMixin = {
   data () {
     return {
+      publicKey: `-----BEGIN PUBLIC KEY-----
+MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIGs2dvgRPJl/zMLAUeZgLP2ouCvuXcg
+65LI3KsUDl40UwATyxaX2ZxgytcrGFk8KRwcRiexEhbRlytedqbKVsMCAwEAAQ==
+-----END PUBLIC KEY-----`,
+      privateKey: `-----BEGIN RSA PRIVATE KEY-----
+MIIBOQIBAAJBAIGs2dvgRPJl/zMLAUeZgLP2ouCvuXcg65LI3KsUDl40UwATyxaX
+2ZxgytcrGFk8KRwcRiexEhbRlytedqbKVsMCAwEAAQJAdg98Dc5il1o7fSpQ0PI1
+liM/aVczgP1M3MfY+Dz7U9H5zzFHX3zasyFTu505i4Ia75DEU3Ik5MNAJsajC7Li
+KQIhANTmbAIJK0H5VPqYMvNKIPKcFcNghQzM5O6WCBx/Rff3AiEAm+1JhWfMQIXo
+zcH7yn4QWg6EjpfUK/Es3sWgp8seHJUCIACtz3BeOR4XvnaiH595AAvmBYe++g2l
+ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
++Bf8g9tQUSeiK6kGqKeZfbA49Qot3NWxA/VxGXI=
+-----END RSA PRIVATE KEY-----`,
+      jsencrypt: () => import('jsencrypt'),
       rules: {
         name: [
           { required: true, message: '帐户名称不能为空', trigger: 'blur' },
@@ -91,38 +105,22 @@ let rulesMixin = {
     }
   },
   methods: {
-    alert (message, type = "warning", duration = 2000) {
-      this.$message({
-        message,
-        type,
-        duration
-      });
-    },
     newLogin () {
       this.confirm('登录凭证失效，请从新登录', "warning", () => {
         this.$router.replace('/user/login')
       });
     },
-    confirm (messgae, type = "warning", callback) {
-      this.$alert(messgae, '温馨提示', {
-        confirmButtonText: '确定',
-        type,
-        callback
-      });
+    async  _getPublicKey (password) {
+      let { JSEncrypt } = await this.jsencrypt()
+      let encryptor = new JSEncrypt();
+      encryptor.setPublicKey(this.publicKey)
+      return encryptor.encrypt(password)
     },
-    prompt(message,callback) {
-      this.$confirm(message, '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        closeOnClickModal: false,
-        type: 'warning'
-      }).then(callback).catch(() => {
-        this.$message({
-          type: 'success',
-          message: '您是对的，三思而后行',
-          duration:1000
-        });
-      });
+    async _parsingKey (password) {
+      let { JSEncrypt } = await this.jsencrypt()
+      let decryptor = new JSEncrypt();
+      decryptor.setPrivateKey(this.privateKey);
+      return decryptor.decrypt(password)
     }
   }
 };

@@ -20,13 +20,13 @@
   </div>
 </template>
 <script>
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+import userMixin from "~/assets/mixin/userMixin.js"
+import dialogMixin from '~/assets/mixin/dialogMixin'
 import { loginUser } from '~/api'
-import userMixin from '~/assets/mixin/user'
 import { mapState } from 'vuex'
 
 export default {
-  mixins: [rulesMixin, userMixin],
+  mixins: [userMixin, dialogMixin],
   layout: "user",
   head: {
     title: '用户登录',

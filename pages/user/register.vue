@@ -36,13 +36,15 @@
 
 
 <script>
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import userMixin from '~/assets/mixin/user'
+import userMixin from '~/assets/mixin/userMixin'
+import dialogMixin from '~/assets/mixin/dialogMixin'
 import { getcode, registerUser } from '~/api'
 import getCode from '~/components/user/getCode.vue'
 
+
+
 export default {
-  mixins: [rulesMixin, userMixin],
+  mixins: [userMixin, dialogMixin],
   layout: "user",
   head: {
     title: '用户注册'

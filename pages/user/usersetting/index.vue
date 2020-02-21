@@ -144,8 +144,8 @@
 <script>
 
 import { mapState } from 'vuex'
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import userMixin from '~/assets/mixin/user'
+import userMixin from "~/assets/mixin/userMixin.js"
+import dialogMixin from "~/assets/mixin/dialogMixin.js"
 import { updateUser, delUser } from "~/api"
 import { gLS, sLS, cLS } from '~/assets/js/handleStorage.js'
 import btnGroup from '~/components/user/btnGroup.vue'
@@ -153,7 +153,7 @@ import getCode from '~/components/user/getCode.vue'
 
 
 export default {
-  mixins: [rulesMixin, userMixin],
+  mixins: [userMixin, dialogMixin],
   components: {
     btnGroup,
     getCode,

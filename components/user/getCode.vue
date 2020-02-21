@@ -6,9 +6,11 @@
 
 <script>
 import { getcode, getMobileCode } from '~/api'
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+import userMixin from "~/assets/mixin/userMixin.js"
+import dialogMixin from "~/assets/mixin/dialogMixin.js"
+
 export default {
-  mixins: [rulesMixin],
+  mixins: [userMixin, dialogMixin],
   props: {
     identity: String,
     email: String,
