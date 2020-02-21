@@ -56,7 +56,6 @@ let rulesMixin = {
               this.emailValidator = false
               return callback(new Error('邮箱不能为空'))
             }
-            setTimeout(() => {
               if (mailReg.test(value)) {
                 this.emailValidator = true
                 callback()
@@ -64,7 +63,6 @@ let rulesMixin = {
                 this.emailValidator = false
                 callback(new Error('请输入正确的邮箱格式'))
               }
-            }, 100)
           },
           trigger: ['blur', 'change']
         },
@@ -72,23 +70,19 @@ let rulesMixin = {
         mobile: [
           {
             validator: (rule, value, callback) => {
-
               const phoneReg = /^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/
 
               if (!value) {
                 this.isValidateMobile = false
                 return callback(new Error('电话号码不能为空'))
               }
-
-              setTimeout(() => {
-                if (phoneReg.test(value)) {
+              if (phoneReg.test(value)) {
                   this.isValidateMobile = true
                   callback()
                 } else {
                   this.isValidateMobile = false
                   callback(new Error('请输入正确的电话号码'))
                 }
-              }, 100)
             },
             trigger: ['blur', 'change']
           },
@@ -97,7 +91,7 @@ let rulesMixin = {
     }
   },
   methods: {
-    alert (message, type = "warning", duration = 1000) {
+    alert (message, type = "warning", duration = 2000) {
       this.$message({
         message,
         type,
@@ -114,6 +108,20 @@ let rulesMixin = {
         confirmButtonText: '确定',
         type,
         callback
+      });
+    },
+    prompt(message,callback) {
+      this.$confirm(message, '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type: 'warning'
+      }).then(callback).catch(() => {
+        this.$message({
+          type: 'success',
+          message: '您是对的，三思而后行',
+          duration:1000
+        });
       });
     }
   }

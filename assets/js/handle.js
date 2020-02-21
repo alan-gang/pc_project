@@ -1,3 +1,5 @@
+
+// 获取存储内容
 export const gLS = (val) => {
   if (process.client) {
     let data = localStorage[val] && JSON.parse(localStorage[val])
@@ -9,6 +11,7 @@ export const gLS = (val) => {
   }
 }
 
+/* 报错本地储存 */
 export const sLS = (key, val) => {
   if (process.client) {
     if (typeof val == 'object') {
@@ -16,5 +19,11 @@ export const sLS = (key, val) => {
     } else {
       localStorage[key] = val
     }
+  }
+}
+/* 清除本地存储 */
+export const cLS = (key) => {
+  if (process.client) {
+    localStorage.removeItem(key)
   }
 }

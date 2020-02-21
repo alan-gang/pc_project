@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="w_380 pl_10 pr_10 b_s mt_30 user-form">
-      <el-form-item v-if="!ruleForm.accountName && ruleForm.email" prop="email">
+      <el-form-item v-if="!ruleForm.accountName " prop="email">
         <el-input class="c_f_c ft_16" prefix-icon="el-icon-message" v-model="ruleForm.email" placeholder="Enter email login"></el-input>
       </el-form-item>
       <el-form-item v-else prop="accountName">
@@ -62,7 +62,7 @@ export default {
       let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
       let { code, data, message } = await loginUser({ name: this.ruleForm.email, password: encryptionPassword, accountName: this.ruleForm.accountName })
       if (code == 1) {
-        this.alert(message);
+        this.alert(message, 'warning', 1000);
       } else {
         let token = data.token;
         sessionStorage.token = token;
@@ -76,6 +76,7 @@ export default {
     },
     async _fillUserInfo () {
       let userInfo = localStorage.user && JSON.parse(localStorage.user)
+      if (!userInfo) return
       if (userInfo.accountName) {
         this.ruleForm.accountName = userInfo.accountName
       } else {

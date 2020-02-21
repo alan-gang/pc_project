@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const { userMode } = require('../../../model/user_model')
+const { userMode, delUserMode} = require('../../../model/user_model')
 const { generateToken, genertaePassword, analysisPassword } = require('../../../util/user')
 const fs = require('fs')
 const path = require('path')
@@ -39,13 +39,12 @@ router.post('/register', async ctx => {
     ctx.body = ctx.state.sendFrontEnd(null, '对不起，验证码不正确')
     return
   }
-  // let hasEmail = await userMode.findOne({ email })
   if (ctx.session.email != email) {
     ctx.body = ctx.state.sendFrontEnd(null, '对不起，邮箱错误')
     return
   }
-  password = await genertaePassword(password)
-  let saveStatus = await userMode.create({ password, email, identity })
+  let backendPassword = await genertaePassword(password)
+  let saveStatus = await userMode.create({ password: backendPassword, email, identity })
   let token = await generateToken(saveStatus);
   saveStatus.password = password
   ctx.session.user = saveStatus;
@@ -73,6 +72,19 @@ router.post('/signOut', jwt, async ctx => {
   ctx.session.token = null
   ctx.body = ctx.state.sendFrontEnd({ msg: '退出成功' })
 })
+
+/* 用户删除操作 */
+
+router.delete('/delUser', jwt, async ctx => {
+  const {_id} = ctx.query
+  ctx.session.user = null
+  ctx.session.token = null
+  let userInfo = await userMode.findOne({ _id })
+  let res = await Promise.all([delUserMode.create(JSON.parse(JSON.stringify(userInfo))), userMode.deleteOne({ _id })])
+  ctx.body = ctx.state.sendFrontEnd({ msg: '删除成功' })
+  // delete userInfo._id
+})
+
 
 /* 服务端数据获取 */
 
@@ -109,17 +121,14 @@ router.post("/updateUser", jwt, async ctx => {
       break;
   }
 
-
   let result = await userMode.findOneAndUpdate({ _id }, { $set: obj }, {
     new: true,
     upsert: true
   })
-
   ctx.session.user = result
   let token = await generateToken(result)
   ctx.session.token = token
   ctx.body = ctx.state.sendFrontEnd({ msg: '恭喜你，修改成功', token, user: result })
 })
-
 
 module.exports = router
