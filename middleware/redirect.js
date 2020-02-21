@@ -8,6 +8,6 @@ export default function ({ route, app, store, redirect, ctx, req, $axios, error 
       }
     }
   } else {
-    
+
   }
 }

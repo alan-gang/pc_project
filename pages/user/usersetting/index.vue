@@ -191,21 +191,14 @@ export default {
           this.form['checkPassword'] = ''
         }
 
-
         let res = await updateUser(data);
+        if (res.code != 0) return
 
         // 当用户名为账户邮箱密码的时候进行本地数据存储
         (data['accountName'] || this.temporaryPassword || this.form['email']) && this.isSaveUserName(formItem.length)
-
-        if (res.code == 1) {
-          res.status === 401 ? this.newLogin() : this.alert(res.message)
-          return
-        } else {
-          sessionStorage.token = res.data.token;
-          this.$store.commit('user/saveUserInfo', res.data.user);
-          this.alert(res.data.msg, 'success')
-        }
-
+        sessionStorage.token = res.data.token;
+        this.$store.commit('user/saveUserInfo', res.data.user);
+        this.alert(res.data.msg, 'success')
         this.activeNames = '0'
         this.isDisabled = true
 

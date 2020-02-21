@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-const { userMode, delUserMode} = require('../../../model/user_model')
+const { userMode, delUserMode } = require('../../../model/user_model')
 const { generateToken, genertaePassword, analysisPassword } = require('../../../util/user')
 const fs = require('fs')
 const path = require('path')
@@ -76,7 +76,7 @@ router.post('/signOut', jwt, async ctx => {
 /* 用户删除操作 */
 
 router.delete('/delUser', jwt, async ctx => {
-  const {_id} = ctx.query
+  const { _id } = ctx.query
   ctx.session.user = null
   ctx.session.token = null
   let userInfo = await userMode.findOne({ _id })
