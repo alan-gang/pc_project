@@ -41,8 +41,6 @@ import dialogMixin from '~/assets/mixin/dialogMixin'
 import { getcode, registerUser } from '~/api'
 import getCode from '~/components/user/getCode.vue'
 
-
-
 export default {
   mixins: [userMixin, dialogMixin],
   layout: "user",
@@ -83,7 +81,7 @@ export default {
           } else {
             sessionStorage.token = data.token
             this.$store.commit('user/saveUserInfo', data.user)
-            this.$router.replace('/user/usersetting')
+            this.$router.replace('/user/usersetting/userMessage')
           }
           this.isLoading = false
         } else {

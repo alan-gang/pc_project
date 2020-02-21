@@ -11,8 +11,10 @@ const userSchema = new mongoose.Schema({
   "classClassify": { type: String },
   "accountName": { type: String },
   "nickName": { type: String },
+  "username": { type: String, default: '' },
   "mobile": { tyle: String }
 })
+
 const delUserSchema = new mongoose.Schema({
   "identity": { type: String },
   "email": { type: String },
@@ -22,6 +24,7 @@ const delUserSchema = new mongoose.Schema({
   "classClassify": { type: String },
   "accountName": { type: String },
   "nickName": { type: String },
+  "username": { type: String, default: '' },
   "mobile": { tyle: String }
 })
 

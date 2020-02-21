@@ -41,7 +41,6 @@ export default {
         this.sendData = { mobile: this.mobile, identity: this.identity }
       }
 
-
       /* 当没有验证通过时候，无法进行验证获取 */
       if (!this.isValidate || !this.identity) {
         this.alert(this.msg)
@@ -60,11 +59,10 @@ export default {
       }, 1000);
 
       let { code, data, status, message } = await this.url(this.sendData);
-      if (status == 401) {
-        this.alert('频率过快,绑定手机失败', 'warning')
-        return
+
+      if (code == 0) {
+        this.alert(data.msg, this.identity == 1 ? 'success' : 'warning')
       }
-      code === 0 ? this.alert(data.msg, this.identity == 1 ? 'success' : 'warning') : this.alert(message, 'warning');
     }
   },
 }

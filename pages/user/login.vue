@@ -70,7 +70,7 @@ export default {
         this.ruleForm.email ? obj.email = this.ruleForm.email : obj.accountName = this.ruleForm.accountName
         this.saveSing && (localStorage.user = JSON.stringify(obj))
         this.$store.commit('user/saveUserInfo', data.user);
-        this.UserInfo.classClassify || (this.UserInfo.identity == '2') ? this.$router.push('/') : this.$router.push("/user/usersetting")
+        (this.UserInfo.username && this.UserInfo.className) || (this.UserInfo.identity == '2') ? this.$router.push('/') : this.$router.push("/user/usersetting/userMessage")
       }
       this.loading = false
     },

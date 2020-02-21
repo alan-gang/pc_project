@@ -15,7 +15,32 @@ ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
 +Bf8g9tQUSeiK6kGqKeZfbA49Qot3NWxA/VxGXI=
 -----END RSA PRIVATE KEY-----`,
       jsencrypt: () => import('jsencrypt'),
+      isSaveUserName: true,
       rules: {
+        username: [
+          {
+            validator: (rule, value, callback) => {
+              const userReg = /[\u4e00-\u9fa5]/gm
+
+              if (!value) {
+                this.isSaveUserName = true
+                return callback(new Error('姓名不能为空'))
+              }
+              if (value.length < 2 || value.length > 5) {
+                this.isSaveUserName = true
+                return callback(new Error('姓名长度不正确'))
+              }
+              if (userReg.test(value)) {
+                this.isSaveUserName = false
+                callback()
+              } else {
+                this.isSaveUserName = false
+                callback(new Error('请输入正确的姓名格式'))
+              }
+            },
+            trigger: ['blur', 'change']
+          },
+        ],
         name: [
           { required: true, message: '帐户名称不能为空', trigger: 'blur' },
           { min: 6, max: 15, message: '长度在 6 到 15个字符', trigger: 'blur' }
@@ -70,13 +95,13 @@ ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
               this.emailValidator = false
               return callback(new Error('邮箱不能为空'))
             }
-              if (mailReg.test(value)) {
-                this.emailValidator = true
-                callback()
-              } else {
-                this.emailValidator = false
-                callback(new Error('请输入正确的邮箱格式'))
-              }
+            if (mailReg.test(value)) {
+              this.emailValidator = true
+              callback()
+            } else {
+              this.emailValidator = false
+              callback(new Error('请输入正确的邮箱格式'))
+            }
           },
           trigger: ['blur', 'change']
         },
@@ -91,12 +116,12 @@ ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
                 return callback(new Error('电话号码不能为空'))
               }
               if (phoneReg.test(value)) {
-                  this.isValidateMobile = true
-                  callback()
-                } else {
-                  this.isValidateMobile = false
-                  callback(new Error('请输入正确的电话号码'))
-                }
+                this.isValidateMobile = true
+                callback()
+              } else {
+                this.isValidateMobile = false
+                callback(new Error('请输入正确的电话号码'))
+              }
             },
             trigger: ['blur', 'change']
           },

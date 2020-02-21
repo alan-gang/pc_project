@@ -3,7 +3,6 @@
 
 
 export default ({ app, store }) => {
-
   app.router.beforeEach((to, from, next) => {
     if (process.client) {
       // let userInfo = localStorage.userInfo;

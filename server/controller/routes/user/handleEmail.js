@@ -4,14 +4,14 @@ const { emailConfig, connectEmail, mailoptions } = require('../../../util/user')
 
 
 /* 处理验证码 */
-router.post("/getcode", async ctx => {
+router.get("/getcode", async ctx => {
   let { email, identity } = ctx.query;
   ctx.session.code = null;
   let checkCode = emailConfig.code()
 
   let user = await userMode.findOne({ email })
   if (user) {
-     ctx.body = ctx.state.sendFrontEnd(null, '当前邮箱已经注册过账户，请重新选择')
+    ctx.body = ctx.state.sendFrontEnd(null, '当前邮箱已经注册过账户，请重新选择')
     return
   }
 

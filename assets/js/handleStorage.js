@@ -21,6 +21,7 @@ export const sLS = (key, val) => {
     }
   }
 }
+
 /* 清除本地存储 */
 export const cLS = (key) => {
   if (process.client) {
