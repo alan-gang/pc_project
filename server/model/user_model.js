@@ -12,7 +12,9 @@ const userSchema = new mongoose.Schema({
   "accountName": { type: String },
   "nickName": { type: String },
   "username": { type: String, default: '' },
-  "mobile": { tyle: String }
+  "mobile": { tyle: String },
+  "marriage": { type: String, default: '2' },
+  "dateBirth": { type: String }
 })
 
 const delUserSchema = new mongoose.Schema({
@@ -25,7 +27,9 @@ const delUserSchema = new mongoose.Schema({
   "accountName": { type: String },
   "nickName": { type: String },
   "username": { type: String, default: '' },
-  "mobile": { tyle: String }
+  "mobile": { tyle: String },
+  "marriage": { type: String },
+  "dateBirth": { type: String }
 })
 
 

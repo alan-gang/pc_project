@@ -61,9 +61,7 @@ export default {
     async _sendUserInfo () {
       let encryptionPassword = await this._getPublicKey(this.ruleForm.password)
       let { code, data, message } = await loginUser({ name: this.ruleForm.email, password: encryptionPassword, accountName: this.ruleForm.accountName })
-      if (code == 1) {
-        this.alert(message, 'warning', 1000);
-      } else {
+      if (code == 0) {
         let token = data.token;
         sessionStorage.token = token;
         let obj = { password: encryptionPassword }

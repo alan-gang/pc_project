@@ -15,26 +15,22 @@ ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
 +Bf8g9tQUSeiK6kGqKeZfbA49Qot3NWxA/VxGXI=
 -----END RSA PRIVATE KEY-----`,
       jsencrypt: () => import('jsencrypt'),
-      isSaveUserName: true,
+      usernameIsDisabled: true,
       rules: {
         username: [
           {
             validator: (rule, value, callback) => {
-              const userReg = /[\u4e00-\u9fa5]/gm
+              const userReg = /^[\u4E00-\u9FA5]{2,4}$/
 
               if (!value) {
-                this.isSaveUserName = true
+                this.usernameIsDisabled = true
                 return callback(new Error('姓名不能为空'))
               }
-              if (value.length < 2 || value.length > 5) {
-                this.isSaveUserName = true
-                return callback(new Error('姓名长度不正确'))
-              }
               if (userReg.test(value)) {
-                this.isSaveUserName = false
+                this.usernameIsDisabled = false
                 callback()
               } else {
-                this.isSaveUserName = false
+                this.usernameIsDisabled = true
                 callback(new Error('请输入正确的姓名格式'))
               }
             },
