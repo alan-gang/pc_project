@@ -73,20 +73,26 @@ export const updateUser = (data) => ajax({
 /* 获取手机验证码 */
 
 export const getMobileCode = (params) => ajax({
-  url: '/user/handleMobile/getMobileCode',
-  params,
-  config: {
-    isLoading: false
-  }
+    url: '/user/handleMobile/getMobileCode',
+    params,
+    config: {
+        isLoading: false
+    }
 })
 
 /* 用户删除操作 */
 
 export const delUser = (params) => ajax({
-  url: '/user/useradmin/delUser',
-  params,
-  type: 'delete',
-  config: {
-    isLoading: true
-  }
+    url: '/user/useradmin/delUser',
+    params,
+    type: 'delete',
+    config: {
+        isLoading: true
+    }
+})
+
+// 获取家乡地址
+export const getAddress = (url, params) => ajax({
+    url: `/getAddress/area/${url}`,
+    params: Object.assign(params, { appkey: "4b775b74c1af75ba" }),
 })

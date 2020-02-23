@@ -62,24 +62,27 @@
           </el-form-item>
         </el-col>
         <!--出生日期结束-->
-
+        <!--毕业时间开始-->
         <el-col :span="6" :push="8">
           <el-form-item label="毕业时间" class="w_100p">
-            <el-date-picker class="ml_20" v-model="form.graduationTime" type="date" placeholder="选择大学/高中毕业时间">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" @change=" _updateUser('graduationTime',{graduationTime:form.graduationTime})"  class="ml_20" v-model="form.graduationTime" type="date" placeholder="选择大学/高中毕业时间" value-format="timestamp">
             </el-date-picker>
           </el-form-item>
         </el-col>
+         <!--毕业时间结束-->
       </el-row>
       <el-row>
+        <!--家乡开始-->
         <el-col :span="6">
           <el-form-item label="家乡" class="w_100p">
-            <el-cascader :props="props" class="ml_20" placeholder="请输入你的家乡" v-model="form.home"></el-cascader>
+            <el-cascader :props="props" class="ml_20" placeholder="请输入你的家乡" @visible-change="(falg)=>isRequset=falg" v-model="form.home"></el-cascader>
             <!-- :value="form.home" -->
           </el-form-item>
         </el-col>
+        <!--家乡结束-->
         <el-col :span="6" :push="8">
           <el-form-item label="现居住地" class="w_100p">
-            <el-cascader :props="props" class="ml_20" placeholder="请输入你当前的居住地址" v-model="form.home"></el-cascader>
+            <el-cascader  class="ml_20" placeholder="请输入你当前的居住地址" v-model="form.currentHome"></el-cascader>
           </el-form-item>
         </el-col>
       </el-row>
@@ -100,7 +103,7 @@
       <el-row>
         <el-col :span="6">
           <el-form-item label="所在班级" class="w_100p">
-            <el-cascader :props="props" class="ml_20" placeholder="请输入你的班级/专业" v-model="form.class"></el-cascader>
+            <el-cascader  class="ml_20" placeholder="请输入你的班级/专业" v-model="form.class"></el-cascader>
           </el-form-item>
         </el-col>
         <el-col :span="10" :push="8">
@@ -163,7 +166,7 @@
 
 import userMixin from "~/assets/mixin/userMixin.js"
 import dialogMixin from "~/assets/mixin/dialogMixin.js"
-import { updateUser } from '~/api'
+import { updateUser,getAddress } from '~/api'
 
 
 let id = 0;
@@ -176,20 +179,24 @@ export default {
       useNameLogin: false,
       form: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
       props: {
-        lazy: true,
-        lazyLoad (node, resolve) {
+        lazy: true,//开启动态加载
+        lazyLoad: async  (node, resolve)=> { //设置加载数据源的方法
+          console.log(this.isRequset)
+          return;
           const { level } = node;
-          setTimeout(() => {
-            const nodes = [1, 2, 3, 4, 5]
-              .map(item => ({
-                value: ++id,
-                label: `选项${id}`,
-                leaf: level >= 2
-              }));
-            resolve(nodes);
-          }, 200);
+          let res =await this._getAddress(level)
+        //   setTimeout(() => {
+        //     const nodes = [1, 2, 3, 4, 5]
+        //       .map(item => ({
+        //         value: ++id,
+        //         label: `选项${id}`,
+        //         leaf: level >= 2
+        //       }));
+            resolve(res);
+        //   }, 200);
         }
-      }
+      },
+      isRequset:false
     };
   },
   methods: {
@@ -205,6 +212,13 @@ export default {
     },
     goHome () {
 
+    },
+    async _getAddress(node,resolve){
+        console.log(node,resolve)
+        // let nodes = ["province","city","town"];
+        // let appkey = "4b775b74c1af75ba";
+        // let res = await getAddress(nodes[level],{parentid});
+        // console.log(res)
     }
   }
 }

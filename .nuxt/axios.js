@@ -134,7 +134,7 @@ const setupProgress = (axios) => {
 export default (ctx, inject) => {
   // baseURL
   const baseURL = process.browser
-      ? 'http://localhost:5000/'
+      ? '/'
       : (process.env._AXIOS_BASE_URL_ || 'http://localhost:5000/')
 
   // Create fresh objects for all default header scopes
