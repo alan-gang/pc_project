@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema({
     "mobile": { tyle: String },
     "marriage": { type: String, default: '2' },
     "dateBirth": { type: String },
-    "graduationTime": { type: String }
+    "graduationTime": { type: String },
+    "address": { type: String },
+    "currentAddress": { type: String },
+
 })
 
 const delUserSchema = new mongoose.Schema({
@@ -31,7 +34,10 @@ const delUserSchema = new mongoose.Schema({
     "mobile": { tyle: String },
     "marriage": { type: String },
     "dateBirth": { type: String },
-    "graduationTime": { type: String }
+    "graduationTime": { type: String },
+    "address": { type: String },
+    "currentAddress": { type: String },
+
 })
 
 

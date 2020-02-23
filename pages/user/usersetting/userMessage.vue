@@ -74,17 +74,15 @@
       <el-row>
         <!--家乡开始-->
         <el-col :span="6">
-          <el-form-item label="家乡" class="w_100p">
-            <el-cascader :props="props" class="ml_20" placeholder="请输入你的家乡" @visible-change="(falg)=>isRequset=falg" v-model="form.home"></el-cascader>
-            <!-- :value="form.home" -->
-          </el-form-item>
+          <vAddress currentVal="请输入你的家乡" :val="form.address" label="家乡"  @postArea=" (address)=>_updateUser('address',{address})"/>
         </el-col>
         <!--家乡结束-->
+
+        <!-- 现居地开始 -->
         <el-col :span="6" :push="8">
-          <el-form-item label="现居住地" class="w_100p">
-            <el-cascader class="ml_20" placeholder="请输入你当前的居住地址" v-model="form.currentHome"></el-cascader>
-          </el-form-item>
+          <vAddress currentVal="请输入你当前的居住地址" :val="form.currentAddress" label="现居地" @postArea="(currentAddress)=> _updateUser('currentAddress',{currentAddress})"/>
         </el-col>
+        <!-- 现居地结束 -->
       </el-row>
       <el-row>
         <el-col :span="6">
@@ -166,29 +164,15 @@
 
 import userMixin from "~/assets/mixin/userMixin.js"
 import dialogMixin from "~/assets/mixin/dialogMixin.js"
-import { updateUser, getAddress } from '~/api'
+import vAddress from '~/components/user/getAddress.vue'
+import { updateUser } from '~/api'
 
 
 let id = 0;
 export default {
   mixins: [userMixin, dialogMixin],
-  beforeMount () {
-    this.props = {
-      lazy: true,//开启动态加载
-      lazyLoad: async (node, resolve) => { //设置加载数据源的方法
-        const { level } = node;
-        let res = await this._getAddress(level)
-        //   setTimeout(() => {
-        //     const nodes = [1, 2, 3, 4, 5]
-        //       .map(item => ({
-        //         value: ++id,
-        //         label: `选项${id}`,
-        //         leaf: level >= 2
-        //       }));
-        resolve(res);
-        //   }, 200);
-      }
-    }
+  components: {
+    vAddress
   },
   data () {
     return {
@@ -196,13 +180,9 @@ export default {
       visitDisabled: true,
       useNameLogin: false,
       form: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
-      props: null,
-      isRequset: false
     };
   },
   methods: {
-    handleChange (val) {
-    },
     async  _updateUser (type, params) {
       let res = await updateUser(params);
       if (res.code != 0) return
@@ -210,15 +190,7 @@ export default {
       this.$store.commit('user/saveUserInfo', res.data.user);
       this.alert(res.data.msg, 'success')
     },
-    goHome () {
-
-    },
-    async _getAddress (level, parentid = null) {
-      let lists = ["province", "city", "town"];
-      // let appkey = "4b775b74c1af75ba";
-      let { result } = await getAddress(lists[level], { parentid });
-      console.log(result)
-    }
+    goHome() {}
   }
 }
 </script>
