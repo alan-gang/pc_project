@@ -1,15 +1,11 @@
 <template>
   <div class="user-wrapper bgc_u_b">
     <div class="form-box w_400 mg_0a pt_40">
-      <span class="to-register c_f ft_12 c_r"
-            @click="changePath">{{pathName}}</span>
+      <span class="to-register c_f ft_12 c_r" @click="changePath">{{pathName}}</span>
       <div class="header">
-        <img src="/images/user/logo.png"
-             alt="">
+        <img src="/images/user/logo.png" alt="">
       </div>
-      <transition name="el-fade-in">
-        <nuxt />
-      </transition>
+      <nuxt />
     </div>
   </div>
 </template>

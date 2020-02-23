@@ -347,3 +347,10 @@ absolute(l = 50%, t = 50%, b = auto, r = auto) {
     transform: translate(-50%, -50%);
   }
 }
+/* 全局page动画 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.1s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}

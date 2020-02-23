@@ -23,6 +23,12 @@ axios.interceptors.response.use(function (response) {
     const store = $nuxt.$store
     store.commit('changLoadingMasker', false)
   }
+
+  /* 处理省市区三级联动菜单 */
+  if (response.data.msg == 'ok') {
+    response.data.code = 0;
+  }
+
   /* 请求错误处理内容 */
   if (response.data.code !== 0) {
     let message = response.data.message

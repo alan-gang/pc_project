@@ -47,6 +47,7 @@ export default {
   head: {
     title: '用户注册'
   },
+  transition: 'fade',
   components: {
     getCode
   },
