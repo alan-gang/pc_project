@@ -1,6 +1,6 @@
 <template>
   <el-form-item :label="label " class="w_100p">
-    <el-cascader ref="area" :props="cityData" class="ml_20" :class="{demo:val}" :placeholder="val?val:currentVal" v-model="value"></el-cascader>
+    <el-cascader ref="area" :props="cityData" class="ml_20" :class="{normal:val}" :placeholder="val?val:currentVal" v-model="value"></el-cascader>
   </el-form-item>
 </template>
 
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-  .demo {
+  .normal {
    /deep/ input::-webkit-input-placeholder {
         color: #606266 !important;
       }

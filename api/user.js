@@ -54,10 +54,6 @@ export const signOut = () => ajax({
   }
 })
 
-/* 服务端获取用户内容 */
-export const initUser = (axios) => {
-  return axios.$get('/user/useradmin/initUser')
-}
 
 
 /* 修改并且填充用户数据 */

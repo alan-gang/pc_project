@@ -74,30 +74,37 @@
       <el-row>
         <!--家乡开始-->
         <el-col :span="6">
-          <vAddress currentVal="请输入你的家乡" :val="form.address" label="家乡"  @postArea=" (address)=>_updateUser('address',{address})"/>
+          <vAddress currentVal="请输入你的家乡" :val="form.address" label="家乡" @postArea=" (address)=>_updateUser('address',{address})" />
         </el-col>
         <!--家乡结束-->
 
         <!-- 现居地开始 -->
         <el-col :span="6" :push="8">
-          <vAddress currentVal="请输入你当前的居住地址" :val="form.currentAddress" label="现居地" @postArea="(currentAddress)=> _updateUser('currentAddress',{currentAddress})"/>
+          <vAddress currentVal="请输入你当前的居住地址" :val="form.currentAddress" label="现居地" @postArea="(currentAddress)=> _updateUser('currentAddress',{currentAddress})" />
         </el-col>
         <!-- 现居地结束 -->
       </el-row>
+
       <el-row>
+        <!-- 入学时间开始 -->
         <el-col :span="6">
           <el-form-item label="入学时间" class="w_100p">
-            <el-date-picker class="ml_20" v-model="form.enterTime" type="date" placeholder="选择入学时间">
+            <el-date-picker class="ml_20" :class="{warning:!form.enterScollTime}" v-model="form.enterScollTime" type="date" readonly placeholder="班主任进行入学时间确认" @change=" _updateUser('enterScollTime',{enterScollTime:form.enterScollTime})" >
             </el-date-picker>
           </el-form-item>
         </el-col>
+        <!-- 入学时间结束 -->
+
+           <!-- 离校时间开始 -->
         <el-col :span="6" :push="8">
           <el-form-item label="离校时间" class="w_100p">
-            <el-date-picker class="ml_20" v-model="form.leaveTime" type="date" placeholder="选择离校时间">
+            <el-date-picker class="ml_20"  :class="{warning:!form.leaveSchollTime}" v-model="form.leaveSchollTime" type="date" readonly placeholder="班主任进行离校时间确认" @change=" _updateUser('leaveSchollTime',{leaveSchollTime:form.leaveSchollTime})" >
             </el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
+       <!-- 离校时间结束-->
+       
       <el-row>
         <el-col :span="6">
           <el-form-item label="所在班级" class="w_100p">
@@ -190,7 +197,7 @@ export default {
       this.$store.commit('user/saveUserInfo', res.data.user);
       this.alert(res.data.msg, 'success')
     },
-    goHome() {}
+    goHome () { }
   }
 }
 </script>

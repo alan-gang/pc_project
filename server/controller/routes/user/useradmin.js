@@ -86,13 +86,6 @@ router.delete('/delUser', jwt, async ctx => {
 })
 
 
-/* 服务端数据获取 */
-
-router.get('/initUser', jwt, async ctx => {
-  ctx.body = ctx.state.sendFrontEnd({ user: ctx.session.user })
-})
-
-
 // 修改并添加用户信息
 router.post("/updateUser", jwt, async ctx => {
   let _id = ctx.state.user._id
