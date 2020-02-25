@@ -155,12 +155,12 @@
 
               <!-- 按钮 -->
               <template slot="suffix">
-                <div v-if="activeIndex !== 3" class="c_e c_r" @click="$refs.wechat.focus()">
+                <div v-if="activeIndex !== 4" class="c_e c_r" @click="$refs.qq.focus()">
                   <i class="icon iconfont icon-write_fill"></i>
                   <span>修改</span>
                 </div>
                 <div v-else>
-                  <el-button type="text" :disabled="isInputDisabled" @click="activeIndex=1 && _updateUser('wechat',{wechat:form.wechat})">保存</el-button>
+                  <el-button type="text" :disabled="isInputDisabled" @click="activeIndex=1 && _updateUser('qq',{qq:form.qq})">保存</el-button>
                   <el-link @click="(activeIndex=-1,isInputDisabled = true)">取消</el-link>
                 </div>
               </template>
@@ -202,7 +202,6 @@ export default {
   data () {
     return {
       activeIndex: -1,
-      visitDisabled: true,
       useNameLogin: false,
       classOptions: null,
       form: JSON.parse(JSON.stringify(this.$store.state.user.UserInfo)),
@@ -222,6 +221,11 @@ export default {
       this.classOptions = classLists;
     },
     goHome () { }
+  },
+  computed:{
+      visitDisabled(){
+          return !Boolean(this.form.username && this.form.className)
+      }
   }
 }
 </script>
