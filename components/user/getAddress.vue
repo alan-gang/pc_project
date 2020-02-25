@@ -55,7 +55,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
+<style  lang="stylus">
   .normal {
    /deep/ input::-webkit-input-placeholder {
         color: #606266 !important;

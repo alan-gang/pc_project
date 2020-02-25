@@ -15,7 +15,7 @@ ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
 +Bf8g9tQUSeiK6kGqKeZfbA49Qot3NWxA/VxGXI=
 -----END RSA PRIVATE KEY-----`,
       jsencrypt: () => import('jsencrypt'),
-      usernameIsDisabled: true,
+      isInputDisabled: true,
       rules: {
         username: [
           {
@@ -23,15 +23,35 @@ ZaGBJvt4SG/XAiA2h4IppEYa3nmu00MB6po/VEppL5GkmGAvu/9WDsOGDQIgJdXi
               const userReg = /^[\u4E00-\u9FA5]{2,4}$/
 
               if (!value) {
-                this.usernameIsDisabled = true
+                this.isInputDisabled = true
                 return callback(new Error('姓名不能为空'))
               }
               if (userReg.test(value)) {
-                this.usernameIsDisabled = false
+                this.isInputDisabled = false
                 callback()
               } else {
-                this.usernameIsDisabled = true
+                this.isInputDisabled = true
                 callback(new Error('请输入正确的姓名格式'))
+              }
+            },
+            trigger: ['blur', 'change']
+          },
+        ],
+        wechat: [
+          {
+            validator: (rule, value, callback) => {
+              const wechatRule = /^[a-zA-Z]{1}[-_a-zA-Z0-9]{5,19}$/;
+
+              if (!value) {
+                this.isInputDisabled = true
+                return callback(new Error('还没有填写微信账号'))
+              }
+              if (wechatRule.test(value)) {
+                this.isInputDisabled = false
+                callback()
+              } else {
+                this.isInputDisabled = true
+                callback(new Error('请输入正确的微信账户格式'))
               }
             },
             trigger: ['blur', 'change']

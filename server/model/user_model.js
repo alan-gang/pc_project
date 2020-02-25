@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   "currentAddress": { type: String },
   "enterScollTime": { type: String },
   "leaveSchollTime": { type: String },
+  "className": { type: String },
 
 })
 
@@ -41,6 +42,7 @@ const delUserSchema = new mongoose.Schema({
   "currentAddress": { type: String },
   "enterScollTime": { type: String },
   "leaveSchollTime": { type: String },
+  "className": { type: String },
 
 })
 
