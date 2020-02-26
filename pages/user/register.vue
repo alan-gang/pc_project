@@ -16,7 +16,7 @@
         <el-input class="c_f_c ft_16" prefix-icon="el-icon-paperclip" v-model="form.code" placeholder="Code"></el-input>
 
         <!-- 邮箱组件-->
-        <get-code :emailValidator="emailValidator" :identity="form.identity" :email="form.email" class="p_a p_r_0 p_t_1"></get-code>
+        <get-code :isValidate="emailValidator" :identity="form.identity" :email="form.email" type="email" class="p_a p_r_0 p_t_1"></get-code>
 
       </el-form-item>
       <el-form-item class="mt_20" prop="password">
@@ -36,17 +36,18 @@
 
 
 <script>
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
-import userMixin from '~/assets/mixin/user'
+import userMixin from '~/assets/mixin/userMixin'
+import dialogMixin from '~/assets/mixin/dialogMixin'
 import { getcode, registerUser } from '~/api'
 import getCode from '~/components/user/getCode.vue'
 
 export default {
-  mixins: [rulesMixin, userMixin],
+  mixins: [userMixin, dialogMixin],
   layout: "user",
   head: {
     title: '用户注册'
   },
+  transition: 'fade',
   components: {
     getCode
   },
@@ -81,7 +82,7 @@ export default {
           } else {
             sessionStorage.token = data.token
             this.$store.commit('user/saveUserInfo', data.user)
-            this.$router.replace('/user/usersetting')
+            this.$router.replace('/user/usersetting/userMessage')
           }
           this.isLoading = false
         } else {

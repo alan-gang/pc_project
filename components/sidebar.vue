@@ -1,43 +1,23 @@
 <template>
   <div class="aside-container">
-    <el-menu :default-active="activeIndex"
-             class="asside-container"
-             :unique-opened="true"
-             @open="handleClick"
-             @close="handleClick"
-             background-color="#1F262D"
-             text-color="rgba(255,255,255,.6)"
-             active-text-color="#ffb848"
-             :collapse="isCollapse">
+    <el-menu :default-active="activeIndex" class="asside-container" :unique-opened="true" @open="handleClick" @close="handleClick" background-color="#1F262D" text-color="rgba(255,255,255,.6)" active-text-color="#ffb848" :collapse="isCollapse">
       <el-menu-item class="first">
         <i class="small-logo"></i>
-        <img class="mt_5"
-             src="/images/home/logo.png"
-             slot="title">
+        <img class="mt_5" src="/images/home/logo.png" slot="title">
         <span slot="title"></span>
       </el-menu-item>
-      <el-submenu :index="`${index}`"
-                  v-for="(item,index) in sidebarList.contentList"
-                  :key="item.title"
-                  :popper-class="!item.lists.length?'hide':''"
-                  :class="{empty:!item.lists.length}">
-        <template slot="title"
-                  v-if="!item.lists.length">
-          <nuxt-link :to="item.linkUrl"
-                     tag="div">
-            <i class="icon iconfont"
-               :class="`${item.icon}`"></i>
+      <el-submenu :index="`${index}`" v-for="(item,index) in sidebarList" :key="item.title" :popper-class="!item.lists.length?'hide':''" :class="{empty:!item.lists.length}">
+        <template slot="title" v-if="!item.lists.length">
+          <nuxt-link :to="item.linkUrl" tag="div">
+            <i class="icon iconfont" :class="`${item.icon}`"></i>
             <span class="pl_5">{{item.title}}</span>
           </nuxt-link>
         </template>
-        <template slot="title"
-                  v-else>
-          <i class="icon iconfont"
-             :class="`${item.icon}`"></i>
+        <template slot="title" v-else>
+          <i class="icon iconfont" :class="`${item.icon}`"></i>
           <span class="pl_5">{{item.title}}</span>
         </template>
-        <el-menu-item-group v-for="(section, sIndex) in item.lists"
-                            :key="sIndex">
+        <el-menu-item-group v-for="(section, sIndex) in item.lists" :key="sIndex">
           <el-menu-item :index="`${index}-${sIndex}`">{{section.title}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
@@ -64,8 +44,16 @@ export default {
   computed: {
     ...mapState({
       isCollapse: (state) => state.home.isCollapse,
-      sidebarList: (state) => state.home.sidebarList
-    })
+      userInfo: (state) => state.user.UserInfo
+    }),
+    sidebarList () {
+      let arr = JSON.parse(JSON.stringify(this.$store.state.home.sidebarList.contentList))
+      if (!this.userInfo.username) {
+        let t = arr.splice(0, 1)
+        arr.splice(1, 0, ...t)
+      }
+      return arr
+    }
   }
 }
 </script>

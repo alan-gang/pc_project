@@ -19,7 +19,6 @@
     flex(flex-start);
   }
 }
-
 .userinfo-container {
   >>>.el-collapse {
     border: none;
@@ -53,5 +52,13 @@
   }
   >>>.el-collapse-item__wrap {
     border: none;
+  }
+  >>>.el-cascader>.el-input--suffix {
+    width: 220px;
+  }
+}
+.warning {
+  /deep/ input::-webkit-input-placeholder {
+    color: red !important;
   }
 }

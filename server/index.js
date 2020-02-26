@@ -3,6 +3,7 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const koajwt = require('koa-jwt');
 const app = new Koa()
+const Redis = require('koa-redis')
 
 /* 处理psot请求 */
 const bodyParser = require('koa-bodyparser');
@@ -11,17 +12,20 @@ app.use(bodyParser())
 
 /* 全局使用session ================*/
 const session = require('koa-session');
-app.keys = ['some secret hurr'];
+app.keys = ['secrt'];
 const CONFIG = {
-  key: 'sessionKey', //cookie key (default is koa:sess)
+  key: 'session',
   maxAge: 86400000,
-  overwrite: true, //是否可以overwrite
-  httpOnly: true, //cookie是否只有服务器端可以访问 httpOnly or not (default true)
-  signed: true, //签名默认true
+  overwrite: true,
+  httpOnly: true,
+  signed: true,
   renew: false,
+  store: new Redis({
+    port: 6379,
+    host: '123.56.119.225',
+  })
 };
 app.use(session(CONFIG, app));
-/* ======================= */
 
 
 /* 使用错误处理 */

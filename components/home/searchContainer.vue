@@ -57,11 +57,14 @@ export default {
                       color #fff
 </style>
 
-<style scoped>
-.el-input__inner::placeholder {
-  color: #ffffff;
-}
-.el-input__inner::-webkit-input-placeholder {
-  color: #ffffff;
-}
+<style scoped lang="stylus">
+    /deep/ input::-webkit-input-placeholder {
+        color: red !important;
+      }
+      /deep/ input::-moz-input-placeholder {
+        color: red !important;
+      }
+      /deep/ input::-ms-input-placeholder {
+        color: red !important;
+      }
 </style>

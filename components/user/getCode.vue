@@ -6,9 +6,11 @@
 
 <script>
 import { getcode, getMobileCode } from '~/api'
-import rulesMixin from "~/assets/mixin/userRuleMixin.js"
+import userMixin from "~/assets/mixin/userMixin.js"
+import dialogMixin from "~/assets/mixin/dialogMixin.js"
+
 export default {
-  mixins: [rulesMixin],
+  mixins: [userMixin, dialogMixin],
   props: {
     identity: String,
     email: String,
@@ -56,8 +58,11 @@ export default {
         this.countDown--
       }, 1000);
 
-      let { code, data, message } = await this.url(this.sendData);
-      code === 0 ? this.alert(data.msg, this.identity == 1 ? 'success' : 'warning') : this.alert('频率过快,绑定手机失败', 'warning');
+      let { code, data, status, message } = await this.url(this.sendData);
+
+      if (code == 0) {
+        this.alert(data.msg, this.identity == 1 ? 'success' : 'warning')
+      }
     }
   },
 }
