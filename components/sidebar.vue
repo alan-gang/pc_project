@@ -48,11 +48,9 @@ export default {
     }),
     sidebarList () {
       let arr = JSON.parse(JSON.stringify(this.$store.state.home.sidebarList.contentList))
-      console.log(arr)
       if (!this.userInfo.username) {
         let t = arr.splice(0, 1)
         arr.splice(1, 0, ...t)
-        // this.activeIndex = '1'
       }
       return arr
     }
