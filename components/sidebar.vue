@@ -17,9 +17,12 @@
           <i class="icon iconfont" :class="`${item.icon}`"></i>
           <span class="pl_5">{{item.title}}</span>
         </template>
-        <el-menu-item-group v-for="(section, sIndex) in item.lists" :key="sIndex">
-          <el-menu-item :index="`${index}-${sIndex}`">{{section.title}}</el-menu-item>
-        </el-menu-item-group>
+          <el-menu-item v-for="(section, sIndex) in item.lists" :key="sIndex">
+              <nuxt-link :to="section.linkUrl" tag="div">
+                    <i class="icon iconfont" :class="`${section.icon}`"></i>
+                    <span class="pl_5">{{section.title}}</span>
+              </nuxt-link>
+         </el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
