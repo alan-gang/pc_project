@@ -1,24 +1,27 @@
 <template>
   <div class="header-container c_f">
     <div class="side-controller">
-      <i :class="isSlider?'el-icon-s-unfold':'el-icon-s-fold'"
-         class="ml_20 ft_24 c_r"
-         @click="changeSlider(isSlider= !isSlider)"></i>
+      <i :class="isSlider?'el-icon-s-unfold':'el-icon-s-fold'" class="ml_20 ft_24 c_r" @click="changeSlider(isSlider= !isSlider)"></i>
     </div>
     <div class="header-main pr_20 ml_30">
       <search-container v-if="!showSearch"></search-container>
-      <div v-else class="c_tc">{{showSearch}}</div>
+      <div v-else class="c_tc">
+        <nuxt-link class="return-home  ft_12" to="/">
+          <i class="icon iconfont icon-dibudaohanglan-"></i>
+          首页</nuxt-link>
+        <span>{{showSearch}}</span>
+      </div>
       <user-operation></user-operation>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations,mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 import searchContainer from '@/components/home/searchContainer'
 import userOperation from '@/components/user/userOperation'
 export default {
-  components:{
+  components: {
     searchContainer,
     userOperation
   },
@@ -27,9 +30,9 @@ export default {
       isSlider: false
     }
   },
-  computed:{
+  computed: {
     ...mapState({
-      showSearch:(state)=> state.home.sidebarList.title === 'userSetting'?'用户中心':false
+      showSearch: (state) => state.home.sidebarList.title === 'userSetting' ? '用户中心' : false
     })
   },
   methods: {
@@ -49,4 +52,8 @@ export default {
         flex()
         flex-grow: 1;
         box-sizing: border-box;
+        .return-home
+          color rgba(255,255,255,.6)
+          &:hover
+            color rgba(255,255,255,1)
 </style>
