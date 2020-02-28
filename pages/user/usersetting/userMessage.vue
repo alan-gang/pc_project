@@ -221,10 +221,11 @@ export default {
       this.classOptions = classLists;
     }
   },
-  computed:{
-      visitDisabled(){
-          return !Boolean(this.form.username && this.form.className)
-      }
+  computed: {
+    visitDisabled () {
+      this.$store.state.username
+      return !Boolean(this.$store.state.user.UserInfo.username && this.$store.state.user.UserInfo.className)
+    }
   }
 }
 </script>

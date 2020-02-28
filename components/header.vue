@@ -5,11 +5,14 @@
     </div>
     <div class="header-main pr_20 ml_30">
       <search-container v-if="!showSearch"></search-container>
-      <div v-else class="c_tc">
-        <nuxt-link class="return-home  ft_12" to="/">
-          <i class="icon iconfont icon-dibudaohanglan-"></i>
-          首页</nuxt-link>
-        <span>{{showSearch}}</span>
+      <div class="c_tc">
+        <el-tooltip  v-if="showSearch &&  (UserInfo.username && UserInfo.className)" class="item ml_10 mr_10" effect="dark" content="返回首页面" placement="bottom">
+          <nuxt-link class="return-home  ft_12" to="/">
+            <i class="icon iconfont icon-dibudaohanglan-"></i>
+            首页
+          </nuxt-link>
+        </el-tooltip>
+        <span v-if="showSearch">{{showSearch}}</span>
       </div>
       <user-operation></user-operation>
     </div>
@@ -32,7 +35,8 @@ export default {
   },
   computed: {
     ...mapState({
-      showSearch: (state) => state.home.sidebarList.title === 'userSetting' ? '用户中心' : false
+      showSearch: (state) => state.home.sidebarList.title === 'userSetting' ? '用户中心' : false,
+      UserInfo: (state) => state.user.UserInfo
     })
   },
   methods: {
