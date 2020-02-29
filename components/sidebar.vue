@@ -1,6 +1,6 @@
 <template>
   <div class="aside-container">
-    <el-menu class="asside-container" default-active="3" ref="menu" :unique-opened="true" @open="handleClick" background-color="#1F262D" text-color="rgba(255,255,255,.6)" active-text-color="#909399" :collapse="isCollapse">
+    <el-menu class="asside-container" ref="menu" :unique-opened="true" @open="handleClick" background-color="#1F262D" text-color="rgba(255,255,255,.6)" active-text-color="#909399" :collapse="isCollapse">
       <el-menu-item class="first">
         <i class="small-logo"></i>
         <img class="mt_5" src="/images/home/logo.png" slot="title">

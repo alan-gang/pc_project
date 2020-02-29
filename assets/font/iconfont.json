@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6880441",
+      "name": "组建大纲-01",
+      "font_class": "zujiandagang-",
+      "unicode": "e68a",
+      "unicode_decimal": 59018
+    },
+    {
+      "icon_id": "12619960",
+      "name": "分析",
+      "font_class": "icon_A",
+      "unicode": "e698",
+      "unicode_decimal": 59032
+    },
+    {
       "icon_id": "1422331",
       "name": "高级会员",
       "font_class": "gaojihuiyuan",

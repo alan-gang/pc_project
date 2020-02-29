@@ -39,6 +39,7 @@
 import userMixin from '~/assets/mixin/userMixin'
 import dialogMixin from '~/assets/mixin/dialogMixin'
 import { getcode, registerUser } from '~/api'
+import { mapState } from 'vuex'
 import getCode from '~/components/user/getCode.vue'
 
 export default {
@@ -81,8 +82,8 @@ export default {
             this.alert(message)
           } else {
             sessionStorage.token = data.token
-            this.$store.commit('user/saveUserInfo', data.user)
-            this.$router.replace('/user/usersetting/userMessage')
+            this.$store.commit('user/saveUserInfo', data.user);
+              (this.UserInfo.identity == '2') ? this.$router.replace('/forum/forumlist/all') : this.$router.replace("/user/usersetting/userMessage")
           }
           this.isLoading = false
         } else {
@@ -92,6 +93,11 @@ export default {
       });
     },
   },
+  computed: {
+    ...mapState('user', {
+      UserInfo: state => state.UserInfo
+    })
+  }
 };
 </script>
 

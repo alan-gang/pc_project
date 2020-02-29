@@ -223,8 +223,10 @@ export default {
   },
   computed: {
     visitDisabled () {
-      this.$store.state.username
-      return !Boolean(this.$store.state.user.UserInfo.username && this.$store.state.user.UserInfo.className)
+      if(this.$store.state.user.UserInfo.identity != '1') {
+        return false
+      }
+      return !Boolean(  this.$store.state.user.UserInfo.username && this.$store.state.user.UserInfo.className)
     }
   }
 }
