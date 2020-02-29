@@ -20,10 +20,10 @@ const CONFIG = {
   httpOnly: true,
   signed: true,
   renew: false,
-  store: new Redis({
-    port: 6379,
-    host: '123.56.119.225',
-  })
+  // store: new Redis({
+  //   port: 6379,
+  //   host: '123.56.119.225',
+  // })
 };
 app.use(session(CONFIG, app));
 
