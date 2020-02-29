@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{359:function(n,t,e){"use strict";e.r(t);var c={},r=e(2),component=Object(r.a)(c,(function(){var n=this.$createElement;return(this._self._c||n)("div",[this._v("\n  文章详情页面\n")])}),[],!1,null,"99561f56",null);t.default=component.exports}}]);

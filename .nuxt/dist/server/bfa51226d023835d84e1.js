@@ -1,0 +1,1 @@
+exports.ids=[4],exports.modules={126:function(t,e,r){"use strict";r.r(e);var n={},c=r(1);var component=Object(c.a)(n,(function(){var t=this.$createElement;return(this._self._c||t)("div",[this._ssrNode("\n  文章详情页面\n")])}),[],!1,(function(t){}),"99561f56","c132748e");e.default=component.exports}};
