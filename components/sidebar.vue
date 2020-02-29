@@ -1,6 +1,6 @@
 <template>
   <div class="aside-container">
-    <el-menu :default-active="activeIndex" class="asside-container" :unique-opened="true" @open="handleClick" @close="handleClick" background-color="#1F262D" text-color="rgba(255,255,255,.6)" active-text-color="#ffb848" :collapse="isCollapse">
+    <el-menu class="asside-container" default-active="3" ref="menu" :unique-opened="true" @open="handleClick" background-color="#1F262D" text-color="rgba(255,255,255,.6)" active-text-color="#909399" :collapse="isCollapse">
       <el-menu-item class="first">
         <i class="small-logo"></i>
         <img class="mt_5" src="/images/home/logo.png" slot="title">
@@ -17,9 +17,12 @@
           <i class="icon iconfont" :class="`${item.icon}`"></i>
           <span class="pl_5">{{item.title}}</span>
         </template>
-        <el-menu-item-group v-for="(section, sIndex) in item.lists" :key="sIndex">
-          <el-menu-item :index="`${index}-${sIndex}`">{{section.title}}</el-menu-item>
-        </el-menu-item-group>
+        <el-menu-item v-for="(section, sIndex) in item.lists" :key="index+sIndex">
+          <nuxt-link :to="section.linkUrl" tag="div">
+            <i class="icon iconfont icon-anli"></i>
+            <span class="pl_5">{{section.title}}</span>
+          </nuxt-link>
+        </el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
@@ -28,18 +31,23 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  created () {
+  mounted () {
+    this.$refs.menu.open(this.activeIndex)
   },
   data () {
     return {
-      activeIndex: '0'
+    }
+  },
+  watch: {
+    $route (newRoute, oldRoute) {
+      if (newRoute.name.substr(0, newRoute.name.indexOf('-')) !== oldRoute.name.substr(0, oldRoute.name.indexOf('-'))) {
+        this.$refs.menu.open('0')
+      }
     }
   },
   methods: {
     handleClick (index) {
-      // if (this.sidebarList.contentList[index].lists.length) return
-      // this.$router.push(this.sidebarList.contentList[index].linkUrl)
-    }
+    },
   },
   computed: {
     ...mapState({
@@ -53,6 +61,23 @@ export default {
         arr.splice(1, 0, ...t)
       }
       return arr
+    },
+    activeIndex () {
+      let r = 0;
+      for (const [index, item] of this.sidebarList.entries()) {
+        if (item.linkUrl && (item.linkUrl === this.$route.path)) {
+          r = index
+          break
+        } else {
+          for (const childItme of item.lists) {
+            if (childItme.linkUrl === this.$route.path) {
+              r = index
+              break
+            }
+          }
+        }
+      }
+      return r
     }
   }
 }

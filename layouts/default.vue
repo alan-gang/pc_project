@@ -3,6 +3,7 @@
     <m-sidebar></m-sidebar>
     <div class="content-container">
       <m-header></m-header>
+      <nav-header v-if="isShowNavHeader"></nav-header>
       <el-main>
         <nuxt />
       </el-main>
@@ -14,15 +15,18 @@
 
 import mHeader from '~/components/header'
 import mSidebar from '~/components/sidebar'
+import navHeader from '~/components/navHeader'
+
 import { mapState } from 'vuex'
 export default {
   components: {
     mHeader,
-    mSidebar
+    mSidebar,
+    navHeader
   },
   data () {
     return {
-
+      isShowNavHeader: true
     }
   },
   methods: {

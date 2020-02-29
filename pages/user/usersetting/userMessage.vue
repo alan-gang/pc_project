@@ -176,7 +176,7 @@
       操作
     </div>
     <div class="cancel-group mt_30 ml_15 c_6 ft_18">
-      <el-button type="primary" @click="goHome" class="w_30p" :disabled="visitDisabled">访问首页面</el-button>
+      <el-button type="primary" @click="$router.push('/forum/forumlist/all')" class="w_30p" :disabled="visitDisabled">访问首页面</el-button>
     </div>
   </div>
 </template>
@@ -219,13 +219,13 @@ export default {
       let { code, data: { classLists } } = await getClassList()
       if (code != 0) return
       this.classOptions = classLists;
-    },
-    goHome () { }
+    }
   },
-  computed:{
-      visitDisabled(){
-          return !Boolean(this.form.username && this.form.className)
-      }
+  computed: {
+    visitDisabled () {
+      this.$store.state.username
+      return !Boolean(this.$store.state.user.UserInfo.username && this.$store.state.user.UserInfo.className)
+    }
   }
 }
 </script>

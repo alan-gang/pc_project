@@ -1,16 +1,14 @@
 <template>
   <div>
-   论坛界面
-    <hr>
+    navHeader.vue
   </div>
 </template>
 
 <script>
-  export default {
+export default {
 
-  }
+}
 </script>
 
 <style scoped>
-
 </style>
