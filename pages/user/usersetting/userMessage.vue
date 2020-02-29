@@ -176,7 +176,7 @@
       操作
     </div>
     <div class="cancel-group mt_30 ml_15 c_6 ft_18">
-      <el-button type="primary" @click="$router.push('/')" class="w_30p" :disabled="visitDisabled">访问首页面</el-button>
+      <el-button type="primary" @click="$router.push('/forum/forumlist/all')" class="w_30p" :disabled="visitDisabled">访问首页面</el-button>
     </div>
   </div>
 </template>

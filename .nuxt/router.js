@@ -5,6 +5,9 @@ import scrollBehavior from './router.scrollBehavior.js'
 
 const _34aa4579 = () => interopDefault(import('..\\pages\\404.vue' /* webpackChunkName: "pages_404" */))
 const _2ade282b = () => interopDefault(import('..\\pages\\example.vue' /* webpackChunkName: "pages_example" */))
+const _fd7bb2bc = () => interopDefault(import('..\\pages\\forum.vue' /* webpackChunkName: "pages_forum" */))
+const _0a45fa00 = () => interopDefault(import('..\\pages\\forum\\forumdetail.vue' /* webpackChunkName: "pages_forum_forumdetail" */))
+const _3c7e6326 = () => interopDefault(import('..\\pages\\forum\\forumlist\\_forumList.vue' /* webpackChunkName: "pages_forum_forumlist__forumList" */))
 const _567970fc = () => interopDefault(import('..\\pages\\video.vue' /* webpackChunkName: "pages_video" */))
 const _31026dff = () => interopDefault(import('..\\pages\\user\\login.vue' /* webpackChunkName: "pages_user_login" */))
 const _080f767d = () => interopDefault(import('..\\pages\\user\\register.vue' /* webpackChunkName: "pages_user_register" */))
@@ -13,7 +16,6 @@ const _215d423b = () => interopDefault(import('..\\pages\\user\\usersetting.vue'
 const _0ccc29e7 = () => interopDefault(import('..\\pages\\user\\usersetting\\index.vue' /* webpackChunkName: "pages_user_usersetting_index" */))
 const _7e83c192 = () => interopDefault(import('..\\pages\\user\\usersetting\\userDetail.vue' /* webpackChunkName: "pages_user_usersetting_userDetail" */))
 const _c065e7de = () => interopDefault(import('..\\pages\\user\\usersetting\\userMessage.vue' /* webpackChunkName: "pages_user_usersetting_userMessage" */))
-const _5236fc5a = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -39,6 +41,19 @@ export const routerOptions = {
     path: "/example",
     component: _2ade282b,
     name: "example"
+  }, {
+    path: "/forum",
+    component: _fd7bb2bc,
+    name: "forum",
+    children: [{
+      path: "forumdetail",
+      component: _0a45fa00,
+      name: "forum-forumdetail"
+    }, {
+      path: "forumlist/:forumList?",
+      component: _3c7e6326,
+      name: "forum-forumlist-forumList"
+    }]
   }, {
     path: "/video",
     component: _567970fc,
@@ -71,10 +86,6 @@ export const routerOptions = {
       component: _c065e7de,
       name: "user-usersetting-userMessage"
     }]
-  }, {
-    path: "/",
-    component: _5236fc5a,
-    name: "index"
   }, {
     path: "*",
     component: _34aa4579,

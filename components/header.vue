@@ -7,7 +7,7 @@
       <search-container v-if="!showSearch"></search-container>
       <div class="c_tc">
         <el-tooltip  v-if="showSearch &&  (UserInfo.username && UserInfo.className)" class="item ml_10 mr_10" effect="dark" content="返回首页面" placement="bottom">
-          <nuxt-link class="return-home  ft_12" to="/">
+          <nuxt-link class="return-home  ft_12" to="/forum/forumlist/all">
             <i class="icon iconfont icon-dibudaohanglan-"></i>
             首页
           </nuxt-link>
