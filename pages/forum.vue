@@ -12,6 +12,8 @@ export default {
   async fetch ({ store, $axios }) {
     let { sidebarList } = await getSidebar($axios, { title: 'forum' })
     store.commit('home/fillSidebar', sidebarList)
+  },
+  created () {
   }
 }
 </script>

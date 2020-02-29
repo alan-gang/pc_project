@@ -6,8 +6,10 @@
       <nav-header v-if="isShowNavHeader"></nav-header>
       <el-main>
         <nuxt />
+        <!-- 显示老师第一次注册对话框 -->
       </el-main>
     </div>
+    <teacher-form></teacher-form>
   </el-container>
 </template>
 
@@ -16,13 +18,17 @@
 import mHeader from '~/components/header'
 import mSidebar from '~/components/sidebar'
 import navHeader from '~/components/navHeader'
-
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import teacherForm from '~/components/dialog/teacherForm'
 export default {
   components: {
     mHeader,
     mSidebar,
-    navHeader
+    navHeader,
+    teacherForm
+  },
+  mounted () {
+    this.checkIsUser()
   },
   data () {
     return {
@@ -30,10 +36,19 @@ export default {
     }
   },
   methods: {
-
+    checkIsUser () {
+      if (this.UserInfo.identity == '1' || this.UserInfo.classLists.length) return
+      this.isShowTeacherForm(true)
+    },
+    ...mapMutations({
+      isShowTeacherForm: 'user/showTeacherForm'
+    })
   },
   computed: {
-    ...mapState(['loadingMasker'])
+    ...mapState(['loadingMasker']),
+    ...mapState('user', {
+      UserInfo: state => state.UserInfo
+    })
   }
 }
 </script>

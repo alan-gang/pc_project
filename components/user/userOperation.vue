@@ -23,11 +23,17 @@
         <template slot="title">
           <el-avatar src="/images/home/user_bg.png"></el-avatar>
         </template>
-        <el-menu-item :index="`3-${index}`" v-for="(item, index) in userSettingList" :key="index">
-          <nuxt-link :to="item.linkUrl" tag="div" class="w_100p">
+        <el-menu-item :index="`3-${index}`" v-for="(item, index) in userSettingList " :key="index">
+          <template v-if="item.linkUrl">
+            <nuxt-link :to="item.linkUrl" tag="div" class="w_100p">
+              <span class="icon iconfont mr_5" :class="item.icon"></span>
+              <span>{{item.title}}</span>
+            </nuxt-link>
+          </template>
+          <template v-else>
             <span class="icon iconfont mr_5" :class="item.icon"></span>
             <span>{{item.title}}</span>
-          </nuxt-link>
+          </template>
         </el-menu-item>
         <el-menu-item index="3-4" @click="_signOut">
           <span class="icon iconfont icon-084tuichu mr_5"></span>
@@ -43,25 +49,13 @@
 <script>
 import { signOut } from '~/api'
 import userMixin from '~/assets/mixin/userMixin'
+import { mapState } from 'vuex'
 
 export default {
   mixins: [userMixin],
   data () {
     return {
       timer: null,
-      userSettingList: [{
-        "icon": "icon-shezhi_huaban",
-        "title": "账户设置",
-        "linkUrl": "/user/usersetting"
-      }, {
-        "icon": "icon-mingpian",
-        "title": "个人资料",
-        "linkUrl": "/user/usersetting/userMessage"
-      }, {
-        "icon": "icon-xuexiao",
-        "title": "用户信息详情",
-        "linkUrl": "/user/usersetting/userDetail"
-      }]
     };
   },
   methods: {
@@ -82,9 +76,34 @@ export default {
       window.open("https://lehu.hyfarsight.com", "_blank", `width=800, height=500, top=${(window.screen.height - 30 - 500) / 2}, left=${(window.screen.width - 10 - 800) / 2}, toolbar=no, menubar=no, scrollbars=yes, resizable=yes,location=no, status=yes`)
     }
   },
+  computed: {
+    userSettingList () {
+      let studentList = [{
+        "icon": "icon-shezhi_huaban",
+        "title": "账户设置",
+        "linkUrl": "/user/usersetting"
+      }, {
+        "icon": "icon-mingpian",
+        "title": "个人资料",
+        "linkUrl": "/user/usersetting/userMessage"
+      }, {
+        "icon": "icon-xuexiao",
+        "title": "用户信息详情",
+        "linkUrl": "/user/usersetting/userDetail"
+      }]
+      let teacherList = [{
+        "icon": "icon-shezhi_huaban",
+        "title": "账户设置",
+      }];
+      return this.UserInfo.identity == '2' ? teacherList : studentList
+    },
+    ...mapState('user', {
+      UserInfo: state => state.UserInfo
+    })
+  },
   beforeDestroy () {
     this.timer && clearTimeout(this.timer)
-  }
+  },
 }
 </script>
 
